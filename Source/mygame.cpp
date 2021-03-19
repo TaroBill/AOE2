@@ -388,4 +388,59 @@ void CGameStateRun::OnShow()
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
 }
+void World::initMap() {
+	int resource[3][3] = { {2,0,1},
+							{0,3,0 },
+							{1,0,2} };
+	for (int i = 0; i < 120; i++) {
+		for (int j = 0; j < 120; j++) {
+			int a = i % 40;
+			int b = j % 40;
+			map[i][j] = resource[a][b];
+		}
+	}
+}
+World::World() {
+	x, y = 120 * 50; // 地圖大小120格, 每格50*50點
+	sx, sy = 60;
+}
+
+void World::OnShow() {
+	for (int i = 0; i < 15; i++) { //螢幕顯示30格*15格
+		for (int j = 0; j < 30; j++) {
+			/*int MX = i * 50;//取得螢幕點座標
+			int MY = j * 50;
+			int GX = i + sx;//取得地圖上的格座標
+			int GY = j + sy;
+			switch (map[GX][GY])
+			{
+			case 0:
+				Grass.SetTopLeft(MX, MY);
+				Grass.ShowBitmap();
+				break;
+			case 1:
+				Tree.SetTopLeft(MX, MY);
+				Tree.ShowBitmap();
+				break;
+			case 2:
+				StoneMine.SetTopLeft(MX, MY);
+				StoneMine.ShowBitmap();
+				break;
+			case 3:
+				Gold.SetTopLeft(MX, MY);
+				Gold.ShowBitmap();
+				break;
+			default:
+				break;
+			}*/
+		}
+	}
+}
+int World::getScreenX(int x) {
+	return x - sx;
+}
+
+int World::getScreenY(int y) {
+	return y - sy;
+}
 }
