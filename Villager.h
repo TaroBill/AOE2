@@ -6,6 +6,5 @@ namespace composite
 {
 	class Villager:Unit
 	{
-
 	};
 }

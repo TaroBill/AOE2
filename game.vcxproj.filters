@@ -162,6 +162,15 @@
     <ClCompile Include="Collectable.cpp">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneMine.cpp">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldMine.cpp">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
