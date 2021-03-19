@@ -41,6 +41,12 @@
     <Filter Include="MyGame\ObjectPool">
       <UniqueIdentifier>{4adba7cd-b701-40f8-abba-46e350bcb14b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame\Utility">
+      <UniqueIdentifier>{b830f96c-60ea-4499-8c72-e5fdc0819d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Utility\PathFinding">
+      <UniqueIdentifier>{5bc903fb-1a67-4204-8419-18414b30f263}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -171,6 +177,12 @@
     <ClCompile Include="GoldMine.cpp">
       <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Villager.cpp">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>MyGame\CompositePattern\Composites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -277,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="Builder.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar.h">
+      <Filter>MyGame\Utility\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="IPathFinding.h">
+      <Filter>MyGame\Utility\PathFinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

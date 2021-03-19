@@ -305,10 +305,13 @@
     </ClCompile>
     <ClCompile Include="StoneMine.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="Villager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Archer.h" />
+    <ClInclude Include="Astar.h" />
     <ClInclude Include="Builder.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Cavalry.h" />
@@ -318,6 +321,7 @@
     <ClInclude Include="Garrisonable.h" />
     <ClInclude Include="GoldMine.h" />
     <ClInclude Include="Infantry.h" />
+    <ClInclude Include="IPathFinding.h" />
     <ClInclude Include="PlayerControl.h" />
     <ClInclude Include="Research.h" />
     <ClInclude Include="Ship.h" />
