@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "./Source/gamelib.h"
 
 namespace composite
 {
@@ -10,5 +11,7 @@ namespace composite
 		int sizeX, sizeY;
 		int hp;
 		int lineOfSight;
+		//«Å§i¹Ï
+		game_framework::CMovingBitmap buildingBitmap;
 	};
 }
