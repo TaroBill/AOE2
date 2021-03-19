@@ -256,6 +256,8 @@
     <None Include="res\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collectable.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Source\audio.cpp" />
     <ClCompile Include="Source\CBall.cpp" />
     <ClCompile Include="Source\CBouncingBall.cpp" />
@@ -302,6 +304,21 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animal.h" />
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="Builder.h" />
+    <ClInclude Include="Building.h" />
+    <ClInclude Include="Cavalry.h" />
+    <ClInclude Include="Collectable.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Economic.h" />
+    <ClInclude Include="Garrisonable.h" />
+    <ClInclude Include="GoldMine.h" />
+    <ClInclude Include="Infantry.h" />
+    <ClInclude Include="PlayerControl.h" />
+    <ClInclude Include="Research.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="SiegeWeapon.h" />
     <ClInclude Include="Source\audio.h" />
     <ClInclude Include="Source\CBall.h" />
     <ClInclude Include="Source\CBouncingBall.h" />
@@ -314,6 +331,14 @@
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
+    <ClInclude Include="StoneMine.h" />
+    <ClInclude Include="Trainer.h" />
+    <ClInclude Include="Tree.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="Upgrader.h" />
+    <ClInclude Include="Villager.h" />
+    <ClInclude Include="Walkable.h" />
+    <ClInclude Include="Wonder.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">

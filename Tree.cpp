@@ -1,11 +1,11 @@
 #pragma once
 #include "Component.h"
 #include "Collectable.h"
+#include "Tree.h"
 namespace composite
 {
-	class Tree :Component
+	Tree::Tree()
 	{
-	public:
-		Tree();
-	};
-}
+		
+	}
+};
