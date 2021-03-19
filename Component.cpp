@@ -23,6 +23,7 @@ namespace composite
 
 	template<typename T> void Component::add(T component)
 	{
+		component = new component;
 		_components.push_back(component);
 	}
 	template<typename T>void Component::remove(T component)

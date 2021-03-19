@@ -6,6 +6,7 @@ namespace composite
 {
 	Tree::Tree()
 	{
-		
+		add<Collectable>;
+
 	}
 };

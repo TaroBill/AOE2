@@ -9,9 +9,9 @@ namespace composite
 	private:
 		int resource;
 		int gatherRate;
+		void reduceResource();
 	public:
 		Collectable();
 		int getResource();
-		void reduceResource();
 	};
 }
