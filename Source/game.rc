@@ -104,11 +104,11 @@ IDB_HELP                BITMAP                  "..\\res\\help.bmp"
 
 IDB_LOADING             BITMAP                  "..\\res\\loading.bmp"
 
-IDB_GRASS               BITMAP                  "D:\\資工作業\\AOE2\\RES\\Grass.bmp"
+IDB_GRASS               BITMAP                  "..\\res\\Grass.bmp"
 
-IDB_GOLD                BITMAP                  "D:\\資工作業\\AOE2\\RES\\Gold_aoe2.bmp"
+IDB_GOLD                BITMAP                  "..\\res\\Gold_aoe2.bmp"
 
-IDB_STONE               BITMAP                  "D:\\資工作業\\AOE2\\RES\\Stone_aoe2.bmp"
+IDB_STONE               BITMAP                  "..\\res\\Stone_aoe2.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

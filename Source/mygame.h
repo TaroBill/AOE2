@@ -63,6 +63,9 @@ namespace game_framework {
 		void OnShow();
 		int getScreenX(int);
 		int getScreenY(int);
+		void LoadBitMap();
+		CMovingBitmap grass;
+		CMovingBitmap river;
 	private:
 		void initMap();
 		int x, y;
@@ -105,6 +108,7 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
+		World			world;
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	background;	// 背景圖
 		CMovingBitmap	help;		// 說明圖
