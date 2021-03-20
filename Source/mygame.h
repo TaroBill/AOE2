@@ -66,7 +66,13 @@ namespace game_framework {
 		void LoadBitMap();
 		CMovingBitmap grass;
 		CMovingBitmap river;
+		void moveScreenUp(bool);
+		void moveScreenDown(bool);
+		void moveScreenLeft(bool);
+		void moveScreenRight(bool);
+		void onMove();
 	private:
+		bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 		void initMap();
 		int x, y;
 		int map[120][120];

@@ -267,6 +267,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//
 	// 移動彈跳的球
 	//
+	world.onMove();
 	bball.OnMove();
 }
 
@@ -313,14 +314,22 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26; // keyboard上箭頭
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	if (nChar == KEY_LEFT)
-		eraser.SetMovingLeft(true);
-	if (nChar == KEY_RIGHT)
-		eraser.SetMovingRight(true);
-	if (nChar == KEY_UP)
-		eraser.SetMovingUp(true);
-	if (nChar == KEY_DOWN)
-		eraser.SetMovingDown(true);
+	if (nChar == KEY_LEFT) {
+		//eraser.SetMovingLeft(true);
+		world.moveScreenLeft(true);
+	}
+	if (nChar == KEY_RIGHT) {
+		//eraser.SetMovingRight(true);
+		world.moveScreenRight(true);
+	}
+	if (nChar == KEY_UP) {
+		//eraser.SetMovingUp(true);
+		world.moveScreenUp(true);
+	}
+	if (nChar == KEY_DOWN) {
+		//eraser.SetMovingDown(true);
+		world.moveScreenDown(true);
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -329,14 +338,22 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26; // keyboard上箭頭
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	if (nChar == KEY_LEFT)
+	if (nChar == KEY_LEFT) {
 		eraser.SetMovingLeft(false);
-	if (nChar == KEY_RIGHT)
+		world.moveScreenLeft(false);
+	}
+	if (nChar == KEY_RIGHT) {
 		eraser.SetMovingRight(false);
-	if (nChar == KEY_UP)
+		world.moveScreenRight(false);
+	}
+	if (nChar == KEY_UP) {
 		eraser.SetMovingUp(false);
-	if (nChar == KEY_DOWN)
+		world.moveScreenUp(false);
+	}
+	if (nChar == KEY_DOWN) {
 		eraser.SetMovingDown(false);
+		world.moveScreenDown(false);
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -399,22 +416,23 @@ void World::initMap() {
 			int a = i / 40;
 			int b = j / 40;
 			map[i][j] = resource[a][b];
-		}
+		} 
 	}
 }
 World::World() {
 	initMap();
+	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	x =  y = 120 * 50; // 地圖大小120格, 每格50*50點
-	sx = sy = 0;
+	sx = sy = 50 * 50;
 }
 
 void World::OnShow() {
-	for (int i = 0; i < 30; i++) { //螢幕顯示30格*15格
-		for (int j = 0; j < 15; j++) {
-			int MX = i * 50;//取得螢幕點座標
-			int MY = j * 50;
-			int GX = i + sx;//取得地圖上的格座標
-			int GY = j + sy;
+	for (int i = -1; i <= 30; i++) { //螢幕顯示30格*15格邊界預載一格
+		for (int j = -1; j <= 15; j++) {
+			int MX = i * 50 - sx % 50;//取得螢幕點座標
+			int MY = j * 50 - sy % 50;
+			int GX = i + sx / 50;//取得地圖上的格座標
+			int GY = j + sy / 50;
 			switch (map[GY][GX])
 			{
 			case 0:
@@ -431,6 +449,57 @@ void World::OnShow() {
 		}
 	}
 }
+void World::onMove() {
+	if (isMovingDown == true) {
+		if ((sy + 5) > ((120 * 50) - (15 * 50))) {
+			sy = 120 * 50 - 15 * 50;
+		}
+		else {
+			sy += 5;
+		}
+	}
+	if (isMovingUp == true) {
+		if (sy - 5 < 50) {
+			sy = 50;
+		}
+		else {
+			sy -= 5;
+		}
+	}
+	if (isMovingLeft == true) {
+		if (sx - 5 < 50) {
+			sx = 50;
+		}
+		else {
+			sx -= 5;
+		}
+	}
+	if (isMovingRight == true) {
+		if ((sx + 5) > (120 * 50 - 30 * 50)) {
+			sx = 120 * 50 - 30 * 50;
+		}
+		else {
+			sx += 5;
+		}
+	}
+	World::OnShow();
+}
+void World::moveScreenUp(bool state) {
+	isMovingUp = state;
+}
+
+void World::moveScreenDown(bool state) {
+	isMovingDown = state;
+}
+
+void World::moveScreenLeft(bool state) {
+	isMovingLeft = state;
+}
+
+void World::moveScreenRight(bool state) {
+	isMovingRight = state;
+}
+
 int World::getScreenX(int x) {
 	return x - sx;
 }
