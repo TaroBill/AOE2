@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
-#include "Collectable.h"
-namespace composite
+
+namespace GameObject
 {
 	class StoneMine :Component
 	{

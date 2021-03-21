@@ -162,27 +162,6 @@
     <ClCompile Include="Source\CBouncingBall.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>MyGame\CompositePattern\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Collectable.cpp">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClCompile>
-    <ClCompile Include="Tree.cpp">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="StoneMine.cpp">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="GoldMine.cpp">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Villager.cpp">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>MyGame\CompositePattern\Composites</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -221,80 +200,80 @@
     <ClInclude Include="Source\CBouncingBall.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerControl.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
+    <ClInclude Include="Source\Unit\IPathFinding.h">
+      <Filter>MyGame\Utility\PathFinding</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="Source\Unit\Astar.h">
+      <Filter>MyGame\Utility\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Component.h">
       <Filter>MyGame\CompositePattern\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
+    <ClInclude Include="Source\Unit\Economic.h">
+      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Research.h">
+      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Wonder.h">
+      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Animal.h">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\GoldMine.h">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\StoneMine.h">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Tree.h">
+      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Archer.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Cavalry.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Infantry.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Ship.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\SiegeWeapon.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Villager.h">
+      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Building.h">
       <Filter>MyGame\CompositePattern\Composites</Filter>
     </ClInclude>
-    <ClInclude Include="Unit.h">
+    <ClInclude Include="Source\Unit\Unit.h">
       <Filter>MyGame\CompositePattern\Composites</Filter>
     </ClInclude>
-    <ClInclude Include="Archer.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Infantry.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Villager.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="SiegeWeapon.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Cavalry.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Animal.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="GoldMine.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="StoneMine.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Wonder.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Economic.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Research.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Walkable.h">
+    <ClInclude Include="Source\Unit\Builder.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Garrisonable.h">
+    <ClInclude Include="Source\Unit\Collectable.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Collectable.h">
+    <ClInclude Include="Source\Unit\Garrisonable.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Trainer.h">
+    <ClInclude Include="Source\Unit\PlayerControl.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Upgrader.h">
+    <ClInclude Include="Source\Unit\Trainer.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Builder.h">
+    <ClInclude Include="Source\Unit\Upgrader.h">
       <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
-    <ClInclude Include="Astar.h">
-      <Filter>MyGame\Utility\PathFinding</Filter>
-    </ClInclude>
-    <ClInclude Include="IPathFinding.h">
-      <Filter>MyGame\Utility\PathFinding</Filter>
+    <ClInclude Include="Source\Unit\Walkable.h">
+      <Filter>MyGame\CompositePattern\Leafs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

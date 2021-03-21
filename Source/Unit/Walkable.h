@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-namespace composite
+namespace GameObject
 {
 	class Walkable :Component
 	{

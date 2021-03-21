@@ -256,9 +256,6 @@
     <None Include="res\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collectable.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="GoldMine.cpp" />
     <ClCompile Include="Source\audio.cpp" />
     <ClCompile Include="Source\CBall.cpp" />
     <ClCompile Include="Source\CBouncingBall.cpp" />
@@ -303,29 +300,27 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="StoneMine.cpp" />
-    <ClCompile Include="Tree.cpp" />
-    <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="Villager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animal.h" />
-    <ClInclude Include="Archer.h" />
-    <ClInclude Include="Astar.h" />
-    <ClInclude Include="Builder.h" />
-    <ClInclude Include="Building.h" />
-    <ClInclude Include="Cavalry.h" />
-    <ClInclude Include="Collectable.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Economic.h" />
-    <ClInclude Include="Garrisonable.h" />
-    <ClInclude Include="GoldMine.h" />
-    <ClInclude Include="Infantry.h" />
-    <ClInclude Include="IPathFinding.h" />
-    <ClInclude Include="PlayerControl.h" />
-    <ClInclude Include="Research.h" />
-    <ClInclude Include="Ship.h" />
-    <ClInclude Include="SiegeWeapon.h" />
+    <ClInclude Include="Source\Unit\Animal.h" />
+    <ClInclude Include="Source\Unit\Archer.h" />
+    <ClInclude Include="Source\Unit\Astar.h">
+      <FileType>CppClass</FileType>
+    </ClInclude>
+    <ClInclude Include="Source\Unit\Builder.h" />
+    <ClInclude Include="Source\Unit\Building.h" />
+    <ClInclude Include="Source\Unit\Cavalry.h" />
+    <ClInclude Include="Source\Unit\Collectable.h" />
+    <ClInclude Include="Source\Unit\Component.h" />
+    <ClInclude Include="Source\Unit\Economic.h" />
+    <ClInclude Include="Source\Unit\Garrisonable.h" />
+    <ClInclude Include="Source\Unit\GoldMine.h" />
+    <ClInclude Include="Source\Unit\Infantry.h" />
+    <ClInclude Include="Source\Unit\IPathFinding.h" />
+    <ClInclude Include="Source\Unit\PlayerControl.h" />
+    <ClInclude Include="Source\Unit\Research.h" />
+    <ClInclude Include="Source\Unit\Ship.h" />
+    <ClInclude Include="Source\Unit\SiegeWeapon.h" />
     <ClInclude Include="Source\audio.h" />
     <ClInclude Include="Source\CBall.h" />
     <ClInclude Include="Source\CBouncingBall.h" />
@@ -338,14 +333,14 @@
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
-    <ClInclude Include="StoneMine.h" />
-    <ClInclude Include="Trainer.h" />
-    <ClInclude Include="Tree.h" />
-    <ClInclude Include="Unit.h" />
-    <ClInclude Include="Upgrader.h" />
-    <ClInclude Include="Villager.h" />
-    <ClInclude Include="Walkable.h" />
-    <ClInclude Include="Wonder.h" />
+    <ClInclude Include="Source\Unit\StoneMine.h" />
+    <ClInclude Include="Source\Unit\Trainer.h" />
+    <ClInclude Include="Source\Unit\Tree.h" />
+    <ClInclude Include="Source\Unit\Unit.h" />
+    <ClInclude Include="Source\Unit\Upgrader.h" />
+    <ClInclude Include="Source\Unit\Villager.h" />
+    <ClInclude Include="Source\Unit\Walkable.h" />
+    <ClInclude Include="Source\Unit\Wonder.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">

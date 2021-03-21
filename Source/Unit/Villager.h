@@ -2,9 +2,12 @@
 
 #include "component.h"
 #include "Unit.h"
-namespace composite
+
+namespace GameObject
 {
 	class Villager:Unit
 	{
+		Villager();
+		~Villager();
 	};
 }

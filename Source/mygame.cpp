@@ -59,6 +59,12 @@
 #include "gamelib.h"
 #include "mygame.h"
 
+#include "Unit/GoldMine.h"
+#include "Unit/Collectable.h"
+#include <typeinfo>
+
+#include <Vector>
+
 namespace game_framework {
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
@@ -216,13 +222,35 @@ void CGameStateRun::OnBeginState()
 		ball[i].SetIsAlive(true);
 	}
 	eraser.Initialize();
-	background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
+	background.SetTopLeft(BACKGROUND_X, 0);				// 設定背景的起始座標
 	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
-	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
+	hits_left.SetTopLeft(HITS_LEFT_X, HITS_LEFT_Y);		// 指定剩下撞擊數的座標
 	CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
+
+	/*
+	GameObject::Building* goldmine01 = new GameObject::Building();
+	goldmine01->add<GameObject::Collectable>();
+	GameObject::Collectable* c = (dynamic_cast<GameObject::Collectable*>(&goldmine01->getComponent(0)));
+	TRACE("%d\n", (*c).resource);
+	(*c).resource = 10;
+	c = dynamic_cast<GameObject::Collectable*>(&goldmine01->getComponent(0));
+	TRACE("%d\n", (*c).resource);
+	*/
+
+	
+	
+	//TRACE("%d\n", rs);
+	//int rs = goldmine01->getComponent<GameObject::Collectable>().resource;
+	//TRACE("%d\n", rs);
+	//goldmine01->getComponent<GameObject::Collectable>().reduceResource();
+	//rs = goldmine01->getComponent<GameObject::Collectable>().resource;
+	//TRACE("%d\n",rs);
+	//goldmine01->getComponent<GameObject::Collectable>();
+	//TRACE("金礦資源還有%d個\n", goldmine01->getComponent<GameObject::Collectable>().resource);
+
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素

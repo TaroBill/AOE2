@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-namespace composite
+namespace GameObject
 {
 	class PlayerControl :Component
 	{
