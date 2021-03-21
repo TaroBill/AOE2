@@ -10,7 +10,7 @@ public:
 	//從礦場取得資源
 	void GetResource(Mine m)
 	{
-		m.getResource()
+		m.getResource();
 		if (rs.type == carry.type)
 		{
 			carry.n += rs.n;
