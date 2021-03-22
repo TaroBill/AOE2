@@ -10,16 +10,16 @@ public:
 	//從礦場取得資源
 	void GetResource(Mine m)
 	{
-		m.getResource();
-		if (rs.type == carry.type)
+		if (m.resource.type == carry.type)
 		{
-			carry.n += rs.n;
+			carry.n += m.getResource();
 		}
 		else
 		{
-			carry.type = rs.type;
-			carry.n = rs.n;
+			carry.type = m.resource.type;
+			carry.n = m.resource.n;
 		}
+		
 	}
 	//把資源放到主城，讓對應的玩家增加資源
 	void ReturnResource()
