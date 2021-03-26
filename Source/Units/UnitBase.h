@@ -13,11 +13,12 @@ class UnitBase
 {
 public:
 	int tileX, tileY;
+	int pointX, pointY;
 	int hp;
 	int movingSpeed;
 	int playerId;
 	CMovingBitmap bmp;
-	void onMove(int, int);
+	void onMove();
 	void onShow(int, int);
 	void findpath(int tileX, int tileY, int& map)
 	{
