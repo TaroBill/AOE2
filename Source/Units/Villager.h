@@ -12,7 +12,7 @@ public:
 	{
 		if (m.resource.type == carry.type)
 		{
-			carry.n += m.getResource();
+			//carry.n += m.getResource();
 		}
 		else
 		{
