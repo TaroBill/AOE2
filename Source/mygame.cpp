@@ -506,6 +506,14 @@ void World::moveScreenRight(bool state) {
 	isMovingRight = state;
 }
 
+int World::getGlobalX(int x) {
+	return x + sx;
+}
+
+int World::getGlobalY(int y) {
+	return y + sy;
+}
+
 int World::getScreenX() {
 	return sx;
 }
@@ -513,6 +521,15 @@ int World::getScreenX() {
 int World::getScreenY() {
 	return sy;
 }
+
+int World::GlobalX2ScreenX(int x) {
+	return x - sx;
+}
+
+int World::GlobalX2ScreenY(int y) {
+	return y - sy;
+}
+
 void World::LoadBitMap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_GOLD);

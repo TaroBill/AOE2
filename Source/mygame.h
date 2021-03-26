@@ -57,13 +57,17 @@ namespace game_framework {
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
-	enum mapItem { GRASS, RIVER, TREE, STONE, GOLD, HOUSE };
+	enum mapItem { GRASS, RIVER};
 	class World {
 	public:
 		World();
 		void OnShow();
 		int getScreenX();
 		int getScreenY();
+		int getGlobalX(int);
+		int getGlobalY(int);
+		int GlobalX2ScreenX(int);
+		int GlobalX2ScreenY(int);
 		int getLocationItem(int, int);
 		void LoadBitMap();
 		CMovingBitmap grass;
