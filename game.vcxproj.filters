@@ -14,6 +14,12 @@
     <Filter Include="MyGame">
       <UniqueIdentifier>{0c798913-b7d2-4e26-8241-0f83266cd626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame\Units">
+      <UniqueIdentifier>{572cd421-7d31-45d9-8dec-9907fc579d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Player">
+      <UniqueIdentifier>{685f2854-e76b-4c2e-b34d-cbc0de399fbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -165,6 +171,21 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\CBouncingBall.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Mine.h">
+      <Filter>MyGame\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\Player.h">
+      <Filter>MyGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Villager.h">
+      <Filter>MyGame\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\UnitBase.h">
+      <Filter>MyGame\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\GameResource.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
