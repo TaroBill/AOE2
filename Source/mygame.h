@@ -41,6 +41,7 @@
 #include "CEraser.h"
 #include "CBall.h"
 #include "CBouncingBall.h"
+#include "World.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -57,33 +58,7 @@ namespace game_framework {
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
-	enum mapItem { GRASS, RIVER};
-	class World {
-	public:
-		World();
-		void OnShow();
-		int getScreenX();
-		int getScreenY();
-		int getGlobalX(int);
-		int getGlobalY(int);
-		int GlobalX2ScreenX(int);
-		int GlobalX2ScreenY(int);
-		int getLocationItem(int, int);
-		void LoadBitMap();
-		CMovingBitmap grass;
-		CMovingBitmap river;
-		void moveScreenUp(bool);
-		void moveScreenDown(bool);
-		void moveScreenLeft(bool);
-		void moveScreenRight(bool);
-		void onMove();
-	private:
-		bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
-		void initMap();
-		int map[120][120];
-		int sx, sy;
-	};
-
+	
 	class CGameStateInit : public CGameState {
 	public:
 		CGameStateInit(CGame *g);
