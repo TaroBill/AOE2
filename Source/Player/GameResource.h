@@ -1,7 +1,7 @@
 #pragma once
 static enum ResourceType
 {
-	Gold, Stone, Meat, Wood
+	None,Gold, Stone, Meat, Wood
 };
 
 

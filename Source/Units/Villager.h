@@ -3,16 +3,18 @@
 #include "UnitBase.h"
 #include "../Player/GameResource.h"
 #include "Mine.h"
+//using namespace
 class Villager :public UnitBase
 {
 public:
+	
 	GameResource carry;
 	//從礦場取得資源
 	void GetResource(Mine m)
 	{
 		if (m.resource.type == carry.type)
 		{
-			//carry.n += m.getResource();
+			carry.n = m.GetResource();
 		}
 		else
 		{
@@ -25,5 +27,9 @@ public:
 	void ReturnResource()
 	{
 
+	}
+	Villager(int pID, int mHP, int tileX, int tileY, int movingSpeed) : UnitBase(pID, mHP, tileX, tileY, movingSpeed)
+	{
+		carry = GameResource(ResourceType.None, 0);
 	}
 };

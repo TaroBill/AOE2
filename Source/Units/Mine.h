@@ -14,6 +14,16 @@ public:
 	game_framework::CMovingBitmap bmp;
 	int sizeX, sizeY;
 	GameResource resource;
+	int GetResource()
+	{
+		return resource.n--;
+	}
+	int GetResource(int n)
+	{
+		int temp = resource.n;
+		resource.n -= temp;
+		return temp;
+	}
 	Mine(ResourceType rt, int n)
 	{
 		sizeX = 3;
