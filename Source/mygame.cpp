@@ -359,6 +359,8 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	eraser.SetMovingLeft(true);
+	TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
+	TRACE("Mouse Global Location: (%d, %d)\n", point.x + world.getScreenX(), point.y + world.getScreenY());
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -422,8 +424,13 @@ void World::initMap() {
 World::World() {
 	initMap();
 	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
-	x =  y = 120 * 50; // 地圖大小120格, 每格50*50點
-	sx = sy = 50 * 50;
+	sx = sy = 50 * 50; //螢幕座標
+}
+
+int World::getLocationItem(int x, int y) {
+	int GX = x / 50;
+	int GY = y / 50;
+	return map[GY][GX];
 }
 
 void World::OnShow() {
@@ -435,11 +442,11 @@ void World::OnShow() {
 			int GY = j + sy / 50;
 			switch (map[GY][GX])
 			{
-			case 0:
+			case GRASS:
 				grass.SetTopLeft(MX, MY);
 				grass.ShowBitmap();
 				break;
-			case 1:
+			case RIVER:
 				river.SetTopLeft(MX, MY);
 				river.ShowBitmap();
 				break;
@@ -482,7 +489,6 @@ void World::onMove() {
 			sx += 5;
 		}
 	}
-	World::OnShow();
 }
 void World::moveScreenUp(bool state) {
 	isMovingUp = state;
@@ -500,12 +506,12 @@ void World::moveScreenRight(bool state) {
 	isMovingRight = state;
 }
 
-int World::getScreenX(int x) {
-	return x - sx;
+int World::getScreenX() {
+	return sx;
 }
 
-int World::getScreenY(int y) {
-	return y - sy;
+int World::getScreenY() {
+	return sy;
 }
 void World::LoadBitMap() {
 	grass.LoadBitmap(IDB_GRASS);
