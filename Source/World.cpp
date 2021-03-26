@@ -25,7 +25,7 @@ int World::getLocationItem(int x, int y) {
 }
 
 void World::OnShow() {
-	for (int i = -1; i <= 30; i++) { //螢幕顯示30格*15格邊界預載一格
+	for (int i = -1; i <= 26; i++) { //螢幕顯示26格*15格邊界預載一格
 		for (int j = -1; j <= 15; j++) {
 			int MX = i * 50 - sx % 50;//取得螢幕點座標
 			int MY = j * 50 - sy % 50;
@@ -73,7 +73,7 @@ void World::onMove() {
 		}
 	}
 	if (isMovingRight == true) {
-		if ((sx + 5) > (120 * 50 - 30 * 50)) {
+		if ((sx + 5) > (120 * 50 - 26 * 50)) {
 			sx = 120 * 50 - 30 * 50;
 		}
 		else {
@@ -81,6 +81,30 @@ void World::onMove() {
 		}
 	}
 }
+
+void World::UnitOnMove() {
+	for (int i = 0; i < unit.size(); i++) {
+		unit[i].onMove();
+	}
+}
+
+void World::UnitOnShow() {
+	for (int i = 0; i < unit.size(); i++) {
+		if (isOnScreen(unit[i].pointX, unit[i].pointY)) {
+			unit[i].onShow(GlobalX2ScreenX(unit[i].pointX), GlobalY2ScreenY(unit[i].pointY));
+		}
+	}
+}
+
+bool World::isOnScreen(int x,int y) {
+	if (x >= sx && x <= sx + 26 * 50) {
+		if (y >= sy && y <= sy + 15 * 50) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void World::moveScreenUp(bool state) {
 	isMovingUp = state;
 }
@@ -97,11 +121,11 @@ void World::moveScreenRight(bool state) {
 	isMovingRight = state;
 }
 
-int World::getGlobalX(int x) {
+int World::ScreenX2GlobalX(int x) {
 	return x + sx;
 }
 
-int World::getGlobalY(int y) {
+int World::ScreenY2GlobalY(int y) {
 	return y + sy;
 }
 
@@ -117,7 +141,7 @@ int World::GlobalX2ScreenX(int x) {
 	return x - sx;
 }
 
-int World::GlobalX2ScreenY(int y) {
+int World::GlobalY2ScreenY(int y) {
 	return y - sy;
 }
 

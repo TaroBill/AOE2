@@ -360,7 +360,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	eraser.SetMovingLeft(true);
 	TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-	TRACE("Mouse Global Location: (%d, %d)\n", point.x + world.getScreenX(), point.y + world.getScreenY());
+	TRACE("Mouse Global Location: (%d, %d)\n", world.ScreenX2GlobalX(point.x), world.GlobalY2ScreenY(point.y));
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
