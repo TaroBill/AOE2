@@ -6,7 +6,9 @@
 #include <ddraw.h>
 #include "../audio.h"
 #include "../gamelib.h"
-
+/*
+*/
+using namespace game_framework;
 class UnitBase
 {
 public:
@@ -15,6 +17,8 @@ public:
 	int movingSpeed;
 	int playerId;
 	CMovingBitmap bmp;
+	void onMove(int, int);
+	void onShow(int, int);
 	void findpath(int tileX, int tileY, int& map)
 	{
 
