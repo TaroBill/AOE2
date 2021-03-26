@@ -7,44 +7,40 @@
 #include "../gamelib.h"
 
 #include "../Player/GameResource.h"
-
-class Mine
+namespace Unit
 {
-public:
-	game_framework::CMovingBitmap bmp;
-	int sizeX, sizeY;
-	GameResource resource;
-	int GetResource()
+	class Mine
 	{
-		return resource.n--;
-	}
-	int GetResource(int n)
-	{
-		int temp = resource.n;
-		resource.n -= temp;
-		return temp;
-	}
-	Mine(ResourceType rt, int n)
-	{
-		sizeX = 3;
-		sizeY = 3;
-		resource = GameResource(rt, n);
-		//讀入對應bmp
-		switch (rt)
+	public:
+		game_framework::CMovingBitmap bmp;
+		int sizeX, sizeY;
+		GameResource resource;
+		Mine(ResourceType rt, int n)
 		{
-		case Gold:
-			bmp.LoadBitmap(IDB_GOLD, RGB(255, 255, 255));
-			break;
-		case Stone:
-			bmp.LoadBitmap(IDB_STONE, RGB(255, 255, 255));
-			break;
-		case Meat:
-		case Wood:
-		default:
-			break;
+			sizeX = 3;
+			sizeY = 3;
+			resource = GameResource(rt, n);
+			//讀入對應bmp
+			switch (rt)
+			{
+			case ResourceType::None:
+				break;
+			case ResourceType::Gold:
+				bmp.LoadBitmap(IDB_GOLD, RGB(255, 255, 255));
+				break;
+			case ResourceType::Stone:
+				bmp.LoadBitmap(IDB_STONE, RGB(255, 255, 255));
+				break;
+			case ResourceType::Meat:
+				break;
+			case ResourceType::Wood:
+				break;
+			default:
+				break;
+			}
 		}
-	}
-	~Mine()
-	{
-	}
-};
+		~Mine()
+		{
+		}
+	};
+}
