@@ -6,8 +6,8 @@
 #include <ddraw.h>
 #include "audio.h"
 #include "gamelib.h"
-#include <Vector>
-#include "./Units/Villager.h"
+//#include <Vector>
+//#include "AllHeader.h"
 
 using namespace game_framework;
 enum mapItem { GRASS, RIVER };
@@ -15,6 +15,8 @@ class World {
 public:
 	World();
 	void OnShow();									//顯示地圖
+	void setScreenLocation(int, int);				//設置sx,sy，螢幕最左上點座標
+	void setScreenLocation(CPoint);					//設置sx,sy，螢幕最左上點座標
 	int getScreenX();								//取得sx，螢幕最左上點座標x
 	int getScreenY();								//取得sy，螢幕最左上點座標y
 	int ScreenX2GlobalX(int);						//將取得的螢幕座標X 轉世界座標X
@@ -33,7 +35,7 @@ public:
 	void UnitOnMove();								//移動單位
 	void UnitOnShow();								//顯示單位
 	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子
-	vector<UnitBase> unit;							
+	//vector<UnitBase> unit;							
 private:
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();

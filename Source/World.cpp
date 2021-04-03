@@ -1,13 +1,20 @@
 #include "World.h"
 
 void World::initMap() {
-	int resource[3][3] = { {1,0,0},
-							{0,1,0 },
-							{0,0,1} };
+	int resource[10][10] = { {1,1,1,0,0,0,0,1,1,1},
+						     {1,1,0,0,0,0,0,0,1,1},
+						     {1,0,0,0,0,0,0,0,0,1},
+						     {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {1,0,0,0,0,0,0,0,0,1},
+							 {1,1,0,0,0,0,0,0,1,1},
+							 {1,1,1,0,0,0,0,1,1,1}};
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
-			int a = i / 40;
-			int b = j / 40;
+			int a = i / 12;
+			int b = j / 12;
 			map[i][j] = resource[a][b];
 		}
 	}
@@ -25,12 +32,14 @@ int World::getLocationItem(int x, int y) {
 }
 
 void World::OnShow() {
-	for (int i = -1; i <= 26; i++) { //螢幕顯示26格*15格邊界預載一格
-		for (int j = -1; j <= 15; j++) {
+	for (int i = -1; i <= SIZE_X / 50 + 1; i++) { //螢幕顯示40格*22格邊界預載一格
+		for (int j = -1; j <= SIZE_Y / 50 + 1; j++) {
 			int MX = i * 50 - sx % 50;//取得螢幕點座標
 			int MY = j * 50 - sy % 50;
 			int GX = i + sx / 50;//取得地圖上的格座標
 			int GY = j + sy / 50;
+			if (map[GY][GX] != GRASS && map[GY][GX] != RIVER)
+				continue;
 			switch (map[GY][GX])
 			{
 			case GRASS:
@@ -49,8 +58,8 @@ void World::OnShow() {
 }
 void World::onMove() {
 	if (isMovingDown == true) {
-		if ((sy + 5) > ((120 * 50) - (15 * 50))) {
-			sy = 120 * 50 - 15 * 50;
+		if ((sy + 5) > ((120 * 50) - (SIZE_Y))) {
+			sy = 120 * 50 - SIZE_Y;
 		}
 		else {
 			sy += 5;
@@ -73,8 +82,8 @@ void World::onMove() {
 		}
 	}
 	if (isMovingRight == true) {
-		if ((sx + 5) > (120 * 50 - 26 * 50)) {
-			sx = 120 * 50 - 30 * 50;
+		if ((sx + 5) > (120 * 50 - SIZE_X)) {
+			sx = 120 * 50 - SIZE_X;
 		}
 		else {
 			sx += 5;
@@ -82,23 +91,23 @@ void World::onMove() {
 	}
 }
 
-void World::UnitOnMove() {
+/*void World::UnitOnMove() {
 	for (int i = 0; i < unit.size(); i++) {
 		unit[i].onMove();
 	}
-}
+}*/
 
-void World::UnitOnShow() {
+/*void World::UnitOnShow() {
 	for (int i = 0; i < unit.size(); i++) {
 		if (isOnScreen(unit[i].pointX, unit[i].pointY)) {
 			unit[i].onShow(GlobalX2ScreenX(unit[i].pointX), GlobalY2ScreenY(unit[i].pointY));
 		}
 	}
-}
+}*/
 
 bool World::isOnScreen(int x,int y) {
-	if (x >= sx && x <= sx + 26 * 50) {
-		if (y >= sy && y <= sy + 15 * 50) {
+	if (x >= sx && x <= sx + SIZE_X) {
+		if (y >= sy && y <= sy + SIZE_Y) {
 			return true;
 		}
 	}
@@ -148,4 +157,26 @@ int World::GlobalY2ScreenY(int y) {
 void World::LoadBitMap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_GOLD);
+}
+
+void World::setScreenLocation(int x, int y) {
+	sx = x;
+	if (sx > (120 * 50 - SIZE_X)) {
+		sx = 120 * 50 - SIZE_X;
+	}
+	sy = y;
+	if (sy > (120 * 50 - SIZE_Y)) {
+		sy = 120 * 50 - SIZE_Y;
+	}
+}
+
+void World::setScreenLocation(CPoint point) {
+	sx = point.x;
+	if (sx > (120 * 50 - SIZE_X)) {
+		sx = 120 * 50 - SIZE_X;
+	}
+	sy = point.y;
+	if (sy > (120 * 50 - SIZE_Y)) {
+		sy = 120 * 50 - SIZE_Y;
+	}
 }

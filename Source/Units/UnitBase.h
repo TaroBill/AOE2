@@ -9,7 +9,7 @@
 /*
 */
 using namespace game_framework;
-namespace Unit
+namespace Unit9
 {
 
 	class UnitBase

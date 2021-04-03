@@ -58,7 +58,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
-#include "AllHeader.h"
+//#include "AllHeader.h"
 namespace game_framework {
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
@@ -275,12 +275,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動彈跳的球
 	//
 	world.onMove();
+	gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
 	bball.OnMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
-{
+{	
 	world.LoadBitMap();
+	gui.LoadBitMap();
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -368,6 +370,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	eraser.SetMovingLeft(true);
 	TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
 	TRACE("Mouse Global Location: (%d, %d)\n", world.ScreenX2GlobalX(point.x), world.GlobalY2ScreenY(point.y));
+	if (gui.minimap.isInMiniMap(point.x, point.y)) {
+		world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
+	}
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -403,6 +408,7 @@ void CGameStateRun::OnShow()
 	//
 	background.ShowBitmap();			// 貼上背景圖
 	help.ShowBitmap();					// 貼上說明圖
+	gui.onShow();
 	hits_left.ShowBitmap();
 	for (int i=0; i < NUMBALLS; i++)
 		ball[i].OnShow();				// 貼上第i號球

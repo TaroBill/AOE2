@@ -275,6 +275,9 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\GUI\Button.cpp" />
+    <ClCompile Include="Source\GUI\GUI.cpp" />
+    <ClCompile Include="Source\GUI\miniMap.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -311,6 +314,9 @@
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
+    <ClInclude Include="Source\GUI\Button.h" />
+    <ClInclude Include="Source\GUI\GUI.h" />
+    <ClInclude Include="Source\GUI\miniMap.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
     <ClInclude Include="Source\Player\Player.h" />
@@ -334,6 +340,12 @@
     <Image Include="res\bitmap3.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />
+    <Image Include="RES\map.bmp" />
+    <Image Include="RES\MiniMap_Current_Location.bmp" />
+    <Image Include="RES\MiniMap_Grass.bmp" />
+    <Image Include="RES\MiniMap_Tree.bmp" />
+    <Image Include="RES\MiniMap_Water.bmp" />
+    <Image Include="RES\MminiMap_Human.bmp" />
     <Image Include="RES\Stone_aoe2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
