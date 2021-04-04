@@ -20,6 +20,15 @@
     <Filter Include="MyGame\Player">
       <UniqueIdentifier>{685f2854-e76b-4c2e-b34d-cbc0de399fbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame\Units\Leafs">
+      <UniqueIdentifier>{26e470b6-f451-4869-a92d-5fabaa76f091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Units\Composites">
+      <UniqueIdentifier>{29a98159-e8df-4c21-94be-067541bf4444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Units\Base">
+      <UniqueIdentifier>{f72987f1-cbae-4471-828b-e7a1e168a431}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -100,6 +109,7 @@
     <None Include="res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\ribbon1.mfcribbon-ms" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\audio.cpp">
@@ -136,15 +146,6 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
-    <ClCompile Include="Source\GUI\Button.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GUI\miniMap.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GUI\GUI.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -183,33 +184,36 @@
     <ClInclude Include="Source\CBouncingBall.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Units\Mine.h">
-      <Filter>MyGame\Units</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Player\Player.h">
       <Filter>MyGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Units\Villager.h">
-      <Filter>MyGame\Units</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\World.h" />
     <ClInclude Include="Source\Units\UnitBase.h">
-      <Filter>MyGame\Units</Filter>
+      <Filter>MyGame\Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Navigator.h">
+      <Filter>MyGame\Units\Leafs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Gatherable.h">
+      <Filter>MyGame\Units\Leafs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Building.h">
+      <Filter>MyGame\Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Entity.h">
+      <Filter>MyGame\Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Villager.h">
+      <Filter>MyGame\Units\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Units\Mine.h">
+      <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player\GameResource.h">
-      <Filter>MyGame</Filter>
+      <Filter>MyGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="AllHeader.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\World.h" />
-    <ClInclude Include="Source\GUI\GUI.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GUI\Button.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GUI\miniMap.h">
-      <Filter>MyGame</Filter>
+    <ClInclude Include="Source\Units\TownCenter.h">
+      <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,22 +234,364 @@
     <Image Include="RES\Stone_aoe2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\MiniMap_Grass.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_0.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\MiniMap_Tree.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\MiniMap_Water.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\MminiMap_Human.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_3.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\map.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_4.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="RES\MiniMap_Current_Location.bmp">
+    <Image Include="RES\Villager\VillagerIdle_0_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_0_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_1_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_2_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_3_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_4_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_5_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_6_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Villager\VillagerIdle_7_14.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

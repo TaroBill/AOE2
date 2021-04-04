@@ -6,68 +6,52 @@
 #include <ddraw.h>
 #include "../audio.h"
 #include "../gamelib.h"
+#include <vector>
+
 /*
 */
 using namespace game_framework;
 namespace Unit9
 {
-
 	class UnitBase
 	{
+		vector<UnitBase*> _components;
 	public:
-		int tileX, tileY;
-		int pointX, pointY;
-		//為0時是角色單位，大於1為建築
-		int sizeXY;
-		int hp;
-		int maxHP;
-		int movingSpeed;
-		//所屬玩家的ID
-		int playerId;
-		CMovingBitmap bmp;
-		void onMove();
-		void onShow(int, int);
-		virtual void findpath(int tileX, int tileY, int& map)
-		{
 
-		}
-		void setBitmap(CMovingBitmap bmp)
+		template<typename T>
+		T* GetComponent()
 		{
-			this->bmp = bmp;
+			for (unsigned int i = 0; i < _components.size(); i++)
+				if (dynamic_cast<T*>(_components.at(i)))
+					return dynamic_cast<T*>(_components.at(i));
+			return nullptr;
 		}
-		//向下轉型
-		Villager mineCast(UnitBase ub)
+
+		void AddComponent(UnitBase* component)
 		{
-			Villager m = Villager(ub.playerId, ub.tileX, ub.tileY, ub.pointX, ub.pointY, ub.maxHP, ub.movingSpeed);
-			return m;
+			_components.push_back(component);
 		}
-		//建構子
+
+		template<typename T>
+		bool RemoveComponent()
+		{
+			for (unsigned int i = 0; i < _components.size(); i++)
+				if (dynamic_cast<T*>(_components.at(i)))
+				{
+					_components.pop_back();
+					return true;
+				}
+			return false;
+		}
+
 		UnitBase()
 		{
-			tileX = 0;
-			tileY = 0;
-			pointX = 0;
-			pointY = 0;
-			maxHP = 1;
-			sizeXY = 0;
-			hp = maxHP;
-			playerId = 0;
-			movingSpeed = 0;
-		}
-		UnitBase(int PlayerID)
-		{
-			this->playerId = playerId;
-		}
-		UnitBase(int playerid, int tilex, int tiley, int pointx, int pointy, int maxhp, int movingSpeed)
-		{
-			this->playerId = playerid;
-			this->tileX = tilex;
-			this->tileY = tiley;
-			this->pointX = pointx;
-			this->pointY = pointy;
-			this->maxHP = maxhp;
-			this->movingSpeed = movingSpeed;
+
 		}
 
+		~UnitBase()
+		{
+
+		}
 	};
 }

@@ -110,17 +110,247 @@ IDB_GOLD                BITMAP                  "..\\res\\Gold_aoe2.bmp"
 
 IDB_STONE               BITMAP                  "..\\res\\Stone_aoe2.bmp"
 
-IDB_BITMAP5             BITMAP                  "..\\RES\\MiniMap_Grass.bmp"
+IDB_BITMAP3             BITMAP                  "..\\res\\bitmap3.bmp"
 
-IDB_BITMAP6             BITMAP                  "..\\RES\\MiniMap_Tree.bmp"
+IDB_VILLAGER000         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_0.bmp"
 
-IDB_WATER               BITMAP                  "..\\RES\\MiniMap_Water.bmp"
+IDB_VILLAGER001         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_1.bmp"
 
-IDB_HUMAN               BITMAP                  "..\\RES\\MminiMap_Human.bmp"
+IDB_VILLAGER002         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_2.bmp"
 
-IDB_MINIMAP             BITMAP                  "..\\RES\\map.bmp"
+IDB_VILLAGER003         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_3.bmp"
 
-IDB_MiniMap_CL          BITMAP                  "..\\RES\\MiniMap_Current_Location.bmp"
+IDB_VILLAGER004         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_4.bmp"
+
+IDB_VILLAGER005         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_5.bmp"
+
+IDB_VILLAGER006         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_6.bmp"
+
+IDB_VILLAGER007         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_7.bmp"
+
+IDB_VILLAGER008         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_8.bmp"
+
+IDB_VILLAGER009         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_9.bmp"
+
+IDB_VILLAGER010         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_10.bmp"
+
+IDB_VILLAGER011         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_11.bmp"
+
+IDB_VILLAGER012         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_12.bmp"
+
+IDB_VILLAGER013         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_13.bmp"
+
+IDB_VILLAGER014         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_14.bmp"
+
+IDB_VILLAGER100         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_0.bmp"
+
+IDB_VILLAGER101         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_1.bmp"
+
+IDB_VILLAGER102         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_2.bmp"
+
+IDB_VILLAGER103         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_3.bmp"
+
+IDB_VILLAGER104         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_4.bmp"
+
+IDB_VILLAGER105         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_5.bmp"
+
+IDB_VILLAGER106         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_6.bmp"
+
+IDB_VILLAGER107         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_7.bmp"
+
+IDB_VILLAGER108         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_8.bmp"
+
+IDB_VILLAGER109         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_9.bmp"
+
+IDB_VILLAGER110         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_10.bmp"
+
+IDB_VILLAGER111         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_11.bmp"
+
+IDB_VILLAGER112         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_12.bmp"
+
+IDB_VILLAGER113         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_13.bmp"
+
+IDB_VILLAGER114         BITMAP                  "..\\RES\\Villager\\VillagerIdle_1_14.bmp"
+
+IDB_VILLAGER200         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_0.bmp"
+
+IDB_VILLAGER201         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_1.bmp"
+
+IDB_VILLAGER202         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_2.bmp"
+
+IDB_VILLAGER203         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_3.bmp"
+
+IDB_VILLAGER204         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_4.bmp"
+
+IDB_VILLAGER205         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_5.bmp"
+
+IDB_VILLAGER206         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_6.bmp"
+
+IDB_VILLAGER207         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_7.bmp"
+
+IDB_VILLAGER208         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_8.bmp"
+
+IDB_VILLAGER209         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_9.bmp"
+
+IDB_VILLAGER210         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_10.bmp"
+
+IDB_VILLAGER211         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_11.bmp"
+
+IDB_VILLAGER212         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_12.bmp"
+
+IDB_VILLAGER213         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_13.bmp"
+
+IDB_VILLAGER214         BITMAP                  "..\\RES\\Villager\\VillagerIdle_2_14.bmp"
+
+IDB_VILLAGER300         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_0.bmp"
+
+IDB_VILLAGER301         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_1.bmp"
+
+IDB_VILLAGER302         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_2.bmp"
+
+IDB_VILLAGER303         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_3.bmp"
+
+IDB_VILLAGER304         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_4.bmp"
+
+IDB_VILLAGER305         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_5.bmp"
+
+IDB_VILLAGER306         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_6.bmp"
+
+IDB_VILLAGER307         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_7.bmp"
+
+IDB_VILLAGER308         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_8.bmp"
+
+IDB_VILLAGER309         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_9.bmp"
+
+IDB_VILLAGER310         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_10.bmp"
+
+IDB_VILLAGER311         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_11.bmp"
+
+IDB_VILLAGER312         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_12.bmp"
+
+IDB_VILLAGER313         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_13.bmp"
+
+IDB_VILLAGER314         BITMAP                  "..\\RES\\Villager\\VillagerIdle_3_14.bmp"
+
+IDB_VILLAGER400         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_0.bmp"
+
+IDB_VILLAGER401         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_1.bmp"
+
+IDB_VILLAGER402         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_2.bmp"
+
+IDB_VILLAGER403         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_3.bmp"
+
+IDB_VILLAGER404         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_4.bmp"
+
+IDB_VILLAGER405         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_5.bmp"
+
+IDB_VILLAGER406         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_6.bmp"
+
+IDB_VILLAGER407         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_7.bmp"
+
+IDB_VILLAGER408         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_8.bmp"
+
+IDB_VILLAGER409         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_9.bmp"
+
+IDB_VILLAGER410         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_10.bmp"
+
+IDB_VILLAGER411         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_11.bmp"
+
+IDB_VILLAGER412         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_12.bmp"
+
+IDB_VILLAGER413         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_13.bmp"
+
+IDB_VILLAGER414         BITMAP                  "..\\RES\\Villager\\VillagerIdle_4_14.bmp"
+
+IDB_VILLAGER500         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_0.bmp"
+
+IDB_VILLAGER501         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_1.bmp"
+
+IDB_VILLAGER502         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_2.bmp"
+
+IDB_VILLAGER503         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_3.bmp"
+
+IDB_VILLAGER504         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_4.bmp"
+
+IDB_VILLAGER505         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_5.bmp"
+
+IDB_VILLAGER506         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_6.bmp"
+
+IDB_VILLAGER507         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_7.bmp"
+
+IDB_VILLAGER508         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_8.bmp"
+
+IDB_VILLAGER509         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_9.bmp"
+
+IDB_VILLAGER510         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_10.bmp"
+
+IDB_VILLAGER511         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_11.bmp"
+
+IDB_VILLAGER512         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_12.bmp"
+
+IDB_VILLAGER513         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_13.bmp"
+
+IDB_VILLAGER514         BITMAP                  "..\\RES\\Villager\\VillagerIdle_5_14.bmp"
+
+IDB_VILLAGER600         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_0.bmp"
+
+IDB_VILLAGER601         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_1.bmp"
+
+IDB_VILLAGER602         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_2.bmp"
+
+IDB_VILLAGER603         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_3.bmp"
+
+IDB_VILLAGER604         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_4.bmp"
+
+IDB_VILLAGER605         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_5.bmp"
+
+IDB_VILLAGER606         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_6.bmp"
+
+IDB_VILLAGER607         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_7.bmp"
+
+IDB_VILLAGER608         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_8.bmp"
+
+IDB_VILLAGER609         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_9.bmp"
+
+IDB_VILLAGER610         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_10.bmp"
+
+IDB_VILLAGER611         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_11.bmp"
+
+IDB_VILLAGER612         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_12.bmp"
+
+IDB_VILLAGER613         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_13.bmp"
+
+IDB_VILLAGER614         BITMAP                  "..\\RES\\Villager\\VillagerIdle_6_14.bmp"
+
+IDB_VILLAGER700         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_0.bmp"
+
+IDB_VILLAGER701         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_1.bmp"
+
+IDB_VILLAGER702         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_2.bmp"
+
+IDB_VILLAGER703         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_3.bmp"
+
+IDB_VILLAGER704         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_4.bmp"
+
+IDB_VILLAGER705         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_5.bmp"
+
+IDB_VILLAGER706         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_6.bmp"
+
+IDB_VILLAGER707         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_7.bmp"
+
+IDB_VILLAGER708         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_8.bmp"
+
+IDB_VILLAGER709         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_9.bmp"
+
+IDB_VILLAGER710         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_10.bmp"
+
+IDB_VILLAGER711         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_11.bmp"
+
+IDB_VILLAGER712         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_12.bmp"
+
+IDB_VILLAGER713         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_13.bmp"
+
+IDB_VILLAGER714         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_14.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -129,6 +359,14 @@ IDB_MiniMap_CL          BITMAP                  "..\\RES\\MiniMap_Current_Locati
 //
 
 IDC_GAMECURSOR          CURSOR                  "..\\res\\gamecurs.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Ribbon
+//
+
+IDR_RIBBON1             RT_RIBBON_XML           "..\\res\\ribbon1.mfcribbon-ms"
 
 #endif    // 中文 (繁體，台灣) resources
 /////////////////////////////////////////////////////////////////////////////
