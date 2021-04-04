@@ -14,38 +14,11 @@
     <Filter Include="MyGame">
       <UniqueIdentifier>{0c798913-b7d2-4e26-8241-0f83266cd626}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MyGame\CompositePattern">
-      <UniqueIdentifier>{e543d1ae-feff-437a-a913-0af76dffad08}</UniqueIdentifier>
+    <Filter Include="MyGame\Units">
+      <UniqueIdentifier>{572cd421-7d31-45d9-8dec-9907fc579d95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MyGame\CompositePattern\Composites">
-      <UniqueIdentifier>{e2148f91-beea-4c58-8899-beefe888587b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\CompositePattern\Leafs">
-      <UniqueIdentifier>{c03a5c04-a9d0-494c-a952-1518314f2a88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\CompositePattern\Components">
-      <UniqueIdentifier>{1334ec3a-5f01-45ee-bf54-1b0676ac7aff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\CompositePattern\Composites\UnitTypes">
-      <UniqueIdentifier>{d0e1f37c-c5cb-4f48-b21e-fd548a303f90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\CompositePattern\Composites\Resources">
-      <UniqueIdentifier>{b0bf05f7-3d08-42d3-8344-d58f072f8b9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\CompositePattern\Composites\BuildingTypes">
-      <UniqueIdentifier>{a7d38ce0-138f-432f-ba58-9008555fd205}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\Manager">
-      <UniqueIdentifier>{ef9c6cdf-d810-419f-86f9-c2db6010fdef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\ObjectPool">
-      <UniqueIdentifier>{4adba7cd-b701-40f8-abba-46e350bcb14b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\Utility">
-      <UniqueIdentifier>{b830f96c-60ea-4499-8c72-e5fdc0819d4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\Utility\PathFinding">
-      <UniqueIdentifier>{5bc903fb-1a67-4204-8419-18414b30f263}</UniqueIdentifier>
+    <Filter Include="MyGame\Player">
+      <UniqueIdentifier>{685f2854-e76b-4c2e-b34d-cbc0de399fbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,85 +173,42 @@
     <ClInclude Include="Source\CBouncingBall.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\IPathFinding.h">
-      <Filter>MyGame\Utility\PathFinding</Filter>
+    <ClInclude Include="Source\Units\Mine.h">
+      <Filter>MyGame\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\Astar.h">
-      <Filter>MyGame\Utility\PathFinding</Filter>
+    <ClInclude Include="Source\Player\Player.h">
+      <Filter>MyGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\Component.h">
-      <Filter>MyGame\CompositePattern\Components</Filter>
+    <ClInclude Include="Source\Units\Villager.h">
+      <Filter>MyGame\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\Economic.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
+    <ClInclude Include="Source\Units\UnitBase.h">
+      <Filter>MyGame\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\Research.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
+    <ClInclude Include="Source\Player\GameResource.h">
+      <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Unit\Wonder.h">
-      <Filter>MyGame\CompositePattern\Composites\BuildingTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Animal.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\GoldMine.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\StoneMine.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Tree.h">
-      <Filter>MyGame\CompositePattern\Composites\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Archer.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Cavalry.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Infantry.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Ship.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\SiegeWeapon.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Villager.h">
-      <Filter>MyGame\CompositePattern\Composites\UnitTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Building.h">
-      <Filter>MyGame\CompositePattern\Composites</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Unit.h">
-      <Filter>MyGame\CompositePattern\Composites</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Builder.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Collectable.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Garrisonable.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\PlayerControl.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Trainer.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Upgrader.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Unit\Walkable.h">
-      <Filter>MyGame\CompositePattern\Leafs</Filter>
+    <ClInclude Include="AllHeader.h">
+      <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
       <Filter>MFC</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="RES\Grass.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Gold_aoe2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Stone_aoe2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

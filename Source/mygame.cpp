@@ -295,11 +295,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//
 	// 移動彈跳的球
 	//
+	world.onMove();
 	bball.OnMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	world.LoadBitMap();
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -340,14 +342,22 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26; // keyboard上箭頭
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	if (nChar == KEY_LEFT)
-		eraser.SetMovingLeft(true);
-	if (nChar == KEY_RIGHT)
-		eraser.SetMovingRight(true);
-	if (nChar == KEY_UP)
-		eraser.SetMovingUp(true);
-	if (nChar == KEY_DOWN)
-		eraser.SetMovingDown(true);
+	if (nChar == KEY_LEFT) {
+		//eraser.SetMovingLeft(true);
+		world.moveScreenLeft(true);
+	}
+	if (nChar == KEY_RIGHT) {
+		//eraser.SetMovingRight(true);
+		world.moveScreenRight(true);
+	}
+	if (nChar == KEY_UP) {
+		//eraser.SetMovingUp(true);
+		world.moveScreenUp(true);
+	}
+	if (nChar == KEY_DOWN) {
+		//eraser.SetMovingDown(true);
+		world.moveScreenDown(true);
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -356,19 +366,29 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26; // keyboard上箭頭
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	if (nChar == KEY_LEFT)
+	if (nChar == KEY_LEFT) {
 		eraser.SetMovingLeft(false);
-	if (nChar == KEY_RIGHT)
+		world.moveScreenLeft(false);
+	}
+	if (nChar == KEY_RIGHT) {
 		eraser.SetMovingRight(false);
-	if (nChar == KEY_UP)
+		world.moveScreenRight(false);
+	}
+	if (nChar == KEY_UP) {
 		eraser.SetMovingUp(false);
-	if (nChar == KEY_DOWN)
+		world.moveScreenUp(false);
+	}
+	if (nChar == KEY_DOWN) {
 		eraser.SetMovingDown(false);
+		world.moveScreenDown(false);
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	eraser.SetMovingLeft(true);
+	TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
+	TRACE("Mouse Global Location: (%d, %d)\n", point.x + world.getScreenX(), point.y + world.getScreenY());
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -393,6 +413,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	world.OnShow();
 	//
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 	//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
@@ -415,5 +436,113 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
+}
+void World::initMap() {
+	int resource[3][3] = { {1,0,0},
+							{0,1,0 },
+							{0,0,1} };
+	for (int i = 0; i < 120; i++) {
+		for (int j = 0; j < 120; j++) {
+			int a = i / 40;
+			int b = j / 40;
+			map[i][j] = resource[a][b];
+		} 
+	}
+}
+World::World() {
+	initMap();
+	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
+	sx = sy = 50 * 50; //螢幕座標
+}
+
+int World::getLocationItem(int x, int y) {
+	int GX = x / 50;
+	int GY = y / 50;
+	return map[GY][GX];
+}
+
+void World::OnShow() {
+	for (int i = -1; i <= 30; i++) { //螢幕顯示30格*15格邊界預載一格
+		for (int j = -1; j <= 15; j++) {
+			int MX = i * 50 - sx % 50;//取得螢幕點座標
+			int MY = j * 50 - sy % 50;
+			int GX = i + sx / 50;//取得地圖上的格座標
+			int GY = j + sy / 50;
+			switch (map[GY][GX])
+			{
+			case GRASS:
+				grass.SetTopLeft(MX, MY);
+				grass.ShowBitmap();
+				break;
+			case RIVER:
+				river.SetTopLeft(MX, MY);
+				river.ShowBitmap();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+void World::onMove() {
+	if (isMovingDown == true) {
+		if ((sy + 5) > ((120 * 50) - (15 * 50))) {
+			sy = 120 * 50 - 15 * 50;
+		}
+		else {
+			sy += 5;
+		}
+	}
+	if (isMovingUp == true) {
+		if (sy - 5 < 50) {
+			sy = 50;
+		}
+		else {
+			sy -= 5;
+		}
+	}
+	if (isMovingLeft == true) {
+		if (sx - 5 < 50) {
+			sx = 50;
+		}
+		else {
+			sx -= 5;
+		}
+	}
+	if (isMovingRight == true) {
+		if ((sx + 5) > (120 * 50 - 30 * 50)) {
+			sx = 120 * 50 - 30 * 50;
+		}
+		else {
+			sx += 5;
+		}
+	}
+}
+void World::moveScreenUp(bool state) {
+	isMovingUp = state;
+}
+
+void World::moveScreenDown(bool state) {
+	isMovingDown = state;
+}
+
+void World::moveScreenLeft(bool state) {
+	isMovingLeft = state;
+}
+
+void World::moveScreenRight(bool state) {
+	isMovingRight = state;
+}
+
+int World::getScreenX() {
+	return sx;
+}
+
+int World::getScreenY() {
+	return sy;
+}
+void World::LoadBitMap() {
+	grass.LoadBitmap(IDB_GRASS);
+	river.LoadBitmap(IDB_GOLD);
 }
 }
