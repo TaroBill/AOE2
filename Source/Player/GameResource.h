@@ -1,5 +1,5 @@
 #pragma once
-static enum ResourceType
+enum class ResourceType
 {
 	None,Gold, Stone, Meat, Wood
 };
@@ -9,12 +9,32 @@ class GameResource
 {
 public:
 
-	int n;
+	int amount;
 	ResourceType type;
-	GameResource() {};
-	GameResource(ResourceType type,int n)
+	int GetResource()
+	{
+		if (amount == 0)
+			return 0;
+		return amount--;
+	}
+	int GetResource(int n)
+	{
+		int resource = 0;
+		if (n > amount)
+			for (int i = 0; i < n; i++)
+				resource = GetResource();
+		else
+			resource = n;
+		return resource;
+	}
+	GameResource()
+	{
+		this->type = ResourceType::None;
+		this->amount = 0;
+	};
+	GameResource(ResourceType type, int n)
 	{
 		this->type = type;
-		this->n = n;
+		this->amount = n;
 	}
 };

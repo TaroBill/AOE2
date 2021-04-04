@@ -110,6 +110,18 @@ IDB_GOLD                BITMAP                  "..\\res\\Gold_aoe2.bmp"
 
 IDB_STONE               BITMAP                  "..\\res\\Stone_aoe2.bmp"
 
+IDB_BITMAP5             BITMAP                  "..\\RES\\MiniMap_Grass.bmp"
+
+IDB_BITMAP6             BITMAP                  "..\\RES\\MiniMap_Tree.bmp"
+
+IDB_WATER               BITMAP                  "..\\RES\\MiniMap_Water.bmp"
+
+IDB_HUMAN               BITMAP                  "..\\RES\\MminiMap_Human.bmp"
+
+IDB_MINIMAP             BITMAP                  "..\\RES\\map.bmp"
+
+IDB_MiniMap_CL          BITMAP                  "..\\RES\\MiniMap_Current_Location.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

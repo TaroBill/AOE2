@@ -135,6 +135,16 @@
     <ClCompile Include="Source\CBouncingBall.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\World.cpp" />
+    <ClCompile Include="Source\GUI\Button.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\miniMap.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\GUI.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -191,6 +201,16 @@
     <ClInclude Include="AllHeader.h">
       <Filter>MyGame</Filter>
     </ClInclude>
+    <ClInclude Include="Source\World.h" />
+    <ClInclude Include="Source\GUI\GUI.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Button.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\miniMap.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -208,6 +228,24 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\Stone_aoe2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Grass.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Tree.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Water.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MminiMap_Human.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\map.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Current_Location.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

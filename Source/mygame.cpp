@@ -58,13 +58,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
-
-#include "Unit/GoldMine.h"
-#include "Unit/Collectable.h"
-#include <typeinfo>
-
-#include <Vector>
-
+//#include "AllHeader.h"
 namespace game_framework {
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
@@ -231,26 +225,11 @@ void CGameStateRun::OnBeginState()
 	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
 
 	/*
-	GameObject::Building* goldmine01 = new GameObject::Building();
-	goldmine01->add<GameObject::Collectable>();
-	GameObject::Collectable* c = (dynamic_cast<GameObject::Collectable*>(&goldmine01->getComponent(0)));
-	TRACE("%d\n", (*c).resource);
-	(*c).resource = 10;
-	c = dynamic_cast<GameObject::Collectable*>(&goldmine01->getComponent(0));
-	TRACE("%d\n", (*c).resource);
+	vector<Unit::UnitBase> units;
+	Unit::Villager v;
+	units.push_back(v);
+	Unit::Villager* v2 = dynamic_cast<Unit::Villager*>(&(units.at(0)));
 	*/
-
-	
-	
-	//TRACE("%d\n", rs);
-	//int rs = goldmine01->getComponent<GameObject::Collectable>().resource;
-	//TRACE("%d\n", rs);
-	//goldmine01->getComponent<GameObject::Collectable>().reduceResource();
-	//rs = goldmine01->getComponent<GameObject::Collectable>().resource;
-	//TRACE("%d\n",rs);
-	//goldmine01->getComponent<GameObject::Collectable>();
-	//TRACE("金礦資源還有%d個\n", goldmine01->getComponent<GameObject::Collectable>().resource);
-
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -296,12 +275,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動彈跳的球
 	//
 	world.onMove();
+	gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
 	bball.OnMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
-{
+{	
 	world.LoadBitMap();
+	gui.LoadBitMap();
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -388,7 +369,10 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	eraser.SetMovingLeft(true);
 	TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-	TRACE("Mouse Global Location: (%d, %d)\n", point.x + world.getScreenX(), point.y + world.getScreenY());
+	TRACE("Mouse Global Location: (%d, %d)\n", world.ScreenX2GlobalX(point.x), world.GlobalY2ScreenY(point.y));
+	if (gui.minimap.isInMiniMap(point.x, point.y)) {
+		world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
+	}
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -424,6 +408,7 @@ void CGameStateRun::OnShow()
 	//
 	background.ShowBitmap();			// 貼上背景圖
 	help.ShowBitmap();					// 貼上說明圖
+	gui.onShow();
 	hits_left.ShowBitmap();
 	for (int i=0; i < NUMBALLS; i++)
 		ball[i].OnShow();				// 貼上第i號球
@@ -436,113 +421,5 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
-}
-void World::initMap() {
-	int resource[3][3] = { {1,0,0},
-							{0,1,0 },
-							{0,0,1} };
-	for (int i = 0; i < 120; i++) {
-		for (int j = 0; j < 120; j++) {
-			int a = i / 40;
-			int b = j / 40;
-			map[i][j] = resource[a][b];
-		} 
-	}
-}
-World::World() {
-	initMap();
-	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
-	sx = sy = 50 * 50; //螢幕座標
-}
-
-int World::getLocationItem(int x, int y) {
-	int GX = x / 50;
-	int GY = y / 50;
-	return map[GY][GX];
-}
-
-void World::OnShow() {
-	for (int i = -1; i <= 30; i++) { //螢幕顯示30格*15格邊界預載一格
-		for (int j = -1; j <= 15; j++) {
-			int MX = i * 50 - sx % 50;//取得螢幕點座標
-			int MY = j * 50 - sy % 50;
-			int GX = i + sx / 50;//取得地圖上的格座標
-			int GY = j + sy / 50;
-			switch (map[GY][GX])
-			{
-			case GRASS:
-				grass.SetTopLeft(MX, MY);
-				grass.ShowBitmap();
-				break;
-			case RIVER:
-				river.SetTopLeft(MX, MY);
-				river.ShowBitmap();
-				break;
-			default:
-				break;
-			}
-		}
-	}
-}
-void World::onMove() {
-	if (isMovingDown == true) {
-		if ((sy + 5) > ((120 * 50) - (15 * 50))) {
-			sy = 120 * 50 - 15 * 50;
-		}
-		else {
-			sy += 5;
-		}
-	}
-	if (isMovingUp == true) {
-		if (sy - 5 < 50) {
-			sy = 50;
-		}
-		else {
-			sy -= 5;
-		}
-	}
-	if (isMovingLeft == true) {
-		if (sx - 5 < 50) {
-			sx = 50;
-		}
-		else {
-			sx -= 5;
-		}
-	}
-	if (isMovingRight == true) {
-		if ((sx + 5) > (120 * 50 - 30 * 50)) {
-			sx = 120 * 50 - 30 * 50;
-		}
-		else {
-			sx += 5;
-		}
-	}
-}
-void World::moveScreenUp(bool state) {
-	isMovingUp = state;
-}
-
-void World::moveScreenDown(bool state) {
-	isMovingDown = state;
-}
-
-void World::moveScreenLeft(bool state) {
-	isMovingLeft = state;
-}
-
-void World::moveScreenRight(bool state) {
-	isMovingRight = state;
-}
-
-int World::getScreenX() {
-	return sx;
-}
-
-int World::getScreenY() {
-	return sy;
-}
-void World::LoadBitMap() {
-	grass.LoadBitmap(IDB_GRASS);
-	river.LoadBitmap(IDB_GOLD);
 }
 }
