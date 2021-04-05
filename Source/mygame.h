@@ -44,6 +44,9 @@
 #include "World.h"
 #include "GUI/GUI.h"
 
+#include "Units/Villager.h"
+#include "Units/Entity.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -95,6 +98,8 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
+		Unit::Villager  *testVillager;//測試用村民，應該放在世界底下
+		int counter = 0;//測試用村民用來測試旋轉的int
 		World			world;
 		GUI				gui;
 		const int		NUMBALLS;	// 球的總數
@@ -105,6 +110,7 @@ namespace game_framework {
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
+		
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

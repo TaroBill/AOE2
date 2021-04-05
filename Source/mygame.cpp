@@ -58,7 +58,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
-//#include "AllHeader.h"
+
 namespace game_framework {
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
@@ -224,9 +224,9 @@ void CGameStateRun::OnBeginState()
 	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 	CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
 
+	testVillager = new Unit::Villager(60,60);
 	/*
 	vector<Unit::UnitBase> units;
-	Unit::Villager v;
 	units.push_back(v);
 	Unit::Villager* v2 = dynamic_cast<Unit::Villager*>(&(units.at(0)));
 	*/
@@ -277,6 +277,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	world.onMove();
 	gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
 	bball.OnMove();
+	testVillager->onMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -373,6 +374,10 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	if (gui.minimap.isInMiniMap(point.x, point.y)) {
 		world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
 	}
+	//測試用村民旋轉
+	counter %= 8;
+	testVillager->faceDirection = static_cast<Unit::Entity::Direction>(counter);
+	counter++;
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -421,5 +426,6 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
+	testVillager->onShow(0,0);
 }
 }

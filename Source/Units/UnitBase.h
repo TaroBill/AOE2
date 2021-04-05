@@ -11,7 +11,7 @@
 /*
 */
 using namespace game_framework;
-namespace Unit9
+namespace Unit
 {
 	class UnitBase
 	{

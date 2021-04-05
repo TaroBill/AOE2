@@ -19,23 +19,27 @@ namespace Unit
 
 		void SetBitmap() override
 		{
-			char* st = ".\\RES\\Villager\\VillagerIdle_2_12.bmp";
-			ani.AddBitmap(st, RGB(255, 255, 255));
-			//ani.AddBitmap(, RGB(0, 0, 0));
-			/*
-			char* filename[3] = {
-				".\\RES\\Villager\\VillagerIdle_0_0.bmp",
-				".\\RES\\Villager\\VillagerIdle_0_1.bmp",
-				".\\RES\\Villager\\VillagerIdle_0_2.bmp",
-			};
-			//char* filename[4] = { ".\\bitmaps\\ball1.bmp",".\\bitmaps\\ball2.bmp",".\\bitmaps\\ball3.bmp",".\\bitmaps\\ball4.bmp" };
-			for (int i = 0; i < 4; i++)	// 載入動畫(由4張圖形構成)
-				ani.AddBitmap(filename[i], RGB(0, 0, 0));
-			*/
+			for (int dire = 0; dire < 8; dire++)
+			{
+				for (int s = 0; s < 15; s++)
+				{
+					string str = ".\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
+					State es = State::Idle;
+					Direction d = static_cast<Direction>(dire);
+
+					animations[es][d].AddBitmap(const_cast<char*>(str.c_str()), RGB(255, 255, 255));
+				}
+			}
+			
 		}
 		void onMove() override
 		{
-			ani.OnMove();
+			animations[entityState][faceDirection].OnMove();
+			//ani.OnMove();
+		}
+		Villager(int tileX,int tileY):Entity(tileX,tileY)
+		{
+			SetBitmap();
 		}
 		Villager()
 		{
