@@ -9,10 +9,13 @@ namespace Unit
 	class Entity :public UnitBase
 	{
 	public:
+		//實體的狀態
+		//靜止不動、移動、受傷、死亡
 		enum class State
 		{
-			Idle, Move, Dead
+			Idle, Move,Hurted, Dead
 		};
+		//實體的八方向面向
 		enum class Direction
 		{
 			Down, LeftDown, Left, LeftUp, Up, RightUp, Right, RightDown
@@ -20,12 +23,15 @@ namespace Unit
 	private:
 
 	public:
-		State entityState;;//動作狀態
-		Direction faceDirection;//面向狀態
-		map<State, map<Direction, CAnimation>> animations;//動畫
-
-
-		void StateChanged(State s)
+		//動作狀態
+		State entityState;
+		//面向狀態
+		Direction faceDirection;
+		//動畫
+		map<State, map<Direction, CAnimation>> animations;
+		//狀態重置時，使動畫重置
+		//改變面向時不需要調用此函式
+		void StateReset()
 		{
 			map<State, map<Direction, CAnimation>>::iterator it = animations.begin();
 			while (it != animations.end())
@@ -34,9 +40,15 @@ namespace Unit
 				while (it2 != it->second.end())
 				{
 					it2->second.Reset();
+					it2++;
 				}
 				it++;
 			}
+		}
+		//改變狀態(非面向)
+		void StateChange(State s) 
+		{
+			StateReset();
 			entityState = s;
 		}
 
@@ -58,12 +70,9 @@ namespace Unit
 		int maxHP;
 
 
-		CMovingBitmap bmp;
-		CAnimation ani;
 		virtual void onMove()
 		{
 			animations[entityState][faceDirection].OnMove();
-			ani.OnMove();
 		}
 
 		void onShow(int screenX, int screenY)

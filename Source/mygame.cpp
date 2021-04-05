@@ -374,9 +374,13 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	if (gui.minimap.isInMiniMap(point.x, point.y)) {
 		world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
 	}
+	//測試用村民位移
+	testVillager->tileX++;
+	testVillager->tileY++;
 	//測試用村民旋轉
 	counter %= 8;
 	testVillager->faceDirection = static_cast<Unit::Entity::Direction>(counter);
+	testVillager->StateReset();//重置動作
 	counter++;
 }
 
@@ -426,6 +430,6 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 	corner.SetTopLeft(SIZE_X-corner.Width(), SIZE_Y-corner.Height());
 	corner.ShowBitmap();
-	testVillager->onShow(0,0);
+	testVillager->onShow(testVillager->tileX,testVillager->tileY);
 }
 }

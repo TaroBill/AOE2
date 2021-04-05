@@ -30,7 +30,7 @@ namespace Unit
 					animations[es][d].AddBitmap(const_cast<char*>(str.c_str()), RGB(255, 255, 255));
 				}
 			}
-			
+
 		}
 		void onMove() override
 		{
