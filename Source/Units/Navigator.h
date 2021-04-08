@@ -4,96 +4,118 @@
 
 namespace Unit
 {
+
 	class Navigator :public UnitBase
 	{
-		int counterX;
-		int counterY;
+	public:
+		//移動用計數器
+		//當位移量小於1時，會將位移量累加至計數器
+		//當計數器數值達到至少正負1時，將數值使用於移動
 		float counterXF;
 		float counterYF;
-	public:
+
+		//速度調整
 		float speedFixed;
+
+		//目標點座標
 		int targetPoint[2];
+
+		//目標格座標
 		int targetTile[2];
-		vector<float> pathPointXs;
-		vector<float> pathPointYs;
+
+		//路徑X座標
+		vector<int> pathPointXs;
+
+		//路徑Y座標
+		vector<int> pathPointYs;
+
+		//路徑長
 		vector<float> pathDistances;
+
+		//正規化的下個點座標
 		float normalNextPoint[2];
 
+		//取得二維向量長度
 		float GetLength(int vectorX, int vectorY)
 		{
-			return static_cast<float>(sqrt(vectorX* vectorX+ vectorY* vectorY));
+			return static_cast<float>(sqrt(vectorX * vectorX + vectorY * vectorY));
 		}
+		//取得二維向量長度
 		float GetLength(float vectorX, float vectorY)
 		{
 			return static_cast<float>(sqrt(vectorX * vectorX + vectorY * vectorY));
 		}
-		void Findpath(int pointX, int pointY)
+		//開始尋路
+		void Findpath(int targetPointX, int targetPointY)
 		{
 			int nowX = GetParent<Entity>()->pointX;
 			int nowY = GetParent<Entity>()->pointY;
-			targetPoint[0] = pointX;
-			targetPoint[1] = pointY;
 			pathDistances.clear();
-			//pathPointXs.push_back(targetPoint[0]);
-			//pathPointYs.push_back(targetPoint[0]);
-			Normalization(targetPoint[0], targetPoint[1]);
-			pathDistances.push_back(GetLength(nowX - pointX, nowY - pointY));
+			pathPointXs.clear();
+			pathPointYs.clear();
+			Straight(targetPointX, targetPointY);
+
 
 		}
-		void Normalization(int targetX, int targetY)
+		//正規化
+		void Normalization(int startX, int startY, int endX, int endY, float normal[2])
 		{
-			int nowX = GetParent<Entity>()->pointX;
-			int nowY = GetParent<Entity>()->pointY;
-			int deltaX = targetX - nowX;
-			int deltaY =  targetY - nowY;
-
+			int deltaX = endX - startX;
+			int deltaY = endY - startY;
 			float l = GetLength(deltaX, deltaY);
-			float NormalX = deltaX / l;
-			float NormalY = deltaY / l;
-
-			normalNextPoint[0] = (NormalX);
-			normalNextPoint[1] = (NormalY);
+			normal[0] = deltaX / l;
+			normal[1] = deltaY / l;
 		}
 
+		//移動一步
 		void onMove(int* pointX, int* pointY)
 		{
-
 			if (pathDistances.size() > 0)
 			{
-				Staright(pointX, pointY);
+				Normalization(*pointX, *pointY, pathPointXs.at(0), pathPointYs.at(0), normalNextPoint);
+
+				MoveStraight(pointX, pointY);
+				if (pathDistances.at(0) <= speedFixed)
+				{
+					pathDistances.pop_back();
+					pathPointXs.pop_back();
+					pathPointYs.pop_back();
+				}
 			}
 		}
-		void Staright(int* pointX, int* pointY)
+		//直線移動
+		//往下個點直線走去
+		void MoveStraight(int* pointX, int* pointY)
 		{
 			counterXF += normalNextPoint[0] * speedFixed;
 			counterYF += normalNextPoint[1] * speedFixed;
 			*pointX += static_cast<int>(counterXF);
 			*pointY += static_cast<int>(counterYF);
-			//pathDistances.at(0) -= GetLength(counterXF, counterYF);
-
-			pathDistances.at(0) = GetLength(targetPoint[0]-*pointX, targetPoint[1]-*pointY);
+			pathDistances.at(0) = GetLength(pathPointXs.at(0) - *pointX, pathPointYs.at(0) - *pointY);
 			counterXF -= static_cast<int>(counterXF);
 			counterYF -= static_cast<int>(counterYF);
-			TRACE("%f\n", pathDistances.at(0));
-
-
-
-			if (pathDistances.at(0) <= speedFixed)pathDistances.pop_back();
-			//TRACE("%f,%f\n", normalNextPoint[0], normalNextPoint[1]);
-			//TRACE("%d,%d\n", counterXF, counterYF);
 		}
+		//直線尋路
+		//直接將終點設為下個點
+		void Straight(int targetPointX, int targetPointY)
+		{
+			int nowX, nowY;
+			nowX = GetParent<Entity>()->pointX;
+			nowY = GetParent<Entity>()->pointY;
+			pathPointXs.push_back(targetPointX);
+			pathPointYs.push_back(targetPointY);
+			Normalization(nowX, nowY, targetPoint[0], targetPoint[1], normalNextPoint);
+			pathDistances.push_back(GetLength(nowX - targetPointX, nowY - targetPointY));
+		}
+		//Astar尋路
+		//將每個轉角or格子設為下個點
 		void AStar(int targetTileX, int targetTileY, int** tileMap)
 		{
-			
-			//vector<CPoint> openList
-			//int cost = 0;
-			//tileMap[targetTileY][targetTileX]
-			
 		}
 
 		Navigator()
 		{
-			speedFixed = 15;
+			speedFixed = 5;
 			counterXF = 0;
 			counterYF = 0;
 			for (int i = 0; i < 2; i++)
