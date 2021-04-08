@@ -4,8 +4,6 @@
 
 namespace Unit
 {
-
-
 	class Entity :public UnitBase
 	{
 	public:
@@ -45,11 +43,16 @@ namespace Unit
 				it++;
 			}
 		}
+		void ChangeDirection(int i)
+		{
+			//faceDirection = static_cast<Unit::Entity::Direction>(i);
+		}
 		//改變狀態(非面向)
 		void StateChange(State s) 
 		{
 			StateReset();
 			entityState = s;
+
 		}
 
 
@@ -96,10 +99,20 @@ namespace Unit
 			this->entityState = State::Idle;
 			this->faceDirection = Direction::Down;
 		}
-		Entity(int tileX, int tileY) :Entity()
+		Entity(int pointX, int pointY) :Entity()
 		{
-			this->tileX = tileX;
-			this->tileY = tileY;
+			this->playerId = 0;
+			this->tileX = 0;
+			this->tileY = 0;
+			this->pointX = 0;
+			this->pointY = 0;
+			this->sizeXY = 0;
+			this->maxHP = 0;
+			this->hp = this->maxHP;;
+			this->entityState = State::Idle;
+			this->faceDirection = Direction::Down;
+			this->pointX = pointX;
+			this->pointY = pointY;
 		}
 	};
 }

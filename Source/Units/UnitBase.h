@@ -16,6 +16,12 @@ namespace Unit
 	class UnitBase
 	{
 		vector<UnitBase*> _components;
+		UnitBase* _parent;
+	protected:
+		void SetParent(UnitBase* parent)
+		{
+			this->_parent = parent;
+		}
 	public:
 
 		template<typename T>
@@ -27,9 +33,12 @@ namespace Unit
 			return nullptr;
 		}
 
-		void AddComponent(UnitBase* component)
+
+
+		virtual void AddComponent(UnitBase* component)
 		{
 			_components.push_back(component);
+			component->SetParent(this);
 		}
 
 		template<typename T>
@@ -44,9 +53,13 @@ namespace Unit
 			return false;
 		}
 
+		template<typename T>
+		T* GetParent()
+		{
+			return dynamic_cast<T*>(_parent);
+		}
 		UnitBase()
 		{
-
 		}
 
 		~UnitBase()

@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "UnitBase.h"
-
+#include "Navigator.h"
 namespace Unit
 {
 	class Villager :public Entity
@@ -30,15 +30,19 @@ namespace Unit
 					animations[es][d].AddBitmap(const_cast<char*>(str.c_str()), RGB(255, 255, 255));
 				}
 			}
-
 		}
 		void onMove() override
 		{
 			animations[entityState][faceDirection].OnMove();
-			//ani.OnMove();
+			GetComponent<Navigator>()->onMove(&pointX,&pointY);
+			//TRACE("now at:%d,%d\n", pointX, pointY);
 		}
-		Villager(int tileX,int tileY):Entity(tileX,tileY)
+		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{
+			Navigator* n = new Navigator();
+			AddComponent(n);
+			carryLimit = 10;
+
 			SetBitmap();
 		}
 		Villager()
