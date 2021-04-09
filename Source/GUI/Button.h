@@ -6,8 +6,6 @@
 #include <ddraw.h>
 #include "../audio.h"
 #include "../gamelib.h"
-//#include <Vector>
-//#include "AllHeader.h"
 
 using namespace game_framework;
 class Button {

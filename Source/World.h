@@ -6,8 +6,8 @@
 #include <ddraw.h>
 #include "audio.h"
 #include "gamelib.h"
-//#include <Vector>
-//#include "AllHeader.h"
+#include <Vector>
+#include "Units/Villager.h"
 
 using namespace game_framework;
 enum mapItem { GRASS, RIVER };
@@ -34,9 +34,10 @@ public:
 	void onMove();									//移動螢幕
 	void UnitOnMove();								//移動單位
 	void UnitOnShow();								//顯示單位
-	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子
-	//vector<UnitBase> unit;							
+	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
+	void spwanVillager(int, int);
 private:
+	vector<Unit::Entity*> unit;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	int map[120][120];

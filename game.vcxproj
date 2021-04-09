@@ -338,6 +338,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
+    <Image Include="RES\buttonBackGround.bmp" />
+    <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />
     <Image Include="RES\map.bmp" />
@@ -346,6 +348,7 @@
     <Image Include="RES\MiniMap_Tree.bmp" />
     <Image Include="RES\MiniMap_Water.bmp" />
     <Image Include="RES\MminiMap_Human.bmp" />
+    <Image Include="RES\resource.bmp" />
     <Image Include="RES\Stone_aoe2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

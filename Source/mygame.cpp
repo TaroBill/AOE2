@@ -270,6 +270,80 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				CAudio::Instance()->Stop(AUDIO_NTUT);	// 停止 MIDI
 				GotoGameState(GAME_STATE_OVER);
 			}
+<<<<<<< Updated upstream
+=======
+		//
+		// 移動彈跳的球
+		//
+		world.onMove();
+		gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
+		bball.OnMove();
+
+		world.UnitOnMove();
+		//Test
+		testVillager->onMove();
+	}
+
+	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
+	{
+		world.LoadBitMap();
+		gui.LoadBitMap();
+		//
+		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
+		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
+		//
+		ShowInitProgress(33);	// 接個前一個狀態的進度，此處進度視為33%
+		//
+		// 開始載入資料
+		//
+		int i;
+		for (i = 0; i < NUMBALLS; i++)
+			ball[i].LoadBitmap();								// 載入第i個球的圖形
+		eraser.LoadBitmap();
+		background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
+		//
+		// 完成部分Loading動作，提高進度
+		//
+		ShowInitProgress(50);
+		Sleep(300); // 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+		//
+		// 繼續載入其他資料
+		//
+		help.LoadBitmap(IDB_HELP, RGB(255, 255, 255));				// 載入說明的圖形
+		corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
+		corner.ShowBitmap(background);							// 將corner貼到background
+		bball.LoadBitmap();										// 載入圖形
+		hits_left.LoadBitmap();
+		CAudio::Instance()->Load(AUDIO_DING, "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
+		CAudio::Instance()->Load(AUDIO_LAKE, "sounds\\lake.mp3");	// 載入編號1的聲音lake.mp3
+		CAudio::Instance()->Load(AUDIO_NTUT, "sounds\\ntut.mid");	// 載入編號2的聲音ntut.mid
+		//
+		// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
+		//
+	}
+
+	void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+	{
+		const char KEY_LEFT = 0x25; // keyboard左箭頭
+		const char KEY_UP = 0x26; // keyboard上箭頭
+		const char KEY_RIGHT = 0x27; // keyboard右箭頭
+		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		if (nChar == KEY_LEFT) {
+			//eraser.SetMovingLeft(true);
+			world.moveScreenLeft(true);
+		}
+		if (nChar == KEY_RIGHT) {
+			//eraser.SetMovingRight(true);
+			world.moveScreenRight(true);
+		}
+		if (nChar == KEY_UP) {
+			//eraser.SetMovingUp(true);
+			world.moveScreenUp(true);
+		}
+		if (nChar == KEY_DOWN) {
+			//eraser.SetMovingDown(true);
+			world.moveScreenDown(true);
+>>>>>>> Stashed changes
 		}
 	//
 	// 移動彈跳的球
@@ -363,6 +437,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 		world.moveScreenDown(false);
 	}
+<<<<<<< Updated upstream
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -372,6 +447,37 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	TRACE("Mouse Global Location: (%d, %d)\n", world.ScreenX2GlobalX(point.x), world.GlobalY2ScreenY(point.y));
 	if (gui.minimap.isInMiniMap(point.x, point.y)) {
 		world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
+=======
+
+	void CGameStateRun::OnShow()
+	{
+		world.OnShow();
+		//
+		//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
+		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
+		//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
+		//
+		//
+		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
+		//
+		background.ShowBitmap();			// 貼上背景圖
+		help.ShowBitmap();					// 貼上說明圖
+		hits_left.ShowBitmap();
+		for (int i = 0; i < NUMBALLS; i++)
+			ball[i].OnShow();				// 貼上第i號球
+		bball.OnShow();						// 貼上彈跳的球
+		eraser.OnShow();					// 貼上擦子
+		//
+		//  貼上左上及右下角落的圖
+		//
+		corner.SetTopLeft(0, 0);
+		corner.ShowBitmap();
+		corner.SetTopLeft(SIZE_X - corner.Width(), SIZE_Y - corner.Height());
+		corner.ShowBitmap();
+		testVillager->onShow(world.GlobalX2ScreenX(testVillager->pointX), world.GlobalY2ScreenY(testVillager->pointY));
+		world.UnitOnShow();
+		gui.onShow();
+>>>>>>> Stashed changes
 	}
 }
 

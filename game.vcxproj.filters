@@ -20,6 +20,21 @@
     <Filter Include="MyGame\Player">
       <UniqueIdentifier>{685f2854-e76b-4c2e-b34d-cbc0de399fbd}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
+=======
+    <Filter Include="MyGame\Units\Leafs">
+      <UniqueIdentifier>{26e470b6-f451-4869-a92d-5fabaa76f091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Units\Composites">
+      <UniqueIdentifier>{29a98159-e8df-4c21-94be-067541bf4444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\Units\Base">
+      <UniqueIdentifier>{f72987f1-cbae-4471-828b-e7a1e168a431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame\GUI">
+      <UniqueIdentifier>{6ec89df6-8fe7-4fa0-b6ab-4c721f0ed0e4}</UniqueIdentifier>
+    </Filter>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -136,6 +151,7 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="Source\GUI\Button.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
@@ -144,6 +160,14 @@
     </ClCompile>
     <ClCompile Include="Source\GUI\GUI.cpp">
       <Filter>MyGame</Filter>
+=======
+    <ClCompile Include="Source\GUI\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\Button.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\GUI.cpp">
+      <Filter>MyGame\GUI</Filter>
+>>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +235,16 @@
     <ClInclude Include="Source\GUI\miniMap.h">
       <Filter>MyGame</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Source\GUI\miniMap.h" />
+    <ClInclude Include="Source\GUI\Button.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\GUI.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -246,6 +280,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\MiniMap_Current_Location.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\buttonBackGround.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EntityDataBackGround.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\resource.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
