@@ -472,6 +472,7 @@
     <Image Include="RES\Villager\VillagerIdle_7_7.bmp" />
     <Image Include="RES\Villager\VillagerIdle_7_8.bmp" />
     <Image Include="RES\Villager\VillagerIdle_7_9.bmp" />
+    <Image Include="RES\water.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

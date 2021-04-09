@@ -166,6 +166,8 @@
 #define IDB_MINIMAP                     405
 #define IDB_MiniMap_CL                  406
 #define IDB_WATER                       407
+#define IDB_BITMAP125                   408
+#define IDB_WaterBig                    408
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -179,7 +181,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        408
+#define _APS_NEXT_RESOURCE_VALUE        409
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101

@@ -146,6 +146,9 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
+    <ClCompile Include="Source\GUI\Button.cpp" />
+    <ClCompile Include="Source\GUI\GUI.cpp" />
+    <ClCompile Include="Source\GUI\miniMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -215,6 +218,9 @@
     <ClInclude Include="Source\Units\TownCenter.h">
       <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GUI\Button.h" />
+    <ClInclude Include="Source\GUI\GUI.h" />
+    <ClInclude Include="Source\GUI\miniMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -592,6 +598,27 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\Villager\VillagerIdle_7_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\map.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Current_Location.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Grass.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Tree.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MiniMap_Water.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\MminiMap_Human.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\water.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

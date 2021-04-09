@@ -156,7 +156,7 @@ int World::GlobalY2ScreenY(int y) {
 
 void World::LoadBitMap() {
 	grass.LoadBitmap(IDB_GRASS);
-	river.LoadBitmap(IDB_GOLD);
+	river.LoadBitmap(IDB_WaterBig);
 }
 
 void World::setScreenLocation(int x, int y) {
