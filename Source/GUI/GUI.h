@@ -16,4 +16,7 @@ public:
 	void onShow();
 	bool isInGUI(int, int);
 	MiniMap minimap;
+	CMovingBitmap resourcesBackground;
+	CMovingBitmap buttonBackground;
+	CMovingBitmap entityDataBackground;
 };

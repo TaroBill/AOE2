@@ -275,7 +275,7 @@ namespace game_framework {
 		gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
 		bball.OnMove();
 
-
+		world.UnitOnMove();
 		//Test
 		testVillager->onMove();
 	}
@@ -412,7 +412,6 @@ namespace game_framework {
 		//
 		background.ShowBitmap();			// 貼上背景圖
 		help.ShowBitmap();					// 貼上說明圖
-		gui.onShow();
 		hits_left.ShowBitmap();
 		for (int i = 0; i < NUMBALLS; i++)
 			ball[i].OnShow();				// 貼上第i號球
@@ -426,5 +425,7 @@ namespace game_framework {
 		corner.SetTopLeft(SIZE_X - corner.Width(), SIZE_Y - corner.Height());
 		corner.ShowBitmap();
 		testVillager->onShow(world.GlobalX2ScreenX(testVillager->pointX), world.GlobalY2ScreenY(testVillager->pointY));
+		world.UnitOnShow();
+		gui.onShow();
 	}
 }

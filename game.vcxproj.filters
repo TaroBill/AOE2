@@ -29,6 +29,9 @@
     <Filter Include="MyGame\Units\Base">
       <UniqueIdentifier>{f72987f1-cbae-4471-828b-e7a1e168a431}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame\GUI">
+      <UniqueIdentifier>{6ec89df6-8fe7-4fa0-b6ab-4c721f0ed0e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -146,9 +149,13 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
-    <ClCompile Include="Source\GUI\Button.cpp" />
-    <ClCompile Include="Source\GUI\GUI.cpp" />
     <ClCompile Include="Source\GUI\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\Button.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\GUI.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -218,9 +225,13 @@
     <ClInclude Include="Source\Units\TownCenter.h">
       <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI\Button.h" />
-    <ClInclude Include="Source\GUI\GUI.h" />
     <ClInclude Include="Source\GUI\miniMap.h" />
+    <ClInclude Include="Source\GUI\Button.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\GUI.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">
@@ -619,6 +630,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\water.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\buttonBackGround.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EntityDataBackGround.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\resource.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
