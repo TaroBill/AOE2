@@ -282,8 +282,8 @@ namespace game_framework {
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	{
-		world.LoadBitMap();
-		gui.LoadBitMap();
+		world.LoadBitmap();
+		gui.LoadBitmap();
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。

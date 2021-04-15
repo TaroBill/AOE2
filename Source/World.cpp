@@ -154,7 +154,7 @@ int World::GlobalY2ScreenY(int y) {
 	return y - sy;
 }
 
-void World::LoadBitMap() {
+void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
 	spwanVillager(3500, 3500);

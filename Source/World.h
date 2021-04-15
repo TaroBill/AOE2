@@ -24,7 +24,7 @@ public:
 	int GlobalX2ScreenX(int);						//將取得的世界座標X 轉螢幕座標X
 	int GlobalY2ScreenY(int);						//將取得的世界座標Y 轉螢幕座標Y
 	int getLocationItem(int, int);					//取得X, Y上的物件(障礙物)
-	void LoadBitMap();
+	void LoadBitmap();
 	CMovingBitmap grass;
 	CMovingBitmap river;
 	void moveScreenUp(bool);						//是否移動螢幕向上

@@ -277,8 +277,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Source\GUI\Button.cpp" />
+    <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
+    <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />
     <ClCompile Include="Source\GUI\GUI.cpp" />
     <ClCompile Include="Source\GUI\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\ResourceFrame.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -315,8 +318,12 @@
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\GUI\Button.h" />
+    <ClInclude Include="Source\GUI\EntityDataButtonFrame.h" />
+    <ClInclude Include="Source\GUI\EntityDataFrame.h" />
+    <ClInclude Include="Source\GUI\Frame.h" />
     <ClInclude Include="Source\GUI\GUI.h" />
     <ClInclude Include="Source\GUI\miniMap.h" />
+    <ClInclude Include="Source\GUI\ResourceFrame.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
     <ClInclude Include="Source\Player\Player.h" />
@@ -324,6 +331,7 @@
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
+    <ClInclude Include="Source\tools.h" />
     <ClInclude Include="Source\Units\Building.h" />
     <ClInclude Include="Source\Units\Entity.h" />
     <ClInclude Include="Source\Units\Gatherable.h" />

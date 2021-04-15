@@ -149,11 +149,22 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
-    <ClCompile Include="Source\GUI\miniMap.cpp" />
     <ClCompile Include="Source\GUI\Button.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GUI\GUI.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\ResourceFrame.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\miniMap.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\EntityDataFrame.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -225,11 +236,28 @@
     <ClInclude Include="Source\Units\TownCenter.h">
       <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI\miniMap.h" />
     <ClInclude Include="Source\GUI\Button.h">
       <Filter>MyGame\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUI\GUI.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Frame.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\ResourceFrame.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\miniMap.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\tools.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\EntityDataFrame.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\EntityDataButtonFrame.h">
       <Filter>MyGame\GUI</Filter>
     </ClInclude>
   </ItemGroup>

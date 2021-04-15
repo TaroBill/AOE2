@@ -366,11 +366,11 @@ IDB_VILLAGER714         BITMAP                  "..\\RES\\Villager\\VillagerIdle
 
 IDB_WaterBig            BITMAP                  "..\\RES\\water.bmp"
 
-IDB_BUTTONBACKGROUND    BITMAP                  "D:\\資工作業\\AOE2\\RES\\buttonBackGround.bmp"
+IDB_BUTTONBACKGROUND    BITMAP                  "..\\RES\\buttonBackGround.bmp"
 
-IDB_DATABACKGROUND      BITMAP                  "D:\\資工作業\\AOE2\\RES\\EntityDataBackGround.bmp"
+IDB_DATABACKGROUND      BITMAP                  "..\\RES\\EntityDataBackGround.bmp"
 
-IDB_RESOURCEBACKGROUND  BITMAP                  "D:\\資工作業\\AOE2\\RES\\resource.bmp"
+IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
