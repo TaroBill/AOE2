@@ -11,6 +11,11 @@ public:
 
 	int amount;
 	ResourceType type;
+	void ResetType(ResourceType rt)
+	{
+		amount = 0;
+		type = rt;
+	}
 	int GetResource()
 	{
 		if (amount == 0)

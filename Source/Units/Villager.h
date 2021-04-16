@@ -63,7 +63,9 @@ namespace Unit
 			//應該有個counter累計值
 			//累計到應該獲得一點資源的時候才+1
 			//但先不管
-			this->carryResource.amount += resourcePlace->GetComponent<Gatherable>()->resource.GetResource();
+			this->carryResource.amount +=
+				resourcePlace->GetComponent<Gatherable>()->resource.GetResource();
+			
 		}
 
 
@@ -81,18 +83,26 @@ namespace Unit
 			{
 				switch (tar->resource.type)
 				{
+					resourcePlace = target;
 				case ResourceType::Meat://肉
-					if (target->hp > 0)//目標還活著，攻擊
+					//目標還活著，攻擊or種田
+					if (target->hp > 0)
 					{
-						break;
 					}
+					else
+					{
+						carryResource.ResetType(tar->resource.type);
+					}
+					break;
+
 				case ResourceType::Wood://木頭
 				case ResourceType::Stone://石礦
 				case ResourceType::Gold://金礦
-					resourcePlace = target;
+					carryResource.ResetType(tar->resource.type);
 					vs = VillagerState::GetResourceOnRoad;
 					GetComponent<Navigator>()->FindPath(target->pointX, target->pointY);
 					break;
+
 				default:
 					break;
 				}
@@ -136,21 +146,26 @@ namespace Unit
 			//採集中
 			case VillagerState::Gathering:
 				//採集
-				resourcePlace->GetComponent<Gatherable>();
-				
-				if (carryLimit == carryResource.amount)//滿了
+				Gathering();
+				//若滿了
+				if (carryLimit == carryResource.amount)
 				{
-					//滿了就找地方放
+					//就找地方放
 					FindRecyclingPlace();
-					//切換狀態
+					//切換狀態至放資源的路上
 					vs = VillagerState::ReturnResourceOnRoad;
+					//尋路去放資源
+					FindRecyclingPlace();
 				}
 				break;
+
 			case VillagerState::ReturnResourceOnRoad:
 
 				break;
+
 			case VillagerState::Attack:
 				break;
+
 			default:
 				break;
 			}
@@ -160,18 +175,7 @@ namespace Unit
 		void onMove() override
 		{
 			int navigatorState = GetComponent<Navigator>()->onMove(&pointX, &pointY);
-			
 			FSM(navigatorState);
-			//這裡只做狀態機使用
-			
-			/*
-			animations[entityState][faceDirection].OnMove();
-			if (entityState == State::Move)
-			{
-				GetComponent<Navigator>()->onMove(&pointX, &pointY);
-
-			}
-			*/
 		}
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{
