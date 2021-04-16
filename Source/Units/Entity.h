@@ -22,7 +22,6 @@ namespace Unit
 	private:
 
 	public:
-		int world[120][120];
 		//動作狀態
 		State entityState;
 		//面向狀態
