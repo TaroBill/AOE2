@@ -34,12 +34,26 @@ void Button::setLocation(int X, int Y) {
 	LocX = X;
 	LocY = Y;
 }
+
 void Button::LoadBitmap() {
 	texture.LoadBitmap(IDB_7);
 }
+
 void Button::OnShow() {
 	texture.ShowBitmap();
 }
+
 bool Button::isEnable() {
 	return enable;
+}
+
+bool Button::isInButton(CPoint p) {
+	if (p.x >= LocX && p.x <= (LocX + Width) && p.y >= (LocY) && p.y <= (LocY + Height)) {
+		return true;
+	}
+	return false;
+}
+
+void Button::onClicked() {
+	
 }

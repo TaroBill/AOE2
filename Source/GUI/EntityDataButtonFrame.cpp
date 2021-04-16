@@ -15,5 +15,8 @@ void EntityDataButtonFrame::LoadBitmap() {
 }
 
 void EntityDataButtonFrame::onClicked(CPoint p) {
-
+	for (unsigned int i = 0; i < buttons.size(); i++) {
+		if(buttons[i].isEnable() && buttons[i].isInButton(p))
+			buttons[i].onClicked();
+	}
 }
