@@ -366,6 +366,12 @@ IDB_VILLAGER714         BITMAP                  "..\\RES\\Villager\\VillagerIdle
 
 IDB_WaterBig            BITMAP                  "..\\RES\\water.bmp"
 
+IDB_BUTTONBACKGROUND    BITMAP                  "..\\RES\\buttonBackGround.bmp"
+
+IDB_DATABACKGROUND      BITMAP                  "..\\RES\\EntityDataBackGround.bmp"
+
+IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

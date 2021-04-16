@@ -6,8 +6,8 @@
 #include <ddraw.h>
 #include "audio.h"
 #include "gamelib.h"
-//#include <Vector>
-//#include "AllHeader.h"
+#include <Vector>
+#include "Units/Villager.h"
 
 using namespace game_framework;
 enum mapItem { GRASS, RIVER };
@@ -25,7 +25,7 @@ public:
 	int GlobalX2ScreenX(int);						//將取得的世界座標X 轉螢幕座標X
 	int GlobalY2ScreenY(int);						//將取得的世界座標Y 轉螢幕座標Y
 	int getLocationItem(int, int);					//取得X, Y上的物件(障礙物)
-	void LoadBitMap();
+	void LoadBitmap();
 	CMovingBitmap grass;
 	CMovingBitmap river;
 	void moveScreenUp(bool);						//是否移動螢幕向上
@@ -35,10 +35,11 @@ public:
 	void onMove();									//移動螢幕
 	void UnitOnMove();								//移動單位
 	void UnitOnShow();								//顯示單位
-	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子
-	//vector<UnitBase> unit;							
+	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
+	void spwanVillager(int, int);
 private:
 	static World* instance;
+	vector<Unit::Entity*> unit;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	int map[120][120];

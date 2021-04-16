@@ -7,13 +7,22 @@
 #include "../audio.h"
 #include "../gamelib.h"
 #include "minimap.h"
+#include "ResourceFrame.h"
+#include "EntityDataFrame.h"
+#include "EntityDataButtonFrame.h"
 
 using namespace game_framework;
 class GUI {
 public:
 	GUI();
-	void LoadBitMap();
+	~GUI();
+	static GUI* getInstance();
+	void LoadBitmap();
 	void onShow();
 	bool isInGUI(int, int);
+	void triggerOnClicked(CPoint);
+	vector<Frame *> AllFrames;
 	MiniMap minimap;
+private:
+	static GUI* instance;
 };

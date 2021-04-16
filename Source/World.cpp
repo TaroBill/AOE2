@@ -13,6 +13,14 @@ World* World::getInstance()
 	return instance;
 }
 
+World* World::getInstance() {
+	if (instance == nullptr) {
+		instance = new World();
+	}
+	return instance;
+}
+
+
 void World::initMap() {
 	int resource[10][10] = { {1,1,1,0,0,0,0,1,1,1},
 							 {1,1,0,0,0,0,0,0,1,1},
@@ -105,19 +113,19 @@ void World::onMove() {
 	}
 }
 
-/*void World::UnitOnMove() {
-	for (int i = 0; i < unit.size(); i++) {
-		unit[i].onMove();
+void World::UnitOnMove() {
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		unit[i]->onMove();
 	}
-}*/
+}
 
-/*void World::UnitOnShow() {
-	for (int i = 0; i < unit.size(); i++) {
-		if (isOnScreen(unit[i].pointX, unit[i].pointY)) {
-			unit[i].onShow(GlobalX2ScreenX(unit[i].pointX), GlobalY2ScreenY(unit[i].pointY));
+void World::UnitOnShow() {
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		if (isOnScreen(unit[i]->pointX, unit[i]->pointY)) {
+			unit[i]->onShow(GlobalX2ScreenX(unit[i]->pointX), GlobalY2ScreenY(unit[i]->pointY));
 		}
 	}
-}*/
+}
 
 bool World::isOnScreen(int x,int y) {
 	if (x >= sx && x <= sx + SIZE_X) {
@@ -168,9 +176,10 @@ int World::GlobalY2ScreenY(int y) {
 	return y - sy;
 }
 
-void World::LoadBitMap() {
+void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
+	spwanVillager(3500, 3500);
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -194,3 +203,10 @@ void World::setScreenLocation(CPoint point) {
 		sy = 120 * 50 - SIZE_Y;
 	}
 }
+
+void World::spwanVillager(int x, int y) {
+	Unit::Villager *v = new Unit::Villager(x, y);
+	unit.push_back(v);
+}
+
+World* World::instance;

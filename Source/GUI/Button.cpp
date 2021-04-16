@@ -5,6 +5,10 @@ Button::Button(int X=0, int Y=0, int h=50, int w=50, bool en=true) {
 	init(X, Y, h, w, en);
 }
 
+Button::~Button() {
+
+}
+
 void Button::init(int X, int Y, int h, int w, bool en) {
 	LocX = X;
 	LocY = Y;

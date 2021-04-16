@@ -7,22 +7,22 @@
 #include "../audio.h"
 #include "../gamelib.h"
 #include "../World.h"
+#include "Frame.h"
 
 using namespace game_framework;
-class MiniMap {
+class MiniMap  : public Frame{
 public:
 	MiniMap();
-	MiniMap(int, int, string);
+	~MiniMap();
+	void LoadBitmap() override;
 	void OnShow();
-	void LoadBitMap();
-	CMovingBitmap map;
-	CMovingBitmap CurrentLocation;
+	MiniMap(int, int, string);
 	bool isInMiniMap(int, int);
 	void setCurrentLocation(int, int);
+	void onClicked(CPoint) override;
 	CPoint MiniMapLoc2GlobalLoc(CPoint);
 private:
 	string Name;
-	int h, w;
-	int x, y;
+	CMovingBitmap CurrentLocation;
 	int CurrentLocationX, CurrentLocationY;
 };

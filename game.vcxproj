@@ -258,9 +258,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\audio.cpp" />
-    <ClCompile Include="Source\CBall.cpp" />
-    <ClCompile Include="Source\CBouncingBall.cpp" />
-    <ClCompile Include="Source\CEraser.cpp" />
     <ClCompile Include="Source\game.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -277,8 +274,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Source\GUI\Button.cpp" />
+    <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
+    <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />
     <ClCompile Include="Source\GUI\GUI.cpp" />
     <ClCompile Include="Source\GUI\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\ResourceFrame.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -308,15 +308,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
-    <ClInclude Include="Source\CBall.h" />
-    <ClInclude Include="Source\CBouncingBall.h" />
-    <ClInclude Include="Source\CEraser.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\GUI\Button.h" />
+    <ClInclude Include="Source\GUI\EntityDataButtonFrame.h" />
+    <ClInclude Include="Source\GUI\EntityDataFrame.h" />
+    <ClInclude Include="Source\GUI\Frame.h" />
     <ClInclude Include="Source\GUI\GUI.h" />
     <ClInclude Include="Source\GUI\miniMap.h" />
+    <ClInclude Include="Source\GUI\ResourceFrame.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
     <ClInclude Include="Source\Player\Player.h" />
@@ -324,6 +325,7 @@
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
+    <ClInclude Include="Source\tools.h" />
     <ClInclude Include="Source\Units\Building.h" />
     <ClInclude Include="Source\Units\Entity.h" />
     <ClInclude Include="Source\Units\Gatherable.h" />
@@ -343,6 +345,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
+    <Image Include="RES\buttonBackGround.bmp" />
+    <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />
     <Image Include="RES\map.bmp" />
@@ -351,6 +355,7 @@
     <Image Include="RES\MiniMap_Tree.bmp" />
     <Image Include="RES\MiniMap_Water.bmp" />
     <Image Include="RES\MminiMap_Human.bmp" />
+    <Image Include="RES\resource.bmp" />
     <Image Include="RES\Stone_aoe2.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_0.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_1.bmp" />
