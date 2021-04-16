@@ -172,6 +172,20 @@
 #define IDB_DATABACKGROUND              410
 #define IDB_BITMAP128                   411
 #define IDB_RESOURCEBACKGROUND          411
+#define IDB_BUILDING_BUTTON             412
+#define IDB_CANCEL_BUTTON               413
+#define IDB_DESTROY_BUTTON              414
+#define IDB_DOCK_BUTTON                 415
+#define IDB_GARRISON_BUTTON             416
+#define IDB_HOUSE_BUTTON                417
+#define IDB_LUMBERCAMP_BUTTON           418
+#define IDB_MILITARY_BUTTON             419
+#define IDB_MILL_BUTTON                 420
+#define IDB_MININGCAMP_BUTTON           421
+#define IDB_NEXTPAGE_BUTTON             422
+#define IDB_REPAIR_BUTTON               423
+#define IDB_BITMAP139                   424
+#define IDB_STOP_BUTTON                 424
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -185,7 +199,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        412
+#define _APS_NEXT_RESOURCE_VALUE        425
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101
