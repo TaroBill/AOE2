@@ -13,6 +13,7 @@ using namespace game_framework;
 enum mapItem { GRASS, RIVER };
 class World {
 public:
+	static World* getInstance();
 	World();
 	void OnShow();									//顯示地圖
 	void setScreenLocation(int, int);				//設置sx,sy，螢幕最左上點座標
@@ -37,6 +38,7 @@ public:
 	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子
 	//vector<UnitBase> unit;							
 private:
+	static World* instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	int map[120][120];

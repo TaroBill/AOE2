@@ -67,10 +67,12 @@ namespace game_framework {
 	CGameStateInit::CGameStateInit(CGame* g)
 		: CGameState(g)
 	{
+
 	}
 
 	void CGameStateInit::OnInit()
 	{
+
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -153,6 +155,7 @@ namespace game_framework {
 
 	void CGameStateOver::OnInit()
 	{
+
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -225,8 +228,9 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI
 
 		testVillager = new Unit::Villager(3000, 3000);
-
-
+		testVillager->SetTarget(testVillager);
+		testVillager->AddComponent(new Unit::Gatherable());
+		testVillager->SetTarget(testVillager);
 	}
 
 	void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -271,8 +275,8 @@ namespace game_framework {
 		//
 		// 移動彈跳的球
 		//
-		world.onMove();
-		gui.minimap.setCurrentLocation(world.getScreenX() / 50, world.getScreenY() / 50);
+		World::getInstance()->onMove();
+		gui.minimap.setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
 		bball.OnMove();
 
 
@@ -282,7 +286,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	{
-		world.LoadBitMap();
+		World::getInstance()->LoadBitMap();
 		gui.LoadBitMap();
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
@@ -316,6 +320,7 @@ namespace game_framework {
 		//
 		// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
 		//
+
 	}
 
 	void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -326,19 +331,19 @@ namespace game_framework {
 		const char KEY_DOWN = 0x28; // keyboard下箭頭
 		if (nChar == KEY_LEFT) {
 			//eraser.SetMovingLeft(true);
-			world.moveScreenLeft(true);
+			World::getInstance()->moveScreenLeft(true);
 		}
 		if (nChar == KEY_RIGHT) {
 			//eraser.SetMovingRight(true);
-			world.moveScreenRight(true);
+			World::getInstance()->moveScreenRight(true);
 		}
 		if (nChar == KEY_UP) {
 			//eraser.SetMovingUp(true);
-			world.moveScreenUp(true);
+			World::getInstance()->moveScreenUp(true);
 		}
 		if (nChar == KEY_DOWN) {
 			//eraser.SetMovingDown(true);
-			world.moveScreenDown(true);
+			World::getInstance()->moveScreenDown(true);
 		}
 	}
 
@@ -350,19 +355,19 @@ namespace game_framework {
 		const char KEY_DOWN = 0x28; // keyboard下箭頭
 		if (nChar == KEY_LEFT) {
 			eraser.SetMovingLeft(false);
-			world.moveScreenLeft(false);
+			World::getInstance()->moveScreenLeft(false);
 		}
 		if (nChar == KEY_RIGHT) {
 			eraser.SetMovingRight(false);
-			world.moveScreenRight(false);
+			World::getInstance()->moveScreenRight(false);
 		}
 		if (nChar == KEY_UP) {
 			eraser.SetMovingUp(false);
-			world.moveScreenUp(false);
+			World::getInstance()->moveScreenUp(false);
 		}
 		if (nChar == KEY_DOWN) {
 			eraser.SetMovingDown(false);
-			world.moveScreenDown(false);
+			World::getInstance()->moveScreenDown(false);
 		}
 	}
 
@@ -370,9 +375,9 @@ namespace game_framework {
 	{
 		eraser.SetMovingLeft(true);
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-		TRACE("Mouse Global Location: (%d, %d)\n", world.ScreenX2GlobalX(point.x), world.GlobalY2ScreenY(point.y));
+		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
 		if (gui.minimap.isInMiniMap(point.x, point.y)) {
-			world.setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
+			World::getInstance()->setScreenLocation(gui.minimap.MiniMapLoc2GlobalLoc(point));
 		}
 
 	}
@@ -390,8 +395,8 @@ namespace game_framework {
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
 		eraser.SetMovingRight(true);
-		testVillager->GetComponent<Unit::Navigator>()->Findpath(world.ScreenX2GlobalX(point.x), world.ScreenY2GlobalY(point.y));
-		
+		testVillager->GetComponent<Unit::Navigator>()->FindPath(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -401,7 +406,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnShow()
 	{
-		world.OnShow();
+		World::getInstance()->OnShow();
 		//
 		//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
@@ -425,6 +430,8 @@ namespace game_framework {
 		corner.ShowBitmap();
 		corner.SetTopLeft(SIZE_X - corner.Width(), SIZE_Y - corner.Height());
 		corner.ShowBitmap();
-		testVillager->onShow(world.GlobalX2ScreenX(testVillager->pointX), world.GlobalY2ScreenY(testVillager->pointY));
+		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->pointX), World::getInstance()->GlobalY2ScreenY(testVillager->pointY));
 	}
 }
+
+World* World::instance;

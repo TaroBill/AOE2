@@ -100,7 +100,7 @@ namespace game_framework {
 	private:
 		Unit::Villager  *testVillager;//測試用村民，應該放在世界底下
 		int counter = 0;//測試用村民用來測試旋轉的int
-		World			world;
+		//World*			world;
 		GUI				gui;
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	background;	// 背景圖

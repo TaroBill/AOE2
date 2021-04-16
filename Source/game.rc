@@ -364,7 +364,7 @@ IDB_VILLAGER713         BITMAP                  "..\\RES\\Villager\\VillagerIdle
 
 IDB_VILLAGER714         BITMAP                  "..\\RES\\Villager\\VillagerIdle_7_14.bmp"
 
-IDB_WaterBig            BITMAP                  "D:\\資工作業\\AOE2\\RES\\water.bmp"
+IDB_WaterBig            BITMAP                  "..\\RES\\water.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

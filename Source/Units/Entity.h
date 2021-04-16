@@ -8,10 +8,11 @@ namespace Unit
 	{
 	public:
 		//實體的狀態
-		//靜止不動、移動、受傷、死亡
+		//靜止不動、移動、受傷、死亡、其他
+		//選擇其他時，以單位狀態為優先
 		enum class State
 		{
-			Idle, Move,Hurted, Dead
+			Idle, Move, Hurted, Dead, Other
 		};
 		//實體的八方向面向
 		enum class Direction
@@ -21,6 +22,7 @@ namespace Unit
 	private:
 
 	public:
+		int world[120][120];
 		//動作狀態
 		State entityState;
 		//面向狀態
@@ -48,7 +50,7 @@ namespace Unit
 			//faceDirection = static_cast<Unit::Entity::Direction>(i);
 		}
 		//改變狀態(非面向)
-		void StateChange(State s) 
+		void StateChange(State s)
 		{
 			StateReset();
 			entityState = s;
@@ -58,9 +60,6 @@ namespace Unit
 
 		//所屬玩家的ID
 		int playerId;
-
-		//格座標
-		int tileX, tileY;
 
 		//點座標
 		int pointX, pointY;
@@ -72,25 +71,30 @@ namespace Unit
 		int hp;
 		int maxHP;
 
+		int GetTileX() { return pointX / 50; }
+		int GetTileY() { return pointY / 50; }
+		int Point2Tile(int p) { return p / 50; }
+		int Tile2Point(int t) { return t / 50; }
 
 		virtual void onMove()
 		{
 			animations[entityState][faceDirection].OnMove();
 		}
 
-		void onShow(int screenX, int screenY)
+		virtual void onShow(int screenX, int screenY)
 		{
 			animations[entityState][faceDirection].SetTopLeft(screenX, screenY);
 			animations[entityState][faceDirection].OnShow();
 
 		}
 
-		virtual void SetBitmap() = 0;
+		virtual void SetTarget(Entity* target) = NULL;
+
+		virtual void SetBitmap() = NULL;
 		Entity()
 		{
 			this->playerId = 0;
-			this->tileX = 0;
-			this->tileY = 0;
+
 			this->pointX = 0;
 			this->pointY = 0;
 			this->sizeXY = 0;
@@ -102,8 +106,6 @@ namespace Unit
 		Entity(int pointX, int pointY) :Entity()
 		{
 			this->playerId = 0;
-			this->tileX = 0;
-			this->tileY = 0;
 			this->pointX = 0;
 			this->pointY = 0;
 			this->sizeXY = 0;

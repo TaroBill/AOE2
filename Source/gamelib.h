@@ -337,6 +337,7 @@ public:
 	void OnSuspend();								// 處理「待命」的動作
 	void SetGameState(int);
 	static CGame *Instance();
+
 private:
 	bool			running;			// 遊戲是否正在進行中(未被Pause)
 	bool            suspended;			// 遊戲是否被suspended
