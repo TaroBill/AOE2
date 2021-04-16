@@ -3,6 +3,7 @@
 
 ResourceFrame::ResourceFrame() : Frame(0, 0, 26, 1920)
 {
+
 }
 
 ResourceFrame::~ResourceFrame()

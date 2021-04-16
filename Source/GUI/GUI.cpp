@@ -1,5 +1,12 @@
 #include "GUI.h"
 
+GUI* GUI::getInstance() {
+	if (instance == nullptr) {
+		instance = new GUI();
+	}
+	return instance;
+}
+
 
 GUI::GUI() {
 	AllFrames.push_back(new ResourceFrame());
@@ -8,7 +15,7 @@ GUI::GUI() {
 }
 
 GUI::~GUI() {
-	
+	AllFrames.clear();
 }
 
 void GUI::LoadBitmap() {
@@ -39,3 +46,5 @@ void GUI::triggerOnClicked(CPoint p) {
 		}
 	}
 }
+
+GUI* GUI::instance;

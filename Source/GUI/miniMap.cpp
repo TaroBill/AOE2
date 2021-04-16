@@ -32,7 +32,9 @@ void MiniMap::setCurrentLocation(int cX, int cY) {
 	CurrentLocationY = cY * 2;
 }
 CPoint MiniMap::MiniMapLoc2GlobalLoc(CPoint point) {
-	return CPoint(((point.x - getLocation().x)/2 * 50, (point.y - getLocation().y)/2 * 50));
+	CPoint p = CPoint((point.x - getLocation().x) * 50 / 2, (point.y - getLocation().y) * 50 / 2);
+	//TRACE("%d, %d\n", p.x, p.y);
+	return p;
 }
 
 void MiniMap::onClicked(CPoint point) {

@@ -1,5 +1,13 @@
 #include "World.h"
 
+World* World::getInstance() {
+	if (instance == nullptr) {
+		instance = new World();
+	}
+	return instance;
+}
+
+
 void World::initMap() {
 	int resource[10][10] = { {1,1,1,0,0,0,0,1,1,1},
 						     {1,1,0,0,0,0,0,0,1,1},
@@ -186,3 +194,5 @@ void World::spwanVillager(int x, int y) {
 	Unit::Villager *v = new Unit::Villager(x, y);
 	unit.push_back(v);
 }
+
+World* World::instance;

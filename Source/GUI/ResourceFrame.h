@@ -7,7 +7,7 @@ public:
 	ResourceFrame();
 	~ResourceFrame();
 	void LoadBitmap() override;
-	void onClicked(CPoint) override;
+	void onClicked(CPoint) override; 
 private:
 	vector<Button> buttons;
 };

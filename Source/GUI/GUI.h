@@ -16,10 +16,13 @@ class GUI {
 public:
 	GUI();
 	~GUI();
+	static GUI* getInstance();
 	void LoadBitmap();
 	void onShow();
 	bool isInGUI(int, int);
 	void triggerOnClicked(CPoint);
 	vector<Frame *> AllFrames;
 	MiniMap minimap;
+private:
+	static GUI* instance;
 };

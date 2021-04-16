@@ -8,6 +8,7 @@
 #include "../gamelib.h"
 #include <vector>
 #include "Button.h"
+#include "../World.h"
 
 using namespace game_framework;
 class Frame {
@@ -43,14 +44,14 @@ public:
 		texture.ShowBitmap();
 	}
 
-	bool isInFrame(CPoint p) {
-		if (p.x >= (LocX) && p.x <= LocX + Width && p.y >= (LocY) && p.y <= LocY + Height) {
+	bool isInFrame(CPoint p) const{
+		if (p.x >= LocX && p.x <= (LocX + Width) && p.y >= (LocY) && p.y <= (LocY + Height)) {
 			return true;
 		}
 		return false;
 	}
 
-	bool isInFrame(int x, int y) {
+	bool isInFrame(int x, int y) const{
 		if (x >= (LocX) && x <= LocX + Width && y >= (LocY) && y <= LocY + Height) {
 			return true;
 		}
