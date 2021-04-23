@@ -2,7 +2,10 @@
 #include "Entity.h"
 #include <vector>
 #include <map>
+#include <stack>
 #include "World.h"
+#include <algorithm>
+using namespace std;
 namespace Unit
 {
 
@@ -36,6 +39,11 @@ namespace Unit
 		//正規化的下個點座標
 		float normalNextPoint[2];
 
+		//point2tile
+		int Point2Tile(int p) { return p / 50; };
+		//tile2point
+		int Tile2Point(int t) { return t * 50; }
+
 		//取得二維向量長度
 		float GetLength(int vectorX, int vectorY)
 		{
@@ -54,7 +62,8 @@ namespace Unit
 			pathDistances.clear();
 			pathPointXs.clear();
 			pathPointYs.clear();
-			Straight(targetPointX, targetPointY);
+			//Straight(targetPointX, targetPointY);
+			AStar(targetPointX,targetPointY);
 		}
 		//利用Component找物件
 		template<typename T>
@@ -162,27 +171,81 @@ namespace Unit
 
 		//Astar尋路
 		//將每個轉角or格子設為下個點
-		void AStar(int x, int y, int cost, int map[][120])
+		void AStar(int targetPointX, int targetPointY)
 		{
-			
-			vector<CPoint> close;
-			vector<CPoint> open;
-			CPoint cp = CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());
+			vector<CPoint> close;//封閉list，存放已經被走訪的點
+			vector<CPoint> open;//開啟list，存放可能被做為起點的點
+			CPoint cp = CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
 			std::map<CPoint, int> gScore;//起點到CP點的距離
 			std::map<CPoint, int> hScore;//評估函式，可以用距離、難易度
 			std::map<CPoint, int> fScore;//g+h
-			std::list<CPoint> s;
-			vector<CPoint> came_from;//到目前的路徑
-			open.push_back(cp);
+			map<CPoint, CPoint> come_from;//父節點
+			open.push_back(cp);//起點加入openList
+			//起點加入fscore
+			fScore.insert(pair<CPoint,int>(cp,0));
+			hScore.insert(pair<CPoint, int>(cp, 0));
+			gScore.insert(pair<CPoint, int>(cp, 0));
+
+
 			while (open.size() > 0)
 			{
-				//找最小值的CPoint給smallest
-				int smallest = 0;
-				CPoint n = open.at(smallest);
-				if (n.x == x && n.y == y)//到了
+				int minIndex = 0, minValue = INT32_MAX;
+				//在openList中找最小值的CPoint作為這圈的開始
+				#pragma region FindMin
+
+
+				for (unsigned int i = 0; i < open.size(); i++)
+				{
+					//比最小值還小
+					if (fScore[open.at(i)]<minValue)
+					{
+						minValue = fScore[open.at(i)];
+						minIndex = i;
+					}
+				}
+				#pragma endregion
+				cp = open.at(minIndex);//起點變成有最小值f的點
+				//周圍八方向的點
+				for (unsigned int y = -1; y <= 1; y++)
+				{
+					for (unsigned int x = -1; x <= 1; x++)
+					{
+						if (!(y == 0 && x == 0))//非自己
+						{
+							CPoint newPoint = CPoint(cp.x + x, cp.y + y);
+							if (std::find(close.begin(), close.end(), newPoint) == close.end())//非在close list
+							{
+								//目前到這裡的cost
+								int newGScore = gScore[cp] + 1;
+								
+								//評估cost
+								int newHScore = World::getInstance()->getLocationItem(Tile2Point(newPoint.x), Tile2Point(newPoint.y));
+								
+								//記得加入曼哈頓距離預測
+								//newHScore += targetPointX
+
+								int newFScore = newGScore + newHScore;
+
+
+								gScore.insert(pair<CPoint, int>(newPoint, newGScore));
+								hScore.insert(pair<CPoint, int>(newPoint, newHScore));
+								fScore.insert(pair<CPoint, int>(newPoint, newFScore));
+								open.push_back(newPoint);
+								come_from.insert(pair<CPoint, CPoint>(newPoint, cp));
+							}
+						}
+					}
+				}
+				close.push_back(cp);
+				//記得刪除cp from open list
+
+
+				/*
+				if (cp.x == targetX && cp.y == targetY)//到了
 				{
 					//回傳(存放)路徑
 				}
+				*/
 			
 				//把n從open list刪掉
 				//把n加入close list
