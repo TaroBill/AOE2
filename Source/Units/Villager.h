@@ -97,7 +97,7 @@ namespace Unit
 				case ResourceType::Gold://ª÷Äq
 					carryResource.ResetType(tar->resource.type);
 					vs = VillagerState::GetResourceOnRoad;
-					entityState = Entity::State::Extra;
+					///entityState = Entity::State::Extra;
 					GetComponent<Navigator>()->FindPath(target->pointX, target->pointY);
 					break;
 
@@ -193,7 +193,7 @@ namespace Unit
 		void onMove() override
 		{
 			int navigatorState = GetComponent<Navigator>()->onMove(&pointX, &pointY);
-			FSM(navigatorState);
+			//FSM(navigatorState);
 		}
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{

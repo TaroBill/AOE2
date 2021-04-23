@@ -80,7 +80,7 @@ namespace Unit
 		{
 			if (pathDistances.size() > 0)
 			{
-				GetParent<Entity>()->entityState = Entity::State::Move;
+				//GetParent<Entity>()->entityState = Entity::State::Move;
 				Normalization(*pointX, *pointY, pathPointXs.at(0), pathPointYs.at(0), normalNextPoint);
 
 				MoveStraight(pointX, pointY);
