@@ -140,9 +140,6 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="Source\World.cpp" />
-    <ClCompile Include="Source\GUI\Button.cpp">
-      <Filter>MyGame\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GUI\GUI.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
@@ -153,6 +150,9 @@
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GUI\EntityDataFrame.cpp">
+      <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\Buttons\Button.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp">
@@ -218,9 +218,6 @@
     <ClInclude Include="Source\Units\TownCenter.h">
       <Filter>MyGame\Units\Composites</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI\Button.h">
-      <Filter>MyGame\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GUI\GUI.h">
       <Filter>MyGame\GUI</Filter>
     </ClInclude>
@@ -237,6 +234,9 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUI\EntityDataFrame.h">
+      <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Buttons\Button.h">
       <Filter>MyGame\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUI\EntityDataButtonFrame.h">
@@ -649,6 +649,45 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\resource.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Building.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Cancel.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Destroy.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Dock.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Garrison.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\House.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\LumberCamp.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Military.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Mill.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\MiningCamp.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\NextPage.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Repair.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\Button_Icon\Stop.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

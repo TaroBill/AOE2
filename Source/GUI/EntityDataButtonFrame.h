@@ -1,6 +1,6 @@
 #pragma once
 #include "Frame.h"
-
+#include <map>
 class EntityDataButtonFrame : public Frame
 {
 public:
@@ -9,5 +9,6 @@ public:
 	void LoadBitmap() override;
 	void onClicked(CPoint) override;
 private:
-	vector<Button> buttons;
+	void LoadVillagerButtons();
+	map<string, Button> buttons;
 };

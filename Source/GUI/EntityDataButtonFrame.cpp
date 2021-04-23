@@ -20,3 +20,7 @@ void EntityDataButtonFrame::onClicked(CPoint p) {
 			buttons[i].onClicked();
 	}
 }
+
+void EntityDataButtonFrame::LoadVillagerButtons() {
+
+}

@@ -273,7 +273,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="Source\GUI\Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
     <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />
     <ClCompile Include="Source\GUI\GUI.cpp" />
@@ -311,7 +311,7 @@
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
-    <ClInclude Include="Source\GUI\Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Button.h" />
     <ClInclude Include="Source\GUI\EntityDataButtonFrame.h" />
     <ClInclude Include="Source\GUI\EntityDataFrame.h" />
     <ClInclude Include="Source\GUI\Frame.h" />
@@ -346,6 +346,19 @@
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
     <Image Include="RES\buttonBackGround.bmp" />
+    <Image Include="RES\Button_Icon\Building.bmp" />
+    <Image Include="RES\Button_Icon\Cancel.bmp" />
+    <Image Include="RES\Button_Icon\Destroy.bmp" />
+    <Image Include="RES\Button_Icon\Dock.bmp" />
+    <Image Include="RES\Button_Icon\Garrison.bmp" />
+    <Image Include="RES\Button_Icon\House.bmp" />
+    <Image Include="RES\Button_Icon\LumberCamp.bmp" />
+    <Image Include="RES\Button_Icon\Military.bmp" />
+    <Image Include="RES\Button_Icon\Mill.bmp" />
+    <Image Include="RES\Button_Icon\MiningCamp.bmp" />
+    <Image Include="RES\Button_Icon\NextPage.bmp" />
+    <Image Include="RES\Button_Icon\Repair.bmp" />
+    <Image Include="RES\Button_Icon\Stop.bmp" />
     <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />

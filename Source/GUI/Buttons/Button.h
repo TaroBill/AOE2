@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../stdafx.h"
-#include "../Resource.h"
+#include "../../stdafx.h"
+#include "../../Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
-#include "../audio.h"
-#include "../gamelib.h"
+#include "../../audio.h"
+#include "../../gamelib.h"
 
 using namespace game_framework;
 class Button {

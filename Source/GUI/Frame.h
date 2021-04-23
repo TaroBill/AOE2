@@ -7,7 +7,7 @@
 #include "../audio.h"
 #include "../gamelib.h"
 #include <vector>
-#include "Button.h"
+#include "./Buttons/Button.h"
 #include "../World.h"
 
 using namespace game_framework;
