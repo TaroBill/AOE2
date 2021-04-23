@@ -13,12 +13,6 @@ World* World::getInstance()
 	return instance;
 }
 
-World* World::getInstance() {
-	if (instance == nullptr) {
-		instance = new World();
-	}
-	return instance;
-}
 
 
 void World::initMap() {

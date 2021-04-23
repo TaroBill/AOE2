@@ -321,7 +321,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
-		testVillager->GetComponent<Unit::Navigator>()->Findpath(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+		testVillager->GetComponent<Unit::Navigator>()->FindPath(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 		
 	}
 

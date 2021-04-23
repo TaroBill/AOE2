@@ -11,16 +11,14 @@ namespace Unit
 	public:
 		enum class VillagerState
 		{
-			Idle,//閒置、等待命令
-			OnSetting,//設定命令中，有最高優先級
+			Base,
 			GetResourceOnRoad,//正在採集的路上
 			Gathering,//採集中
 			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
-			//SearchingResource 帶回資源後，
-			Attack
+
 		};
 		
-		VillagerState vs = VillagerState::Idle;
+		VillagerState vs = VillagerState::Base;
 
 		int resourceCounter = 0;
 
@@ -40,21 +38,19 @@ namespace Unit
 		void ReturnResource()
 		{
 			TRACE("=========== now Return Resource =========== \n");
+			//目前僅實作歸零，並未實作將資源放到相對應的玩家身上
 		}
 
-		void GetResource()
-		{
-			TRACE("=========== now Get Resource ing =========== \n");
-		}
-
-		void FindResouce()
+		bool FindResouce()
 		{
 			TRACE("=========== now Find Resouce =========== \n");
+			return false;
 		}
 
-		void FindRecyclingPlace()
+		bool FindRecyclingPlace()
 		{
 			TRACE("=========== now Find Recycling Place =========== \n");
+			return false;
 		}
 
 		//採集
@@ -88,6 +84,7 @@ namespace Unit
 					//目標還活著，攻擊or種田
 					if (target->hp > 0)
 					{
+
 					}
 					else
 					{
@@ -100,6 +97,7 @@ namespace Unit
 				case ResourceType::Gold://金礦
 					carryResource.ResetType(tar->resource.type);
 					vs = VillagerState::GetResourceOnRoad;
+					entityState = Entity::State::Extra;
 					GetComponent<Navigator>()->FindPath(target->pointX, target->pointY);
 					break;
 
@@ -133,11 +131,10 @@ namespace Unit
 		{
 			switch (vs)
 			{
-			case VillagerState::Idle:
-				break;
-			case VillagerState::OnSetting:
+			case VillagerState::Base:
 				break;
 			case VillagerState::GetResourceOnRoad:
+				//到了
 				if (navigatorState == 1)
 				{
 					vs = VillagerState::Gathering;
@@ -151,20 +148,41 @@ namespace Unit
 				if (carryLimit == carryResource.amount)
 				{
 					//就找地方放
-					FindRecyclingPlace();
-					//切換狀態至放資源的路上
-					vs = VillagerState::ReturnResourceOnRoad;
-					//尋路去放資源
-					FindRecyclingPlace();
+					if (FindRecyclingPlace())//找到
+					{
+
+
+						//切換狀態至放資源的路上
+						vs = VillagerState::ReturnResourceOnRoad;
+					}
+					else//沒找到，發呆
+					{
+						vs = VillagerState::Base;
+						entityState = Entity::State::Idle;
+
+					}
 				}
 				break;
 
 			case VillagerState::ReturnResourceOnRoad:
+				
+				if (navigatorState == 1)
+				{
+					//放資源
+					ReturnResource();
 
+					if (FindResouce())//找到
+					{
+						vs = VillagerState::GetResourceOnRoad;
+					}
+					else//沒找到，發呆
+					{
+						vs = VillagerState::Base;
+						entityState = Entity::State::Idle;
+					}
+				}
 				break;
 
-			case VillagerState::Attack:
-				break;
 
 			default:
 				break;
@@ -179,7 +197,6 @@ namespace Unit
 		}
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{
-
 			Navigator* n = new Navigator();
 			AddComponent(n);
 			carryLimit = 10;

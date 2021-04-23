@@ -12,7 +12,7 @@ namespace Unit
 		//選擇其他時，以單位狀態為優先
 		enum class State
 		{
-			Idle, Move, Hurted, Dead, Other
+			Idle, Move, Hurted, Dead, Extra
 		};
 		//實體的八方向面向
 		enum class Direction

@@ -57,9 +57,10 @@ namespace Unit
 			Straight(targetPointX, targetPointY);
 		}
 		//利用Component找物件
-		void FindEntityPath(UnitBase ub)
+		template<typename T>
+		void FindEntityPath()
 		{
-
+			
 		}
 		//正規化
 		void Normalization(int startX, int startY, int endX, int endY, float normal[2])
