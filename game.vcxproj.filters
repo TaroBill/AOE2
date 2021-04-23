@@ -32,6 +32,9 @@
     <Filter Include="MyGame\GUI">
       <UniqueIdentifier>{6ec89df6-8fe7-4fa0-b6ab-4c721f0ed0e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame\GUI\button">
+      <UniqueIdentifier>{459cbac2-1c82-4a20-828c-20f2fee8bc74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp">
@@ -152,11 +155,11 @@
     <ClCompile Include="Source\GUI\EntityDataFrame.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI\Buttons\Button.cpp">
-      <Filter>MyGame\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp">
       <Filter>MyGame\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI\Buttons\Button.cpp">
+      <Filter>MyGame\GUI\button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,11 +239,20 @@
     <ClInclude Include="Source\GUI\EntityDataFrame.h">
       <Filter>MyGame\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI\Buttons\Button.h">
-      <Filter>MyGame\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GUI\EntityDataButtonFrame.h">
       <Filter>MyGame\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Buttons\Button.h">
+      <Filter>MyGame\GUI\button</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Buttons\Building_Button.h">
+      <Filter>MyGame\GUI\button</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Buttons\Military_Button.h">
+      <Filter>MyGame\GUI\button</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI\Buttons\House_Button.h">
+      <Filter>MyGame\GUI\button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

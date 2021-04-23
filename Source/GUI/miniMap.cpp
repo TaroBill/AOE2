@@ -3,7 +3,7 @@
 
 
 
-MiniMap::MiniMap() : Frame(SIZE_X - 240, SIZE_Y - 240, 240, 240){
+MiniMap::MiniMap() : Frame(SIZE_X - 240, SIZE_Y - 240, 240, 240) {
 	this->Name = "";
 	this->CurrentLocationX = 0;
 	this->CurrentLocationY = 0;
@@ -19,7 +19,7 @@ void MiniMap::OnShow() {
 	CurrentLocation.ShowBitmap();
 }
 
-void MiniMap::LoadBitmap() {
+void MiniMap::loadBitmap() {
 	texture.LoadBitmap(IDB_MINIMAP);
 	CurrentLocation.LoadBitmap(IDB_MiniMap_CL, RGB(0, 0, 0));
 }

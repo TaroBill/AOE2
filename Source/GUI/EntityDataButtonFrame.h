@@ -1,14 +1,21 @@
 #pragma once
 #include "Frame.h"
-#include <map>
+#include <vector>
+#include "Buttons/Building_Button.h"
+#include "Buttons/Military_Button.h"
+#include "Buttons/House_Button.h"
+
+
 class EntityDataButtonFrame : public Frame
 {
 public:
 	EntityDataButtonFrame();
 	~EntityDataButtonFrame();
-	void LoadBitmap() override;
+	void loadBitmap() override;
 	void onClicked(CPoint) override;
-private:
+	void OnShow();
 	void LoadVillagerButtons();
-	map<string, Button> buttons;
+	void LoadBuildingButtons();
+private:
+	vector<Button*> buttons;
 };

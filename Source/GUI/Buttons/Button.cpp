@@ -1,7 +1,14 @@
 #include "Button.h"
+#include "../../stdafx.h"
+#include "../../Resource.h"
+#include <mmsystem.h>
+#include <ddraw.h>
+#include "../../audio.h"
+#include "../../gamelib.h"
+#include "../GUI.h"
+using namespace game_framework;
 
-
-Button::Button(int X=0, int Y=0, int h=50, int w=50, bool en=true) {
+Button::Button(int X, int Y, int h = 50, int w = 50, bool en = true) {
 	init(X, Y, h, w, en);
 }
 
@@ -35,12 +42,13 @@ void Button::setLocation(int X, int Y) {
 	LocY = Y;
 }
 
-void Button::LoadBitmap() {
-	texture.LoadBitmap(IDB_7);
+void Button::OnShow() {
+	texture.SetTopLeft(LocX, LocY);
+	texture.ShowBitmap();
 }
 
-void Button::OnShow() {
-	texture.ShowBitmap();
+void Button::setEnable(bool b) {
+	enable = b;
 }
 
 bool Button::isEnable() {
@@ -52,8 +60,4 @@ bool Button::isInButton(CPoint p) {
 		return true;
 	}
 	return false;
-}
-
-void Button::onClicked() {
-	
 }
