@@ -306,7 +306,7 @@ namespace game_framework {
 		if (GUI::getInstance()->minimap.isInMiniMap(point.x, point.y)) {
 			World::getInstance()->setScreenLocation(GUI::getInstance()->minimap.MiniMapLoc2GlobalLoc(point));
 		}
-
+		GUI::getInstance()->triggerOnClicked(point);
 	}
 
 	void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作

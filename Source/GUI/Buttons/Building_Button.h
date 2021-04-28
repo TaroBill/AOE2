@@ -1,13 +1,12 @@
 #pragma once
 #include "Button.h"
-//#include "../GUI.h"
-//#include "../EntityDataButtonFrame.h"
+#include "../EntityDataButtonFrame.h"
 
 class Building_Button : public Button
 {
 
 public:
-	Building_Button() : Button(10, SIZE_Y - 300 + 10, 40, 40, true)
+	Building_Button() : Button(40, SIZE_Y - 240 + 40, 40, 40, true)
 	{
 		loadBitmap();
 	}
@@ -22,4 +21,5 @@ public:
 	void onClicked() override {
 		//GUI::getInstance()->entityDataButtonFrame.LoadBuildingButtons();
 	}
+private:
 };

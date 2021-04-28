@@ -5,7 +5,7 @@
 class Military_Button : public Button {
 
 public:
-	Military_Button() : Button(50, SIZE_Y - 300 + 50, 40, 40, true)
+	Military_Button() : Button(90, SIZE_Y - 240 + 40, 40, 40, true)
 	{
 		loadBitmap();
 	}

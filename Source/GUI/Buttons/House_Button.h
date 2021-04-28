@@ -5,7 +5,7 @@
 class House_Button : public Button {
 
 public:
-	House_Button() : Button(10, SIZE_Y - 300 + 10, 40, 40, true)
+	House_Button() : Button(40, SIZE_Y - 240 + 40, 40, 40, true)
 	{
 		loadBitmap();
 	}
