@@ -1,4 +1,5 @@
 #pragma once
+#include "StdAfx.h"
 #include "Entity.h"
 #include "UnitBase.h"
 #include "Navigator.h"
@@ -98,7 +99,7 @@ namespace Unit
 					carryResource.ResetType(tar->resource.type);
 					vs = VillagerState::GetResourceOnRoad;
 					///entityState = Entity::State::Extra;
-					GetComponent<Navigator>()->FindPath(target->pointX, target->pointY);
+					GetComponent<Navigator>()->FindPath(this->pointX,this->pointY,target->pointX, target->pointY);
 					break;
 
 				default:

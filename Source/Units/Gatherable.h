@@ -1,5 +1,6 @@
 #pragma once
-#include "../player/GameResource.h"
+#include "stdafx.h"
+#include "../Player/GameResource.h"
 namespace Unit
 {
 	class Gatherable :public UnitBase

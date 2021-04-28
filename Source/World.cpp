@@ -1,7 +1,8 @@
+#include "StdAfx.h"
 #include "World.h"
 #include "../Source/Units/Villager.h"
 #include "../Source/Units/UnitBase.h"
-#include "../Source/Units/Navigator.h"
+//#include "../Source/Units/Navigator.h"
 #include "../Source/Units/Entity.h"
 
 World* World::getInstance()
