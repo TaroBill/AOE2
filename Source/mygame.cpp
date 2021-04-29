@@ -248,9 +248,6 @@ namespace game_framework {
 		//
 		// 繼續載入其他資料
 		//
-		CAudio::Instance()->Load(AUDIO_DING, "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
-		CAudio::Instance()->Load(AUDIO_LAKE, "sounds\\lake.mp3");	// 載入編號1的聲音lake.mp3
-		CAudio::Instance()->Load(AUDIO_NTUT, "sounds\\ntut.mid");	// 載入編號2的聲音ntut.mid
 		//
 		// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
 		//
@@ -321,8 +318,8 @@ namespace game_framework {
 
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
-		testVillager->GetComponent<Unit::Navigator>()->FindPath(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-		
+		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -341,7 +338,7 @@ namespace game_framework {
 		//
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
-		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->pointX), World::getInstance()->GlobalY2ScreenY(testVillager->pointY));
+		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->point.x), World::getInstance()->GlobalY2ScreenY(testVillager->point.y));
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
 	}

@@ -158,6 +158,9 @@
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Units\Navigator.cpp">
+      <Filter>MyGame\Units\Leafs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
