@@ -99,6 +99,11 @@ void Unit::Navigator::Straight()
 	pathPoints.push_back(targetPoint);
 	pathDistances.push_back(GetLength(startPoint - targetPoint));
 }
+void Unit::Navigator::Straight(CPoint a, CPoint b)
+{
+	pathPoints.push_back(b);
+	pathDistances.push_back(GetLength(a - b));
+}
 
 //Astar尋路
 //將每個轉角or格子設為下個點
@@ -206,6 +211,8 @@ void Unit::Navigator::AStar()
 			{
 				pathDistances.push_back(GetLength(pathPoints.at(i)-pathPoints.at(i+1)));
 			}
+			Straight(pathPoints.back(),targetPoint);
+			pathDistances.push_back(GetLength(pathPoints.back()- targetPoint));
 			return;
 			//回傳(存放)路徑
 		}

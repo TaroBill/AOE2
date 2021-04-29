@@ -73,7 +73,9 @@ namespace Unit
 		//直線尋路
 		//直接將終點設為下個點
 		void Straight();
-
+		//直線尋路
+		//直接將終點設為下個點
+		void Straight(CPoint a,CPoint b);
 
 		//Astar尋路
 		//將每個轉角or格子設為下個點
