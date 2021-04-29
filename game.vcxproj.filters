@@ -158,8 +158,13 @@
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp">
       <Filter>MyGame\GUI</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Source\GUI\Buttons\Button.cpp">
       <Filter>MyGame\GUI\button</Filter>
+=======
+    <ClCompile Include="Source\Units\Navigator.cpp">
+      <Filter>MyGame\Units\Leafs</Filter>
+>>>>>>> origin/Navigator
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

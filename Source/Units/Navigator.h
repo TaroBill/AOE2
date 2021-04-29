@@ -1,10 +1,13 @@
 #pragma once
-#include "Entity.h"
 #include <vector>
+#include <map>
+#include <stack>
+#include <algorithm>
+#include "UnitBase.h"
+//using namespace std;
 
 namespace Unit
 {
-
 	class Navigator :public UnitBase
 	{
 	public:
@@ -35,95 +38,42 @@ namespace Unit
 		//正規化的下個點座標
 		float normalNextPoint[2];
 
+		//point2tile
+		int Point2Tile(int p);
+		//tile2point
+		int Tile2Point(int t);
+
 		//取得二維向量長度
-		float GetLength(int vectorX, int vectorY)
-		{
-			return static_cast<float>(sqrt(vectorX * vectorX + vectorY * vectorY));
-		}
+		float GetLength(int vectorX, int vectorY);
 		//取得二維向量長度
-		float GetLength(float vectorX, float vectorY)
-		{
-			return static_cast<float>(sqrt(vectorX * vectorX + vectorY * vectorY));
-		}
+		float GetLength(float vectorX, float vectorY);
 		//開始尋路
-		void Findpath(int targetPointX, int targetPointY)
+		void FindPath(int nowX,int nowY,int targetPointX, int targetPointY);
+		//利用Component找物件
+		template<typename T>
+		void FindEntityPath()
 		{
-			int nowX = GetParent<Entity>()->pointX;
-			int nowY = GetParent<Entity>()->pointY;
-			pathDistances.clear();
-			pathPointXs.clear();
-			pathPointYs.clear();
-			Straight(targetPointX, targetPointY);
-
-
+			
 		}
 		//正規化
-		void Normalization(int startX, int startY, int endX, int endY, float normal[2])
-		{
-			int deltaX = endX - startX;
-			int deltaY = endY - startY;
-			float l = GetLength(deltaX, deltaY);
-			normal[0] = deltaX / l;
-			normal[1] = deltaY / l;
-		}
+		void Normalization(int startX, int startY, int endX, int endY, float normal[2]);
 
 		//移動一步
-		void onMove(int* pointX, int* pointY)
-		{
-			if (pathDistances.size() > 0)
-			{
-				Normalization(*pointX, *pointY, pathPointXs.at(0), pathPointYs.at(0), normalNextPoint);
-
-				MoveStraight(pointX, pointY);
-				if (pathDistances.at(0) <= speedFixed)
-				{
-					pathDistances.pop_back();
-					pathPointXs.pop_back();
-					pathPointYs.pop_back();
-				}
-			}
-		}
+		//0路上
+		//1到達
+		//-1目前沒有路徑要進行
+		int onMove(int* pointX, int* pointY);
 		//直線移動
 		//往下個點直線走去
-		void MoveStraight(int* pointX, int* pointY)
-		{
-			counterXF += normalNextPoint[0] * speedFixed;
-			counterYF += normalNextPoint[1] * speedFixed;
-			*pointX += static_cast<int>(counterXF);
-			*pointY += static_cast<int>(counterYF);
-			pathDistances.at(0) = GetLength(pathPointXs.at(0) - *pointX, pathPointYs.at(0) - *pointY);
-			counterXF -= static_cast<int>(counterXF);
-			counterYF -= static_cast<int>(counterYF);
-		}
+		void MoveStraight(int* pointX, int* pointY);
 		//直線尋路
 		//直接將終點設為下個點
-		void Straight(int targetPointX, int targetPointY)
-		{
-			int nowX, nowY;
-			nowX = GetParent<Entity>()->pointX;
-			nowY = GetParent<Entity>()->pointY;
-			pathPointXs.push_back(targetPointX);
-			pathPointYs.push_back(targetPointY);
-			Normalization(nowX, nowY, targetPoint[0], targetPoint[1], normalNextPoint);
-			pathDistances.push_back(GetLength(nowX - targetPointX, nowY - targetPointY));
-		}
+		void Straight(int nowX,int nowY,int targetPointX, int targetPointY);
+
 		//Astar尋路
 		//將每個轉角or格子設為下個點
-		void AStar(int targetTileX, int targetTileY, int** tileMap)
-		{
-		}
+		void AStar(int targetPointX, int targetPointY);
 
-		Navigator()
-		{
-			speedFixed = 5;
-			counterXF = 0;
-			counterYF = 0;
-			for (int i = 0; i < 2; i++)
-			{
-				targetPoint[i] = { 0 };
-				targetTile[i] = { 0 };
-				normalNextPoint[i] = { 0 };
-			}
-		}
+		Navigator();
 	};
-}
+};

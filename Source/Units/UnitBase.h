@@ -24,6 +24,8 @@ namespace Unit
 		}
 	public:
 
+		//取得組件
+		//GetComponent<組件型別>()
 		template<typename T>
 		T* GetComponent()
 		{
@@ -34,19 +36,23 @@ namespace Unit
 		}
 
 
-
+		//新增組件時，請使用new
+		//AddComponent(new 組件型別())
 		virtual void AddComponent(UnitBase* component)
 		{
 			_components.push_back(component);
 			component->SetParent(this);
 		}
 
+		//刪除指定的同型別組件
+		//RemoveComponent<組件型別>()
 		template<typename T>
 		bool RemoveComponent()
 		{
 			for (unsigned int i = 0; i < _components.size(); i++)
 				if (dynamic_cast<T*>(_components.at(i)))
 				{
+					//做錯了，應該用erase直接刪除
 					_components.pop_back();
 					return true;
 				}

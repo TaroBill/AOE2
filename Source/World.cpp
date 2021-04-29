@@ -1,24 +1,32 @@
+#include "StdAfx.h"
 #include "World.h"
+#include "../Source/Units/Villager.h"
+#include "../Source/Units/UnitBase.h"
+//#include "../Source/Units/Navigator.h"
+#include "../Source/Units/Entity.h"
 
-World* World::getInstance() {
-	if (instance == nullptr) {
+World* World::getInstance()
+{
+	if (instance==nullptr)
+	{
 		instance = new World();
 	}
 	return instance;
 }
 
 
+
 void World::initMap() {
 	int resource[10][10] = { {1,1,1,0,0,0,0,1,1,1},
-						     {1,1,0,0,0,0,0,0,1,1},
-						     {1,0,0,0,0,0,0,0,0,1},
-						     {0,0,0,0,0,0,0,0,0,0},
+							 {1,1,0,0,0,0,0,0,1,1},
+							 {1,0,0,0,0,0,0,0,0,1},
+							 {0,0,0,0,0,0,0,0,0,0},
 							 {0,0,0,0,0,0,0,0,0,0},
 							 {0,0,0,0,0,0,0,0,0,0},
 							 {0,0,0,0,0,0,0,0,0,0},
 							 {1,0,0,0,0,0,0,0,0,1},
 							 {1,1,0,0,0,0,0,0,1,1},
-							 {1,1,1,0,0,0,0,1,1,1}};
+							 {1,1,1,0,0,0,0,1,1,1} };
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
 			int a = i / 12;
@@ -31,6 +39,7 @@ World::World() {
 	initMap();
 	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	sx = sy = 50 * 50; //¿Ã¹õ®y¼Ð
+
 }
 
 int World::getLocationItem(int x, int y) {

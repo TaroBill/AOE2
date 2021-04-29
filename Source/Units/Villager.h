@@ -1,21 +1,117 @@
 #pragma once
+#include "StdAfx.h"
 #include "Entity.h"
 #include "UnitBase.h"
 #include "Navigator.h"
+#include "Gatherable.h"
+#include "World.h"
 namespace Unit
 {
 	class Villager :public Entity
 	{
 	public:
+		enum class VillagerState
+		{
+			Base,
+			GetResourceOnRoad,//正在採集的路上
+			Gathering,//採集中
+			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
+
+		};
+		
+		VillagerState vs = VillagerState::Base;
+
+		int resourceCounter = 0;
+
+		//資源的攜帶上限
 		int carryLimit;
 		
-		//從礦場取得資源
+		//攜帶物
+		GameResource carryResource;
+
+		//鎖定的資源源地
+		Entity* resourcePlace;
+
+		//資源回收站點(還暫時沒有分出分支)
+		Entity* recyclePlace;
 
 		//把資源放到主城，讓對應的玩家增加資源
 		void ReturnResource()
 		{
-
+			TRACE("=========== now Return Resource =========== \n");
+			//目前僅實作歸零，並未實作將資源放到相對應的玩家身上
 		}
+
+		bool FindResouce()
+		{
+			TRACE("=========== now Find Resouce =========== \n");
+			return false;
+		}
+
+		bool FindRecyclingPlace()
+		{
+			TRACE("=========== now Find Recycling Place =========== \n");
+			return false;
+		}
+
+		//採集
+		void Gathering()
+		{
+			//應該有個counter累計值
+			//累計到應該獲得一點資源的時候才+1
+			//但先不管
+			this->carryResource.amount +=
+				resourcePlace->GetComponent<Gatherable>()->resource.GetResource();
+			
+		}
+
+
+		/*
+		點擊時觸發一次
+		選取村民後，點擊後判斷點是否為可採集資源後，判斷是什麼資源，不是動物就直接尋路到該點，是動物則判斷血量。
+		村民會存下當下鎖定的資源種類，以及資源來源、以及資源回收站，在帶滿後會尋路回最近的資源回收站，礦沒了，則會找尋其他的同種類礦物
+		*/
+		void SetTarget(Entity* target) override
+		{
+
+			Gatherable* tar = (*target).GetComponent<Gatherable>();
+
+			if (tar != nullptr)
+			{
+				switch (tar->resource.type)
+				{
+					resourcePlace = target;
+				case ResourceType::Meat://肉
+					//目標還活著，攻擊or種田
+					if (target->hp > 0)
+					{
+
+					}
+					else
+					{
+						carryResource.ResetType(tar->resource.type);
+					}
+					break;
+
+				case ResourceType::Wood://木頭
+				case ResourceType::Stone://石礦
+				case ResourceType::Gold://金礦
+					carryResource.ResetType(tar->resource.type);
+					vs = VillagerState::GetResourceOnRoad;
+					///entityState = Entity::State::Extra;
+					GetComponent<Navigator>()->FindPath(this->pointX,this->pointY,target->pointX, target->pointY);
+					break;
+
+				default:
+					break;
+				}
+			}
+			else
+			{
+				//沒找到
+			}
+		}
+
 
 		void SetBitmap() override
 		{
@@ -31,11 +127,74 @@ namespace Unit
 				}
 			}
 		}
+
+		void FSM(int navigatorState)
+		{
+			switch (vs)
+			{
+			case VillagerState::Base:
+				break;
+			case VillagerState::GetResourceOnRoad:
+				//到了
+				if (navigatorState == 1)
+				{
+					vs = VillagerState::Gathering;
+				}
+				break;
+			//採集中
+			case VillagerState::Gathering:
+				//採集
+				Gathering();
+				//若滿了
+				if (carryLimit == carryResource.amount)
+				{
+					//就找地方放
+					if (FindRecyclingPlace())//找到
+					{
+
+
+						//切換狀態至放資源的路上
+						vs = VillagerState::ReturnResourceOnRoad;
+					}
+					else//沒找到，發呆
+					{
+						vs = VillagerState::Base;
+						entityState = Entity::State::Idle;
+
+					}
+				}
+				break;
+
+			case VillagerState::ReturnResourceOnRoad:
+				
+				if (navigatorState == 1)
+				{
+					//放資源
+					ReturnResource();
+
+					if (FindResouce())//找到
+					{
+						vs = VillagerState::GetResourceOnRoad;
+					}
+					else//沒找到，發呆
+					{
+						vs = VillagerState::Base;
+						entityState = Entity::State::Idle;
+					}
+				}
+				break;
+
+
+			default:
+				break;
+			}
+		}
+
+
 		void onMove() override
 		{
-			animations[entityState][faceDirection].OnMove();
-			GetComponent<Navigator>()->onMove(&pointX,&pointY);
-			//TRACE("now at:%d,%d\n", pointX, pointY);
+			int navigatorState = GetComponent<Navigator>()->onMove(&pointX, &pointY);
+			//FSM(navigatorState);
 		}
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{
