@@ -2,12 +2,11 @@
 
 EntityDataButtonFrame::EntityDataButtonFrame() : Frame(0, SIZE_Y - 240, 240, 300)
 {
-	LoadVillagerButtons();
 }
 
 EntityDataButtonFrame::~EntityDataButtonFrame()
 {
-
+	freeButtons();
 }
 
 void EntityDataButtonFrame::loadBitmap() {
@@ -35,13 +34,24 @@ void EntityDataButtonFrame::onClicked(CPoint p) {
 	}
 }
 
+void EntityDataButtonFrame::LoadEmpty() {
+	freeButtons();
+}
+
 void EntityDataButtonFrame::LoadVillagerButtons() {
-	buttons.clear();
+	freeButtons();
 	buttons.push_back(new Building_Button());
 	buttons.push_back(new Military_Button());
 }
 
 void EntityDataButtonFrame::LoadBuildingButtons() {
-	buttons.clear();
+	freeButtons();
 	buttons.push_back(new House_Button());
+}
+
+void EntityDataButtonFrame::freeButtons() {
+	for (unsigned int i = 0; i < buttons.size(); i++) {
+		delete buttons[i];
+	}
+	buttons.clear();
 }

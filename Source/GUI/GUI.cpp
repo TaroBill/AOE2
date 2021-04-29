@@ -34,6 +34,12 @@ bool GUI::isInGUI(int x, int y) {
 	return false;
 }
 
+bool GUI::isInGUI(CPoint p) {
+	if (minimap.isInFrame(p.x, p.y) || entityDataButtonFrame.isInFrame(p.x, p.y) || entityDataFrame.isInFrame(p.x, p.y) || resourceFrame.isInFrame(p.x, p.y))
+		return true;
+	return false;
+}
+
 void GUI::triggerOnClicked(CPoint p) {
 	if (entityDataButtonFrame.isInFrame(p)) {
 		entityDataButtonFrame.onClicked(p);
@@ -45,7 +51,7 @@ void GUI::triggerOnClicked(CPoint p) {
 		resourceFrame.onClicked(p);
 	}
 	if (minimap.isInFrame(p)) {
-		minimap.onClicked(p);
+		World::getInstance()->setScreenLocation(minimap.MiniMapLoc2GlobalLoc(p));
 	}
 }
 

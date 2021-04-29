@@ -119,7 +119,7 @@ namespace Unit
 			{
 				for (int s = 0; s < 15; s++)
 				{
-					string str = ".\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
+					string str = "..\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
 					State es = State::Idle;
 					Direction d = static_cast<Direction>(dire);
 

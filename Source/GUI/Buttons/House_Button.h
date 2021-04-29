@@ -1,6 +1,6 @@
 #pragma once
 #include "Button.h"
-
+#include "../../World.h"
 
 class House_Button : public Button {
 
@@ -18,6 +18,6 @@ public:
 	}
 
 	void onClicked() override {
-
+		World::getInstance()->spawningEntity(IDB_VILLAGER000);
 	}
 };

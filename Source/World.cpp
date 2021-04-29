@@ -72,6 +72,11 @@ void World::OnShow() {
 			}
 		}
 	}
+	if (World::getInstance()->isSpawningEntity) {
+		//TRACE("Mouse monitor Location: (%d, %d)\n", mouseLocation.x, mouseLocation.y);
+		World::getInstance()->spawningEntityBitmap.SetTopLeft(mouseLocation.x, mouseLocation.y);
+		World::getInstance()->spawningEntityBitmap.ShowBitmap();
+	}
 }
 void World::onMove() {
 	if (isMovingDown == true) {
@@ -155,6 +160,10 @@ int World::ScreenY2GlobalY(int y) {
 	return y + sy;
 }
 
+CPoint World::Screen2Global(CPoint p) {
+	return CPoint(p.x + sx, p.y + sy);
+}
+
 int World::getScreenX() {
 	return sx;
 }
@@ -202,6 +211,37 @@ void World::setScreenLocation(CPoint point) {
 void World::spwanVillager(int x, int y) {
 	Unit::Villager *v = new Unit::Villager(x, y);
 	unit.push_back(v);
+}
+
+void World::spwanVillager(CPoint p) {
+	Unit::Villager* v = new Unit::Villager(p.x, p.y);
+	unit.push_back(v);
+}
+
+
+vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
+	vector<Unit::Entity*> output;
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		if ((unit[i]->pointX >= p1.x && unit[i]->pointX <= p2.x && unit[i]->pointY >= p1.y && unit[i]->pointY <= p2.y) || (unit[i]->pointX >= p2.x && unit[i]->pointX <= p1.x && unit[i]->pointY >= p2.y && unit[i]->pointY <= p1.y)) {
+			output.push_back(unit[i]);
+			//TRACE("Entity: %d\n", i);
+		}
+	}
+	return output;
+}
+
+void World::spawningEntity(int bitmap) {
+	CMovingBitmap MB;
+	MB.LoadBitmap(bitmap, RGB(255, 255, 255));
+	spawningEntityBitmap = MB;
+	switch (bitmap){
+	case IDB_VILLAGER000:
+		spawningEntityType = Villager;
+		break;
+	default:
+		break;
+	}
+	isSpawningEntity = true;
 }
 
 World* World::instance;

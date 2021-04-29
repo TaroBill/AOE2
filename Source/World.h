@@ -13,6 +13,9 @@
 
 
 	enum mapItem { GRASS, RIVER };
+	enum EntityTypes {
+		Villager = 10000
+	};
 	class World {
 	public:
 		static World* getInstance();
@@ -24,6 +27,7 @@
 		int getScreenY();								//取得sy，螢幕最左上點座標y
 		int ScreenX2GlobalX(int);						//將取得的螢幕座標X 轉世界座標X
 		int ScreenY2GlobalY(int);						//將取得的螢幕座標Y 轉世界座標Y
+		CPoint Screen2Global(CPoint);
 		int GlobalX2ScreenX(int);						//將取得的世界座標X 轉螢幕座標X
 		int GlobalY2ScreenY(int);						//將取得的世界座標Y 轉螢幕座標Y
 		int getLocationItem(int, int);					//取得X, Y上的物件(障礙物)
@@ -38,7 +42,14 @@
 		void UnitOnMove();								//移動單位
 		void UnitOnShow();								//顯示單位
 		bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
-		void spwanVillager(int, int);
+		void spwanVillager(int, int);					//生成村民在座標
+		void spwanVillager(CPoint);					//生成村民在座標
+		vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
+		void spawningEntity(int);
+		bool isSpawningEntity = false;
+		CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
+		int spawningEntityType;
+		CPoint mouseLocation;
 	private:
 		static World* instance;
 		vector<Unit::Entity*> unit;

@@ -55,6 +55,7 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
+
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -99,6 +100,7 @@ namespace game_framework {
 		int counter = 0;//測試用村民用來測試旋轉的int
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	help;		// 說明圖
+		CPoint LButtonDownPoint;
 		
 	};
 

@@ -386,7 +386,7 @@ IDB_HOUSE_BUTTON        BITMAP                  "..\\RES\\Button_Icon\\House.bmp
 
 IDB_LUMBERCAMP_BUTTON   BITMAP                  "..\\RES\\Button_Icon\\LumberCamp.bmp"
 
-IDB_MILITARY_BUTTON     BITMAP                  "..\\AOE2\\RES\\Button_Icon\\Military.bmp"
+IDB_MILITARY_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Military.bmp"
 
 IDB_MILL_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Mill.bmp"
 

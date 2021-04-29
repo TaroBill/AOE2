@@ -20,6 +20,7 @@ public:
 	void loadBitmap();
 	void onShow();
 	bool isInGUI(int, int);
+	bool isInGUI(CPoint);
 	void triggerOnClicked(CPoint);
 	MiniMap minimap;
 	ResourceFrame resourceFrame;

@@ -16,8 +16,10 @@ public:
 	void loadBitmap() override;
 	void onClicked(CPoint) override;
 	void OnShow();
+	void LoadEmpty();
 	void LoadVillagerButtons();
 	void LoadBuildingButtons();
+	void freeButtons();
 private:
 	vector<Button*> buttons;
 };
