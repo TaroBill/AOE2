@@ -61,8 +61,8 @@ namespace Unit
 		int playerId;
 
 		//點座標
-		int pointX, pointY;
-
+		//int pointX, pointY;
+		CPoint point;
 		//為0時是角色單位，大於1為建築
 		int sizeXY;
 
@@ -70,8 +70,8 @@ namespace Unit
 		int hp;
 		int maxHP;
 
-		int GetTileX() { return pointX / 50; }
-		int GetTileY() { return pointY / 50; }
+		int GetTileX() { return point.x / 50; }
+		int GetTileY() { return point.y / 50; }
 		int Point2Tile(int p) { return p / 50; }
 		int Tile2Point(int t) { return t / 50; }
 
@@ -93,9 +93,6 @@ namespace Unit
 		Entity()
 		{
 			this->playerId = 0;
-
-			this->pointX = 0;
-			this->pointY = 0;
 			this->sizeXY = 0;
 			this->maxHP = 0;
 			this->hp = this->maxHP;;
@@ -105,15 +102,23 @@ namespace Unit
 		Entity(int pointX, int pointY) :Entity()
 		{
 			this->playerId = 0;
-			this->pointX = 0;
-			this->pointY = 0;
 			this->sizeXY = 0;
 			this->maxHP = 0;
 			this->hp = this->maxHP;;
 			this->entityState = State::Idle;
 			this->faceDirection = Direction::Down;
-			this->pointX = pointX;
-			this->pointY = pointY;
+			this->point.x = pointX;
+			this->point.y = pointY;
+		}
+		Entity(CPoint point) :Entity()
+		{
+			this->playerId = 0;
+			this->sizeXY = 0;
+			this->maxHP = 0;
+			this->hp = this->maxHP;;
+			this->entityState = State::Idle;
+			this->faceDirection = Direction::Down;
+			this->point = point;
 		}
 	};
 }

@@ -116,8 +116,8 @@ void World::UnitOnMove() {
 
 void World::UnitOnShow() {
 	for (unsigned int i = 0; i < unit.size(); i++) {
-		if (isOnScreen(unit[i]->pointX, unit[i]->pointY)) {
-			unit[i]->onShow(GlobalX2ScreenX(unit[i]->pointX), GlobalY2ScreenY(unit[i]->pointY));
+		if (isOnScreen(unit[i]->point.x, unit[i]->point.y)) {
+			unit[i]->onShow(GlobalX2ScreenX(unit[i]->point.x), GlobalY2ScreenY(unit[i]->point.y));
 		}
 	}
 }
