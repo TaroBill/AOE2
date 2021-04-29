@@ -32,7 +32,7 @@ namespace Unit
 		CPoint targetTile;
 
 		//路徑點座標
-		vector <CPoint*> pathPoints;
+		vector <CPoint> pathPoints;
 
 		//路徑長
 		vector<float> pathDistances;

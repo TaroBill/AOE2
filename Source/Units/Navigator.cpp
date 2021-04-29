@@ -26,10 +26,12 @@ CPoint Unit::Navigator::Tile2Point(CPoint p)
 	return np;
 };
 
+
 //取得二維向量長度
 float Unit::Navigator::GetLength(CPoint p)
 {
-	return static_cast<float>(sqrt(p.x * p.x + p.y * p.y));
+	float temp = static_cast<float>(sqrt(p.x * p.x + p.y * p.y));
+	return temp>0 ? temp : 1;
 }
 //正規化
 void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
@@ -53,20 +55,12 @@ void Unit::Navigator::MoveStraight(CPoint* point)
 	//角色位移浮點數counter的整數部分
 	*point += CPoint(static_cast<int>(counterF[0]), static_cast<int>(counterF[1]));
 	//計算與下一個點的距離
-	pathDistances.at(0) = GetLength((*(pathPoints.at(0))) - *point);
+	pathDistances.at(0) = GetLength(((pathPoints.at(0))) - *point);
 	//浮點數counter的整數部分去除
 	for (unsigned int i = 0; i < 2; i++)counterF[i] -= static_cast<int>(counterF[i]);
 }
 
-//直線尋路
-//直接將終點設為下個點
 
-void Unit::Navigator::Straight()
-{
-	pathPoints.push_back(&targetPoint);
-	Normalization(startPoint, targetPoint,normalNextPoint);
-	pathDistances.push_back(GetLength(startPoint - targetPoint));
-}
 
 
 //移動一步
@@ -79,13 +73,14 @@ int Unit::Navigator::onMove(CPoint* point)
 	{
 		TRACE("(%f,%f) %f\n", normalNextPoint[0], normalNextPoint[1], pathDistances.at(0));
 		//GetParent<Entity>()->entityState = Entity::State::Move;
-		Normalization(*point, *(pathPoints.at(0)), normalNextPoint);
+		Normalization(*point, (pathPoints.front()), normalNextPoint);
 
 		MoveStraight(point);
-		if (pathDistances.at(0) <= speedFixed)
+		if (pathDistances.front() <= speedFixed)
 		{
-			pathDistances.pop_back();
-			pathPoints.pop_back();
+			
+			pathDistances.erase(pathDistances.begin());
+			pathPoints.erase(pathPoints.begin());
 			return 1;
 		}
 		return 0;
@@ -97,11 +92,19 @@ int Unit::Navigator::onMove(CPoint* point)
 	}
 }
 
+//直線尋路
+//直接將終點設為下個點
+void Unit::Navigator::Straight()
+{
+	pathPoints.push_back(targetPoint);
+	pathDistances.push_back(GetLength(startPoint - targetPoint));
+}
+
 //Astar尋路
 //將每個轉角or格子設為下個點
 void Unit::Navigator::AStar()
 {
-
+	
 	
 	vector<CPoint*> close;//封閉list，存放已經被走訪的點
 	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
@@ -122,7 +125,7 @@ void Unit::Navigator::AStar()
 	{
 		int minIndex = 0, minValue = INT32_MAX;
 		//在openList中找最小值的CPoint作為這圈的開始
-		#pragma region FindMin
+#pragma region FindMin
 
 
 		for (unsigned int i = 0; i < open.size(); i++)
@@ -134,26 +137,27 @@ void Unit::Navigator::AStar()
 				minIndex = i;
 			}
 		}
-		#pragma endregion
+#pragma endregion
 		cp = open.at(minIndex);//起點變成有最小值f的點
 		//周圍八方向的點
-		for ( int y = -1; y <= 1; y++)
+		for (int y = -1; y <= 1; y++)
 		{
-			for ( int x = -1; x <= 1; x++)
+			for (int x = -1; x <= 1; x++)
 			{
 				if (!(y == 0 && x == 0))//非自己
 				{
-					CPoint* newPoint =new CPoint(cp->x + x, cp->y + y);
+					CPoint* newPoint = new CPoint(cp->x + x, cp->y + y);
 					if (std::find(close.begin(), close.end(), newPoint) == close.end())//非在close list
 					{
 						//目前到這裡的cost
 						int newGScore = gScore[cp] + 1;
 
 						//評估cost
-						
-						int isObstacle = World::getInstance()->getLocationItem((*newPoint).x,(*newPoint).y);
+
+						int canPass = World::getInstance()->getLocationItem((*newPoint).x, (*newPoint).y);
+						canPass = 1 - canPass;
 						//曼哈頓距離預測
-						int newHScore = 1000 * isObstacle + (abs(targetPoint.x-(*newPoint).x)+abs(targetPoint.y-(*newPoint).y));
+						int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
 
 						int newFScore = newGScore + newHScore;
 
@@ -171,7 +175,7 @@ void Unit::Navigator::AStar()
 		close.push_back(cp);
 		//cp從open list中刪除
 		auto it = open.begin();
-		for(unsigned int i=0;i<open.size();it++,i++)
+		for (unsigned int i = 0; i < open.size(); it++, i++)
 		{
 			if (*it == cp)
 			{
@@ -181,9 +185,27 @@ void Unit::Navigator::AStar()
 		}
 
 
-		
-		if (*cp == targetPoint)//到了
+
+		if (*cp == targetTile)//到了
 		{
+			stack<CPoint>stackPath;
+			while (true)
+			{
+				stackPath.push(*cp);
+				if (*cp == startTile)break;
+				cp = come_from[cp];
+			}
+			unsigned int s = stackPath.size();
+			for (unsigned int i = 0; i < s; i++)
+			{
+				pathPoints.push_back(Tile2Point(stackPath.top()));
+				stackPath.pop();
+
+			}
+			for (unsigned int i = 0; i < pathPoints.size()-1; i++)
+			{
+				pathDistances.push_back(GetLength(pathPoints.at(i)-pathPoints.at(i+1)));
+			}
 			return;
 			//回傳(存放)路徑
 		}
@@ -195,11 +217,13 @@ void Unit::Navigator::AStar()
 void Unit::Navigator::FindPath(CPoint targetPoint)
 {
 	startPoint = GetParent<Entity>()->point;
+	startTile = GetParent<Entity>()->GetTile();
 	pathPoints.clear();
 	pathDistances.clear();
 	this->targetPoint = targetPoint;
 	targetTile = Point2Tile(targetPoint);
-	Straight();
+	AStar();
+	//Straight();
 }
 
 Unit::Navigator::Navigator()

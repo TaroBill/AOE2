@@ -72,6 +72,7 @@ namespace Unit
 
 		int GetTileX() { return point.x / 50; }
 		int GetTileY() { return point.y / 50; }
+		CPoint GetTile() { return CPoint(GetTileX(), GetTileY()); }
 		int Point2Tile(int p) { return p / 50; }
 		int Tile2Point(int t) { return t / 50; }
 
