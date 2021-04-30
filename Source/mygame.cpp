@@ -341,10 +341,17 @@ namespace game_framework {
 
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+
 		if (World::getInstance()->isSpawningEntity) {
 			World::getInstance()->isSpawningEntity = false;
 		}
 		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+
+		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
+		TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
+		TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
+
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -360,7 +367,12 @@ namespace game_framework {
 		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
 		//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
 		//
-		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->pointX), World::getInstance()->GlobalY2ScreenY(testVillager->pointY));
+
+		//
+		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
+		//
+		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->point.x), World::getInstance()->GlobalY2ScreenY(testVillager->point.y));
+
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
 	}

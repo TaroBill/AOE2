@@ -1,10 +1,9 @@
 #pragma once
-#include "StdAfx.h"
 #include "Entity.h"
 #include "UnitBase.h"
 #include "Navigator.h"
 #include "Gatherable.h"
-#include "World.h"
+#include "../World.h"
 namespace Unit
 {
 	class Villager :public Entity
@@ -99,7 +98,7 @@ namespace Unit
 					carryResource.ResetType(tar->resource.type);
 					vs = VillagerState::GetResourceOnRoad;
 					///entityState = Entity::State::Extra;
-					GetComponent<Navigator>()->FindPath(this->pointX,this->pointY,target->pointX, target->pointY);
+					GetComponent<Navigator>()->FindPath(target->point);
 					break;
 
 				default:
@@ -193,7 +192,7 @@ namespace Unit
 
 		void onMove() override
 		{
-			int navigatorState = GetComponent<Navigator>()->onMove(&pointX, &pointY);
+			int navigatorState = GetComponent<Navigator>()->onMove(&point);
 			//FSM(navigatorState);
 		}
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
@@ -202,6 +201,13 @@ namespace Unit
 			AddComponent(n);
 			carryLimit = 10;
 
+			SetBitmap();
+		}
+		Villager(CPoint point):Entity(point)
+		{
+			Navigator* n = new Navigator();
+			AddComponent(n);
+			carryLimit = 10;
 			SetBitmap();
 		}
 		Villager()
