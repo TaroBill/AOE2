@@ -117,5 +117,9 @@ namespace Unit
 			Init();
 			this->point = point;
 		}
+		~Entity()
+		{
+			delete this;
+		}
 	};
 }

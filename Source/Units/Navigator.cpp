@@ -135,9 +135,9 @@ void Unit::Navigator::AStar()
 		for (unsigned int i = 0; i < open.size(); i++)
 		{
 			//比最小值還小
-			if (fScore[open.at(i)] < minValue)
+			if (fScore[open[i]] < minValue)
 			{
-				minValue = fScore[open.at(i)];
+				minValue = fScore[open[i]];
 				minIndex = i;
 			}
 		}
@@ -154,7 +154,7 @@ void Unit::Navigator::AStar()
 					bool continueFlag = false;
 					for (unsigned i = 0; i < close.size(); i++)
 					{
-						if (*close.at(i) == *newPoint)
+						if (*close[i] == *newPoint)
 						{
 							continueFlag = true;
 							break;
@@ -215,13 +215,24 @@ void Unit::Navigator::AStar()
 				stackPath.pop();
 
 			}
-			for (unsigned int i = 0; i < pathPoints.size()-1; i++)
+			for (unsigned int i = 0; i < pathPoints.size() - 1; i++)
 			{
-				pathDistances.push_back(GetLength(pathPoints.at(i)-pathPoints.at(i+1)));
+				pathDistances.push_back(GetLength(pathPoints[i] - pathPoints[i + 1]));
 			}
-			Straight(pathPoints.back(),targetPoint);
-			pathDistances.push_back(GetLength(pathPoints.back()- targetPoint));
+			Straight(pathPoints.back(), targetPoint);
+			pathDistances.push_back(GetLength(pathPoints.back() - targetPoint));
+
+			for (unsigned int i = 0; i < close.size(); i++)
+				delete close[i];
+			for (unsigned int i = 0; i < open.size(); i++)
+				delete open[i];
+			gScore.clear();
+			hScore.clear();
+			fScore.clear();
+			come_from.clear();
+
 			return;
+
 			//回傳(存放)路徑
 		}
 	}
