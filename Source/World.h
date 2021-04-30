@@ -8,6 +8,7 @@
 #include "gamelib.h"
 #include <Vector>
 #include "Units/Villager.h"
+#include "Units/Navigator.h"
 
 
 
@@ -50,6 +51,7 @@
 		CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
 		int spawningEntityType;
 		CPoint mouseLocation;
+		void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
 	private:
 		static World* instance;
 		vector<Unit::Entity*> unit;

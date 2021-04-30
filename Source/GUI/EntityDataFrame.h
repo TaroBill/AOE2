@@ -16,4 +16,5 @@ public:
 	void clearEntitysBitmap();
 private:
 	vector<CMovingBitmap> entitys;
+	Unit::Entity* showDataEntity;
 };

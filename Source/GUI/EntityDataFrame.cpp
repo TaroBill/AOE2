@@ -23,6 +23,9 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		}
 		entitys[i].SetTopLeft(firstLocation.x + i%20 * 40, firstLocation.y + (int)(i / 20) * 40);
 	}
+	if (entitys.size() == 1) {
+		showDataEntity = en[0];
+	}
 }
 
 void EntityDataFrame::clearEntitysBitmap() {
@@ -33,6 +36,19 @@ void EntityDataFrame::OnShow() {
 	Frame::OnShow();
 	for (unsigned int i = 0; i < entitys.size(); i++) {
 		entitys[i].ShowBitmap();
+	}
+	if (entitys.size() == 1) {
+		CDC* pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
+		CFont f, * fp;
+		f.CreatePointFont(80, "Times New Roman");	// 產生 font f; 160表示16 point的字
+		fp = pDC->SelectObject(&f);					// 選用 font f
+		pDC->SetBkColor(RGB(0, 0, 0));
+		pDC->SetTextColor(RGB(255, 255, 0));
+		char str[80];								// Demo 數字對字串的轉換
+		sprintf(str, "HP: (%d / %d)", showDataEntity->hp, showDataEntity->maxHP);
+		pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
+		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 	}
 }
 

@@ -187,7 +187,7 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	CGameStateRun::CGameStateRun(CGame* g)
-		: CGameState(g), NUMBALLS(28)
+		: CGameState(g)
 	{
 		
 	}
@@ -203,7 +203,6 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
 
-		testVillager = new Unit::Villager(3000, 3000);
 
 
 	}
@@ -224,7 +223,6 @@ namespace game_framework {
 
 		World::getInstance()->UnitOnMove();
 		//Test
-		testVillager->onMove();
 	}
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -321,7 +319,7 @@ namespace game_framework {
 		}
 		CPoint LButtonUpPoint = World::getInstance()->Screen2Global(point);
 		//("(%d, %d), (%d, %d)\n", LButtonDownPoint.x, LButtonDownPoint.y, LButtonUpPoint.x, LButtonUpPoint.y);
-		vector<Unit::Entity*> LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
+		LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
 		if (!LE.empty()) {
 			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(LE);
 			if (typeid(Unit::Villager) == typeid(*LE[0])) {
@@ -344,13 +342,13 @@ namespace game_framework {
 
 		if (World::getInstance()->isSpawningEntity) {
 			World::getInstance()->isSpawningEntity = false;
+			return;
 		}
 		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 
-		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
-		TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
-		TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
+		World::getInstance()->moveEntityToLocation(LE, point);
+		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
+		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
 
 	}
 
@@ -371,7 +369,6 @@ namespace game_framework {
 		//
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
-		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->point.x), World::getInstance()->GlobalY2ScreenY(testVillager->point.y));
 
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
