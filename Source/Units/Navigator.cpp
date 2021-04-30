@@ -161,17 +161,13 @@ void Unit::Navigator::AStar()
 						}
 					}
 					if (continueFlag)continue;
-					TRACE("%d,%d\n", (*newPoint).x, (*newPoint).y);
 
 					//目前到這裡的cost
 					int newGScore = gScore[cp] + 1;
 
 					//評估cost
 					int canPass = World::getInstance()->getLocationItem((*newPoint).x * 50, (*newPoint).y * 50);
-					if ((*newPoint).x == 60 && (*newPoint).y == 60)
-					{
-						TRACE("%d\n", canPass);
-					}
+
 					//canPass = 1 - canPass;
 					//曼哈頓距離預測
 					int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
@@ -234,6 +230,13 @@ void Unit::Navigator::AStar()
 //開始尋路
 void Unit::Navigator::FindPath(CPoint targetPoint)
 {
+	int canPass = World::getInstance()->getLocationItem(targetPoint.x, targetPoint.y);
+
+	if (canPass)
+	{
+		TRACE("Find Path Fail\n");
+		return;
+	}
 	startPoint = GetParent<Entity>()->point;
 	startTile = GetParent<Entity>()->GetTile();
 	pathPoints.clear();
