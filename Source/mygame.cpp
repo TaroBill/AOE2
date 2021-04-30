@@ -205,6 +205,7 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
 
 		testVillager = new Unit::Villager(3000, 3000);
+		townCenter = new Unit::TownCenter(3000, 3000);
 
 
 	}
@@ -319,7 +320,9 @@ namespace game_framework {
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
 		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
+		testVillager->SetTarget(clickPoint);
+		//testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
+		testVillager->GetComponent<Unit::Gatherable>()->resource;
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -338,7 +341,6 @@ namespace game_framework {
 		//
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
-		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->point.x), World::getInstance()->GlobalY2ScreenY(testVillager->point.y));
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
 	}

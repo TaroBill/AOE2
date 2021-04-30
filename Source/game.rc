@@ -372,6 +372,7 @@ IDB_DATABACKGROUND      BITMAP                  "..\\RES\\EntityDataBackGround.b
 
 IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
 
+IDB_TOWNCENTER			BITMAP                  "..\\RES\\Building\\TownCenter.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
