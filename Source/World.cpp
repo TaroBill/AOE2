@@ -222,7 +222,7 @@ void World::spwanVillager(CPoint p) {
 vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 	vector<Unit::Entity*> output;
 	for (unsigned int i = 0; i < unit.size(); i++) {
-		if ((unit[i]->pointX >= p1.x && unit[i]->pointX <= p2.x && unit[i]->pointY >= p1.y && unit[i]->pointY <= p2.y) || (unit[i]->pointX >= p2.x && unit[i]->pointX <= p1.x && unit[i]->pointY >= p2.y && unit[i]->pointY <= p1.y)) {
+		if ((unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y)) {
 			output.push_back(unit[i]);
 			//TRACE("Entity: %d\n", i);
 		}
