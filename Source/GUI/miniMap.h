@@ -10,11 +10,13 @@
 #include "Frame.h"
 
 using namespace game_framework;
-class MiniMap  : public Frame{
+
+
+class MiniMap : public Frame {
 public:
 	MiniMap();
 	~MiniMap();
-	void LoadBitmap() override;
+	void loadBitmap() override;
 	void OnShow();
 	MiniMap(int, int, string);
 	bool isInMiniMap(int, int);

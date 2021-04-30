@@ -135,9 +135,9 @@ void Unit::Navigator::AStar()
 		for (unsigned int i = 0; i < open.size(); i++)
 		{
 			//比最小值還小
-			if (fScore[open.at(i)] < minValue)
+			if (fScore[open[i]] < minValue)
 			{
-				minValue = fScore[open.at(i)];
+				minValue = fScore[open[i]];
 				minIndex = i;
 			}
 		}
@@ -154,24 +154,20 @@ void Unit::Navigator::AStar()
 					bool continueFlag = false;
 					for (unsigned i = 0; i < close.size(); i++)
 					{
-						if (*close.at(i) == *newPoint)
+						if (*close[i] == *newPoint)
 						{
 							continueFlag = true;
 							break;
 						}
 					}
 					if (continueFlag)continue;
-					TRACE("%d,%d\n", (*newPoint).x, (*newPoint).y);
 
 					//目前到這裡的cost
 					int newGScore = gScore[cp] + 1;
 
 					//評估cost
 					int canPass = World::getInstance()->getLocationItem((*newPoint).x * 50, (*newPoint).y * 50);
-					if ((*newPoint).x == 60 && (*newPoint).y == 60)
-					{
-						TRACE("%d\n", canPass);
-					}
+
 					//canPass = 1 - canPass;
 					//曼哈頓距離預測
 					int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
@@ -219,13 +215,24 @@ void Unit::Navigator::AStar()
 				stackPath.pop();
 
 			}
-			for (unsigned int i = 0; i < pathPoints.size()-1; i++)
+			for (unsigned int i = 0; i < pathPoints.size() - 1; i++)
 			{
-				pathDistances.push_back(GetLength(pathPoints.at(i)-pathPoints.at(i+1)));
+				pathDistances.push_back(GetLength(pathPoints[i] - pathPoints[i + 1]));
 			}
-			Straight(pathPoints.back(),targetPoint);
-			pathDistances.push_back(GetLength(pathPoints.back()- targetPoint));
+			Straight(pathPoints.back(), targetPoint);
+			pathDistances.push_back(GetLength(pathPoints.back() - targetPoint));
+
+			for (unsigned int i = 0; i < close.size(); i++)
+				delete close[i];
+			for (unsigned int i = 0; i < open.size(); i++)
+				delete open[i];
+			gScore.clear();
+			hScore.clear();
+			fScore.clear();
+			come_from.clear();
+
 			return;
+
 			//回傳(存放)路徑
 		}
 	}
@@ -234,6 +241,13 @@ void Unit::Navigator::AStar()
 //開始尋路
 void Unit::Navigator::FindPath(CPoint targetPoint)
 {
+	int canPass = World::getInstance()->getLocationItem(targetPoint.x, targetPoint.y);
+
+	if (canPass)
+	{
+		TRACE("Find Path Fail\n");
+		return;
+	}
 	startPoint = GetParent<Entity>()->point;
 	startTile = GetParent<Entity>()->GetTile();
 	pathPoints.clear();

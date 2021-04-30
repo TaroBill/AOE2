@@ -59,6 +59,19 @@ namespace Unit
 			return false;
 		}
 
+		void RemoveComponents(vector<UnitBase*> components)
+		{
+			for (unsigned int i = 0; i < components.size(); i++)
+			{
+				if (components.at(i)->_components.size() > 0)
+				{
+					RemoveComponents(components.at(i)->_components);
+				}
+				delete components.at(i);
+			}
+			components.clear();
+		}
+
 		template<typename T>
 		T* GetParent()
 		{
@@ -67,10 +80,12 @@ namespace Unit
 		UnitBase()
 		{
 		}
-
+		
 		~UnitBase()
 		{
-
+			RemoveComponents(_components);
+			
 		}
+		
 	};
 }

@@ -58,7 +58,6 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
-
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
@@ -188,9 +187,9 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	CGameStateRun::CGameStateRun(CGame* g)
-		: CGameState(g), NUMBALLS(28)
+		: CGameState(g)
 	{
-		
+
 	}
 
 	CGameStateRun::~CGameStateRun()
@@ -204,7 +203,7 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
 
-		testVillager = new Unit::Villager(3000, 3000);
+
 
 
 	}
@@ -225,13 +224,12 @@ namespace game_framework {
 
 		World::getInstance()->UnitOnMove();
 		//Test
-		testVillager->onMove();
 	}
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	{
 		World::getInstance()->LoadBitmap();
-		GUI::getInstance()->LoadBitmap();
+		GUI::getInstance()->loadBitmap();
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -299,29 +297,60 @@ namespace game_framework {
 
 	void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		LButtonDownPoint = World::getInstance()->Screen2Global(point);
+		if (GUI::getInstance()->isInGUI(point)) {
+			GUI::getInstance()->triggerOnClicked(point);
+			return;
+		}
+		if (World::getInstance()->isSpawningEntity) {
+			switch (World::getInstance()->spawningEntityType) {
+			case Villager:
+				World::getInstance()->spwanVillager(LButtonDownPoint);
+				break;
+			}
+		}
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
 		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
-		if (GUI::getInstance()->minimap.isInMiniMap(point.x, point.y)) {
-			World::getInstance()->setScreenLocation(GUI::getInstance()->minimap.MiniMapLoc2GlobalLoc(point));
-		}
-
 	}
 
 	void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		if (GUI::getInstance()->isInGUI(point)) {
+			return;
+		}
+		CPoint LButtonUpPoint = World::getInstance()->Screen2Global(point);
+		//("(%d, %d), (%d, %d)\n", LButtonDownPoint.x, LButtonDownPoint.y, LButtonUpPoint.x, LButtonUpPoint.y);
+		LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
+		if (!LE.empty()) {
+			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(LE);
+			if (typeid(Unit::Villager) == typeid(*LE[0])) {
+				GUI::getInstance()->entityDataButtonFrame.LoadVillagerButtons();
+			}
+		}
+		else {
+			GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
+			GUI::getInstance()->entityDataFrame.clearEntitysBitmap();
+		}
 	}
 
 	void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
-		// 沒事。如果需要處理滑鼠移動的話，寫code在這裡
+		World::getInstance()->mouseLocation = point;
 	}
 
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
-		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
-		TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
-		TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
+
+		if (World::getInstance()->isSpawningEntity) {
+			World::getInstance()->isSpawningEntity = false;
+			return;
+		}
+		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
+
+		World::getInstance()->moveEntityToLocation(LE, point);
+		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
+		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
+
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -337,10 +366,10 @@ namespace game_framework {
 		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
 		//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
 		//
+
 		//
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
-		testVillager->onShow(World::getInstance()->GlobalX2ScreenX(testVillager->point.x), World::getInstance()->GlobalY2ScreenY(testVillager->point.y));
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
 	}

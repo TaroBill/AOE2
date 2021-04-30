@@ -70,9 +70,13 @@ namespace Unit
 		選取村民後，點擊後判斷點是否為可採集資源後，判斷是什麼資源，不是動物就直接尋路到該點，是動物則判斷血量。
 		村民會存下當下鎖定的資源種類，以及資源來源、以及資源回收站，在帶滿後會尋路回最近的資源回收站，礦沒了，則會找尋其他的同種類礦物
 		*/
-		void SetTarget(Entity* target) override
+		//設定目標(尋路)
+		void SetTarget(CPoint point) override
 		{
-
+			this->GetComponent<Unit::Navigator>()->FindPath(point);
+			return;
+			/*
+			
 			Gatherable* tar = (*target).GetComponent<Gatherable>();
 
 			if (tar != nullptr)
@@ -109,8 +113,8 @@ namespace Unit
 			{
 				//沒找到
 			}
+			*/
 		}
-
 
 		void SetBitmap() override
 		{
@@ -118,7 +122,7 @@ namespace Unit
 			{
 				for (int s = 0; s < 15; s++)
 				{
-					string str = ".\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
+					string str = "..\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
 					State es = State::Idle;
 					Direction d = static_cast<Direction>(dire);
 
@@ -195,23 +199,27 @@ namespace Unit
 			int navigatorState = GetComponent<Navigator>()->onMove(&point);
 			//FSM(navigatorState);
 		}
+
 		Villager(int pointX, int pointY) :Entity(pointX, pointY)
 		{
 			Navigator* n = new Navigator();
 			AddComponent(n);
 			carryLimit = 10;
-
+			maxHP = 100;
 			SetBitmap();
 		}
+
 		Villager(CPoint point):Entity(point)
 		{
 			Navigator* n = new Navigator();
 			AddComponent(n);
 			carryLimit = 10;
+			maxHP = 100;
 			SetBitmap();
 		}
 		Villager()
 		{
+
 			SetBitmap();
 		}
 		~Villager()

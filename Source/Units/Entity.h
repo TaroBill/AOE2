@@ -88,38 +88,38 @@ namespace Unit
 
 		}
 
-		virtual void SetTarget(Entity* target) = NULL;
-
+		//virtual void SetTarget(Entity* target) = NULL;
+		virtual void SetTarget(CPoint point) = NULL;
 		virtual void SetBitmap() = NULL;
-		Entity()
+		void Init()
 		{
 			this->playerId = 0;
 			this->sizeXY = 0;
-			this->maxHP = 0;
+			this->maxHP = 100;
 			this->hp = this->maxHP;;
 			this->entityState = State::Idle;
 			this->faceDirection = Direction::Down;
 		}
-		Entity(int pointX, int pointY) :Entity()
+		Entity()
 		{
-			this->playerId = 0;
-			this->sizeXY = 0;
-			this->maxHP = 0;
-			this->hp = this->maxHP;;
-			this->entityState = State::Idle;
-			this->faceDirection = Direction::Down;
+			Init();
+		}
+		Entity(int pointX, int pointY) 
+		{
+			Init();
+
 			this->point.x = pointX;
 			this->point.y = pointY;
+			
 		}
 		Entity(CPoint point) :Entity()
 		{
-			this->playerId = 0;
-			this->sizeXY = 0;
-			this->maxHP = 0;
-			this->hp = this->maxHP;;
-			this->entityState = State::Idle;
-			this->faceDirection = Direction::Down;
+			Init();
 			this->point = point;
+		}
+		~Entity()
+		{
+			delete this;
 		}
 	};
 }
