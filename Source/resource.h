@@ -186,6 +186,8 @@
 #define IDB_REPAIR_BUTTON               423
 #define IDB_BITMAP139                   424
 #define IDB_STOP_BUTTON                 424
+#define IDB_BITMAP126                   425
+#define IDB_VILLAGERICON                425
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -199,7 +201,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        425
+#define _APS_NEXT_RESOURCE_VALUE        426
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101

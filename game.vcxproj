@@ -364,6 +364,7 @@
     <Image Include="RES\Button_Icon\Repair.bmp" />
     <Image Include="RES\Button_Icon\Stop.bmp" />
     <Image Include="RES\EntityDataBackGround.bmp" />
+    <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />
     <Image Include="RES\map.bmp" />

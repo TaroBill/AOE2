@@ -323,12 +323,14 @@ namespace game_framework {
 		//("(%d, %d), (%d, %d)\n", LButtonDownPoint.x, LButtonDownPoint.y, LButtonUpPoint.x, LButtonUpPoint.y);
 		vector<Unit::Entity*> LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
 		if (!LE.empty()) {
+			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(LE);
 			if (typeid(Unit::Villager) == typeid(*LE[0])) {
 				GUI::getInstance()->entityDataButtonFrame.LoadVillagerButtons();
 			}
 		}
 		else {
 			GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
+			GUI::getInstance()->entityDataFrame.clearEntitysBitmap();
 		}
 	}
 

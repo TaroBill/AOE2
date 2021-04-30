@@ -398,6 +398,8 @@ IDB_REPAIR_BUTTON       BITMAP                  "..\\RES\\Button_Icon\\Repair.bm
 
 IDB_STOP_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Stop.bmp"
 
+IDB_VILLAGERICON        BITMAP                  "..\\RES\\Entity_Icon\\VillagerIcon.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
