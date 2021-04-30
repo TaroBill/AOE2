@@ -320,8 +320,6 @@ namespace game_framework {
 	{
 		CPoint clickPoint = CPoint(World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 		testVillager->GetComponent<Unit::Navigator>()->FindPath(clickPoint);
-		TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
-		TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
 	}
 
 	void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
