@@ -11,7 +11,7 @@ ResourceFrame::~ResourceFrame()
 
 }
 
-void ResourceFrame::LoadBitmap() {
+void ResourceFrame::loadBitmap() {
 	texture.LoadBitmap(IDB_RESOURCEBACKGROUND);
 }
 

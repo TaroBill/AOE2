@@ -55,6 +55,7 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
+
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -95,10 +96,11 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		Unit::Villager  *testVillager;//測試用村民，應該放在世界底下
 		Unit::TownCenter *townCenter;
-		const int		NUMBALLS;	// 球的總數
+
 		CMovingBitmap	help;		// 說明圖
+		CPoint LButtonDownPoint;
+		vector<Unit::Entity*> LE;
 		
 	};
 

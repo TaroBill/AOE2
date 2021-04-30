@@ -17,12 +17,15 @@ public:
 	GUI();
 	~GUI();
 	static GUI* getInstance();
-	void LoadBitmap();
+	void loadBitmap();
 	void onShow();
 	bool isInGUI(int, int);
+	bool isInGUI(CPoint);
 	void triggerOnClicked(CPoint);
-	vector<Frame *> AllFrames;
 	MiniMap minimap;
+	ResourceFrame resourceFrame;
+	EntityDataFrame entityDataFrame;
+	EntityDataButtonFrame entityDataButtonFrame;
 private:
 	static GUI* instance;
 };

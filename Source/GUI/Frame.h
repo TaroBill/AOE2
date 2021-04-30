@@ -7,14 +7,16 @@
 #include "../audio.h"
 #include "../gamelib.h"
 #include <vector>
-#include "Button.h"
+#include "./Buttons/Button.h"
 #include "../World.h"
 
 using namespace game_framework;
+
+
 class Frame {
 public:
 	CMovingBitmap texture;
-	Frame(int x=0, int y=0, int h=50, int w=50) {
+	Frame(int x = 0, int y = 0, int h = 50, int w = 50) {
 		LocX = x;
 		LocY = y;
 		Height = h;
@@ -23,7 +25,7 @@ public:
 	~Frame() {
 
 	}
-	CPoint getLocation() const{
+	CPoint getLocation() const {
 		return CPoint(LocX, LocY);
 	}
 	//框架最左上角位置(X, Y)
@@ -37,21 +39,21 @@ public:
 		Width = w;
 	}
 	// 載入圖形s
-	virtual void LoadBitmap() = 0;		
+	virtual void loadBitmap() = 0;
 	// 將圖形貼到畫面
 	void OnShow() {
 		texture.SetTopLeft(LocX, LocY);
 		texture.ShowBitmap();
 	}
 
-	bool isInFrame(CPoint p) const{
+	bool isInFrame(CPoint p) const {
 		if (p.x >= LocX && p.x <= (LocX + Width) && p.y >= (LocY) && p.y <= (LocY + Height)) {
 			return true;
 		}
 		return false;
 	}
 
-	bool isInFrame(int x, int y) const{
+	bool isInFrame(int x, int y) const {
 		if (x >= (LocX) && x <= LocX + Width && y >= (LocY) && y <= LocY + Height) {
 			return true;
 		}

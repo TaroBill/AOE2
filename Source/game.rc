@@ -374,6 +374,35 @@ IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
 
 IDB_TOWNCENTER			BITMAP                  "..\\RES\\Building\\TownCenter.bmp"
 
+IDB_BUILDING_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Building.bmp"
+
+IDB_CANCEL_BUTTON       BITMAP                  "..\\RES\\Button_Icon\\Cancel.bmp"
+
+IDB_DESTROY_BUTTON      BITMAP                  "..\\RES\\Button_Icon\\Destroy.bmp"
+
+IDB_DOCK_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Dock.bmp"
+
+IDB_GARRISON_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Garrison.bmp"
+
+IDB_HOUSE_BUTTON        BITMAP                  "..\\RES\\Button_Icon\\House.bmp"
+
+IDB_LUMBERCAMP_BUTTON   BITMAP                  "..\\RES\\Button_Icon\\LumberCamp.bmp"
+
+IDB_MILITARY_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Military.bmp"
+
+IDB_MILL_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Mill.bmp"
+
+IDB_MININGCAMP_BUTTON   BITMAP                  "..\\RES\\Button_Icon\\MiningCamp.bmp"
+
+IDB_NEXTPAGE_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\NextPage.bmp"
+
+IDB_REPAIR_BUTTON       BITMAP                  "..\\RES\\Button_Icon\\Repair.bmp"
+
+IDB_STOP_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Stop.bmp"
+
+IDB_VILLAGERICON        BITMAP                  "..\\RES\\Entity_Icon\\VillagerIcon.bmp"
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Cursor
