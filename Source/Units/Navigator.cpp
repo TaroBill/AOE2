@@ -71,7 +71,6 @@ int Unit::Navigator::onMove(CPoint* point)
 {
 	if (pathDistances.size() > 0)
 	{
-		TRACE("(%f,%f) %f\n", normalNextPoint[0], normalNextPoint[1], pathDistances.at(0));
 		//GetParent<Entity>()->entityState = Entity::State::Move;
 		Normalization(*point, (pathPoints.front()), normalNextPoint);
 
@@ -152,27 +151,40 @@ void Unit::Navigator::AStar()
 				if (!(y == 0 && x == 0))//非自己
 				{
 					CPoint* newPoint = new CPoint(cp->x + x, cp->y + y);
-					if (std::find(close.begin(), close.end(), newPoint) == close.end())//非在close list
+					bool continueFlag = false;
+					for (unsigned i = 0; i < close.size(); i++)
 					{
-						//目前到這裡的cost
-						int newGScore = gScore[cp] + 1;
-
-						//評估cost
-
-						int canPass = World::getInstance()->getLocationItem((*newPoint).x, (*newPoint).y);
-						canPass = 1 - canPass;
-						//曼哈頓距離預測
-						int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
-
-						int newFScore = newGScore + newHScore;
-
-
-						gScore.insert(pair<CPoint*, int>(newPoint, newGScore));
-						hScore.insert(pair<CPoint*, int>(newPoint, newHScore));
-						fScore.insert(pair<CPoint*, int>(newPoint, newFScore));
-						open.push_back(newPoint);
-						come_from.insert(pair<CPoint*, CPoint*>(newPoint, cp));
+						if (*close.at(i) == *newPoint)
+						{
+							continueFlag = true;
+							break;
+						}
 					}
+					if (continueFlag)continue;
+					TRACE("%d,%d\n", (*newPoint).x, (*newPoint).y);
+
+					//目前到這裡的cost
+					int newGScore = gScore[cp] + 1;
+
+					//評估cost
+					int canPass = World::getInstance()->getLocationItem((*newPoint).x * 50, (*newPoint).y * 50);
+					if ((*newPoint).x == 60 && (*newPoint).y == 60)
+					{
+						TRACE("%d\n", canPass);
+					}
+					//canPass = 1 - canPass;
+					//曼哈頓距離預測
+					int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
+
+					int newFScore = newGScore + newHScore;
+
+
+					gScore.insert(pair<CPoint*, int>(newPoint, newGScore));
+					hScore.insert(pair<CPoint*, int>(newPoint, newHScore));
+					fScore.insert(pair<CPoint*, int>(newPoint, newFScore));
+					open.push_back(newPoint);
+					come_from.insert(pair<CPoint*, CPoint*>(newPoint, cp));
+
 				}
 			}
 		}
@@ -217,7 +229,6 @@ void Unit::Navigator::AStar()
 			//回傳(存放)路徑
 		}
 	}
-	
 }
 
 //開始尋路
