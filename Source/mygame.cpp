@@ -296,6 +296,8 @@ namespace game_framework {
 
 	void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
+		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
 		LButtonDownPoint = World::getInstance()->Screen2Global(point);
 		if (GUI::getInstance()->isInGUI(point)) {
 			GUI::getInstance()->triggerOnClicked(point);
@@ -308,8 +310,7 @@ namespace game_framework {
 				break;
 			}
 		}
-		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
+		isLButtonDown = true;
 	}
 
 	void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -319,10 +320,10 @@ namespace game_framework {
 		}
 		CPoint LButtonUpPoint = World::getInstance()->Screen2Global(point);
 		//("(%d, %d), (%d, %d)\n", LButtonDownPoint.x, LButtonDownPoint.y, LButtonUpPoint.x, LButtonUpPoint.y);
-		LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
-		if (!LE.empty()) {
-			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(LE);
-			if (typeid(Unit::Villager) == typeid(*LE[0])) {
+		World::getInstance()->LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
+		if (!World::getInstance()->LE.empty()) {
+			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
+			if (typeid(Unit::Villager) == typeid(*World::getInstance()->LE[0])) {
 				GUI::getInstance()->entityDataButtonFrame.LoadVillagerButtons();
 			}
 		}
@@ -330,11 +331,13 @@ namespace game_framework {
 			GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
 			GUI::getInstance()->entityDataFrame.clearEntitysBitmap();
 		}
+		isLButtonDown = false;
 	}
 
 	void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
 		World::getInstance()->mouseLocation = point;
+		mouseLocation = point;
 	}
 
 	void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -346,7 +349,7 @@ namespace game_framework {
 		}
 		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 
-		World::getInstance()->moveEntityToLocation(LE, point);
+		World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
 		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
 		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
 
@@ -372,5 +375,11 @@ namespace game_framework {
 
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
+		if (isLButtonDown) {
+			CDC* myDC = CDDraw::GetBackCDC();
+			myDC->SelectObject(GetStockObject(NULL_BRUSH));
+			myDC->Rectangle(World::getInstance()->GlobalX2ScreenX(LButtonDownPoint.x), World::getInstance()->GlobalY2ScreenY(LButtonDownPoint.y), mouseLocation.x, mouseLocation.y);
+			CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC		
+		}
 	}
 }

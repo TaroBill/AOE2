@@ -98,7 +98,8 @@ namespace game_framework {
 	private:
 		CMovingBitmap	help;		// »¡©ú¹Ï
 		CPoint LButtonDownPoint;
-		vector<Unit::Entity*> LE;
+		CPoint mouseLocation;
+		bool isLButtonDown = false;
 		
 	};
 

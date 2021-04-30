@@ -42,6 +42,14 @@ World::World() {
 
 }
 
+World::~World() {
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		delete unit[i];
+	}
+	unit.clear();
+
+}
+
 int World::getLocationItem(int x, int y) {
 	int GX = x / 50;
 	int GY = y / 50;
@@ -211,18 +219,31 @@ void World::setScreenLocation(CPoint point) {
 void World::spwanVillager(int x, int y) {
 	Unit::Villager *v = new Unit::Villager(x, y);
 	unit.push_back(v);
+	calculatePopulation();
 }
 
 void World::spwanVillager(CPoint p) {
 	Unit::Villager* v = new Unit::Villager(p.x, p.y);
 	unit.push_back(v);
+	calculatePopulation();
+}
+
+void World::calculatePopulation() {
+	int total = 0;
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		if (typeid(*unit[i]) == typeid(Unit::Villager)) {
+			total++;
+		}
+	}
+	player.population = total;
 }
 
 
 vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 	vector<Unit::Entity*> output;
 	for (unsigned int i = 0; i < unit.size(); i++) {
-		if ((unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y)) {
+		if ((unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y) ||
+			(unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y)) {
 			output.push_back(unit[i]);
 			//TRACE("Entity: %d\n", i);
 		}

@@ -9,8 +9,8 @@
 #include <Vector>
 #include "Units/Villager.h"
 #include "Units/Navigator.h"
-
-
+#include "Player/Player.h"
+#include <typeinfo>
 
 
 	enum mapItem { GRASS, RIVER };
@@ -21,6 +21,8 @@
 	public:
 		static World* getInstance();
 		World();
+		~World();
+		Player player;
 		void OnShow();									//顯示地圖
 		void setScreenLocation(int, int);				//設置sx,sy，螢幕最左上點座標
 		void setScreenLocation(CPoint);					//設置sx,sy，螢幕最左上點座標
@@ -52,11 +54,13 @@
 		int spawningEntityType;
 		CPoint mouseLocation;
 		void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
+		vector<Unit::Entity*> LE;
 	private:
 		static World* instance;
 		vector<Unit::Entity*> unit;
 		bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 		void initMap();
+		void calculatePopulation();
 		int map[120][120];
 		int sx, sy;
 	};
