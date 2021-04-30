@@ -11,12 +11,10 @@
 #include "Units/Navigator.h"
 #include "Player/Player.h"
 #include <typeinfo>
+#include "Units/EntityFactory.h"
 
 
 	enum mapItem { GRASS, RIVER };
-	enum EntityTypes {
-		Villager = 10000
-	};
 	class World {
 	public:
 		static World* getInstance();
@@ -45,17 +43,18 @@
 		void UnitOnMove();								//移動單位
 		void UnitOnShow();								//顯示單位
 		bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
-		void spwanVillager(int, int);					//生成村民在座標
-		void spwanVillager(CPoint);					//生成村民在座標
+		void spwan(EntityTypes, CPoint);					//生成實體在座標
+		void spwan(EntityTypes, int, int);					//生成實體在座標
 		vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
 		void spawningEntity(int);
 		bool isSpawningEntity = false;
 		CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
-		int spawningEntityType;
+		EntityTypes spawningEntityType;
 		CPoint mouseLocation;
 		void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
 		vector<Unit::Entity*> LE;
 	private:
+		EntityFactory entityFactory;
 		static World* instance;
 		vector<Unit::Entity*> unit;
 		bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;

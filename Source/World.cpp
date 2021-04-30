@@ -1,9 +1,4 @@
-#include "StdAfx.h"
 #include "World.h"
-#include "../Source/Units/Villager.h"
-#include "../Source/Units/UnitBase.h"
-//#include "../Source/Units/Navigator.h"
-#include "../Source/Units/Entity.h"
 
 World* World::getInstance()
 {
@@ -191,7 +186,7 @@ int World::GlobalY2ScreenY(int y) {
 void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
-	spwanVillager(3500, 3500);
+	spwan(EntityTypes::Villager, 3000, 3000);
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -216,15 +211,13 @@ void World::setScreenLocation(CPoint point) {
 	}
 }
 
-void World::spwanVillager(int x, int y) {
-	Unit::Villager *v = new Unit::Villager(x, y);
-	unit.push_back(v);
+void World::spwan(EntityTypes ET, int x, int y) {
+	unit.push_back(entityFactory.SpawnEntity(ET, x, y));
 	calculatePopulation();
 }
 
-void World::spwanVillager(CPoint p) {
-	Unit::Villager* v = new Unit::Villager(p.x, p.y);
-	unit.push_back(v);
+void World::spwan(EntityTypes ET, CPoint p) {
+	unit.push_back(entityFactory.SpawnEntity(ET, p));
 	calculatePopulation();
 }
 
@@ -263,7 +256,7 @@ void World::spawningEntity(int bitmap) {
 	spawningEntityBitmap = MB;
 	switch (bitmap){
 	case IDB_VILLAGER000:
-		spawningEntityType = Villager;
+		spawningEntityType = EntityTypes::Villager;
 		break;
 	default:
 		break;

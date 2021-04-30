@@ -305,8 +305,8 @@ namespace game_framework {
 		}
 		if (World::getInstance()->isSpawningEntity) {
 			switch (World::getInstance()->spawningEntityType) {
-			case Villager:
-				World::getInstance()->spwanVillager(LButtonDownPoint);
+			case EntityTypes::Villager:
+				World::getInstance()->spwan(EntityTypes::Villager, LButtonDownPoint);
 				break;
 			}
 		}
