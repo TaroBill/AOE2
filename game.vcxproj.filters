@@ -50,7 +50,7 @@
     <ClInclude Include="Source\Units\UnitBase.h" />
     <ClInclude Include="Source\Units\Villager.h" />
     <ClInclude Include="Source\World.h" />
-    <ClInclude Include="Source\Units\Flocking.h" />
+    <ClInclude Include="Source\Units\BoidsFlocking.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
