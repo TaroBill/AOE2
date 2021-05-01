@@ -109,7 +109,6 @@ void Unit::Navigator::Straight(CPoint a, CPoint b)
 void Unit::Navigator::AStar()
 {
 	
-	
 	vector<CPoint*> close;//封閉list，存放已經被走訪的點
 	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
 	CPoint* cp =new CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點

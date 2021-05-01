@@ -332,6 +332,7 @@
     <ClInclude Include="Source\tools.h" />
     <ClInclude Include="Source\Units\Building.h" />
     <ClInclude Include="Source\Units\Entity.h" />
+    <ClInclude Include="Source\Units\Flocking.h" />
     <ClInclude Include="Source\Units\Gatherable.h" />
     <ClInclude Include="Source\Units\Mine.h" />
     <ClInclude Include="Source\Units\Navigator.h" />
