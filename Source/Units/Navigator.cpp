@@ -8,7 +8,7 @@
 #include "../World.h"
 
 using namespace std;
-
+#pragma region Utility
 //point2tile
 CPoint Unit::Navigator::Point2Tile(CPoint p) 
 { 
@@ -17,6 +17,7 @@ CPoint Unit::Navigator::Point2Tile(CPoint p)
 	np.y = p.y / 50;
 	return np;
 };
+
 //tile2point
 CPoint Unit::Navigator::Tile2Point(CPoint p)
 {
@@ -26,13 +27,13 @@ CPoint Unit::Navigator::Tile2Point(CPoint p)
 	return np;
 };
 
-
 //取得二維向量長度
 float Unit::Navigator::GetLength(CPoint p)
 {
 	float temp = static_cast<float>(sqrt(p.x * p.x + p.y * p.y));
 	return temp>0 ? temp : 1;
 }
+
 //正規化
 void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
 {
@@ -41,9 +42,64 @@ void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
 	normal[0] = delta.x / l;
 	normal[1] = delta.y / l;
 }
+#pragma endregion
 
+#pragma region BoidsNavigator
+//對齊
+//朝向群體的平均方向移動
+CPoint Unit::Navigator::Alignment()
+{
+	CPoint pv = CPoint(0, 0);
+	for (unsigned int i = 0; i < others.size(); i++)
+	{
+		//可能出問題，應該考慮自己寫一個PointF or VectorF
+		pv.x = pv.x + (int)(*others[i]).velocity[0];
+		pv.y = pv.y + (int)(*others[i]).velocity[1];
+	}
+	pv.x = pv.x / alignment;
+	pv.y = pv.y / alignment;
+	return pv;
+}
 
+//凝聚
+//向群體的平均位置移動
+CPoint Unit::Navigator::Cohesion()
+{
+	CPoint pc = CPoint(0, 0);
+	for (unsigned int i = 0; i < others.size(); i++)
+	{
+		pc += *others[i]->nowPoint;
+	}
+	pc.x = pc.x / others.size();
+	pc.y = pc.y / others.size();
+	pc.x = pc.x / coherence;
+	pc.y = pc.y / coherence;
+	return pc;
+}
 
+//分離
+//在群體內避免過於擁擠
+//包含避開障礙物
+CPoint Unit::Navigator::Separation()
+{
+	CPoint c = CPoint(0, 0);
+	for (unsigned int i = 0; i < others.size(); i++)
+	{
+		float dis = 0;
+		CPoint a;
+		CPoint b;
+		a = *others[i]->nowPoint;
+		b = *this->nowPoint;
+		dis = static_cast<float>(sqrt(a.x * a.x + b.y * b.y));
+
+		if (dis < separationRange)
+		{
+			c = c - (b - a);
+		}
+	}
+	return c;
+}
+#pragma endregion 
 
 //直線移動
 //往下個點直線走去
@@ -69,26 +125,33 @@ void Unit::Navigator::MoveStraight(CPoint* point)
 //-1目前沒有路徑要進行
 int Unit::Navigator::onMove(CPoint* point)
 {
-	if (pathDistances.size() > 0)
+	if (isLeader)
 	{
-		//GetParent<Entity>()->entityState = Entity::State::Move;
-		Normalization(*point, (pathPoints.front()), normalNextPoint);
-
-		MoveStraight(point);
-		if (pathDistances.front() <= speedFixed)
+		if (pathDistances.size() > 0)
 		{
-			
-			pathDistances.erase(pathDistances.begin());
-			pathPoints.erase(pathPoints.begin());
-			return 1;
+			//GetParent<Entity>()->entityState = Entity::State::Move;
+			Normalization(*point, (pathPoints.front()), normalNextPoint);
+
+			MoveStraight(point);
+			if (pathDistances.front() <= speedFixed)
+			{
+
+				pathDistances.erase(pathDistances.begin());
+				pathPoints.erase(pathPoints.begin());
+				return 1;
+			}
+			return 0;
 		}
-		return 0;
+		else
+		{
+			return -1;
+		}
 	}
 	else
 	{
-		return -1;
-		//GetParent<Entity>()->entityState = Entity::State::Idle;
+
 	}
+	return -1;
 }
 
 //直線尋路
@@ -108,7 +171,6 @@ void Unit::Navigator::Straight(CPoint a, CPoint b)
 //將每個轉角or格子設為下個點
 void Unit::Navigator::AStar()
 {
-	
 	
 	vector<CPoint*> close;//封閉list，存放已經被走訪的點
 	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
@@ -267,4 +329,5 @@ Unit::Navigator::Navigator()
 	normalNextPoint[1] = 0;
 	counterF[0] = 0;
 	counterF[1] = 0;
+	isLeader = 1;
 }
