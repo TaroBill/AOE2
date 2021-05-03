@@ -1,9 +1,4 @@
-#include "StdAfx.h"
 #include "World.h"
-#include "../Source/Units/Villager.h"
-#include "../Source/Units/UnitBase.h"
-//#include "../Source/Units/Navigator.h"
-#include "../Source/Units/Entity.h"
 
 World* World::getInstance()
 {
@@ -39,6 +34,14 @@ World::World() {
 	initMap();
 	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	sx = sy = 50 * 50; //¿Ã¹õ®y¼Ð
+
+}
+
+World::~World() {
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		delete unit[i];
+	}
+	unit.clear();
 
 }
 
@@ -183,7 +186,7 @@ int World::GlobalY2ScreenY(int y) {
 void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
-	spwanVillager(3500, 3500);
+	spwan(EntityTypes::Villager, 3000, 3000);
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -208,21 +211,32 @@ void World::setScreenLocation(CPoint point) {
 	}
 }
 
-void World::spwanVillager(int x, int y) {
-	Unit::Villager *v = new Unit::Villager(x, y);
-	unit.push_back(v);
+void World::spwan(EntityTypes ET, int x, int y) {
+	unit.push_back(entityFactory.SpawnEntity(ET, x, y));
+	calculatePopulation();
 }
 
-void World::spwanVillager(CPoint p) {
-	Unit::Villager* v = new Unit::Villager(p.x, p.y);
-	unit.push_back(v);
+void World::spwan(EntityTypes ET, CPoint p) {
+	unit.push_back(entityFactory.SpawnEntity(ET, p));
+	calculatePopulation();
+}
+
+void World::calculatePopulation() {
+	int total = 0;
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		if (typeid(*unit[i]) == typeid(Unit::Villager)) {
+			total++;
+		}
+	}
+	player.population = total;
 }
 
 
 vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 	vector<Unit::Entity*> output;
 	for (unsigned int i = 0; i < unit.size(); i++) {
-		if ((unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y)) {
+		if ((unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y) ||
+			(unit[i]->point.x >= p2.x && unit[i]->point.x <= p1.x && unit[i]->point.y >= p1.y && unit[i]->point.y <= p2.y) || (unit[i]->point.x >= p1.x && unit[i]->point.x <= p2.x && unit[i]->point.y >= p2.y && unit[i]->point.y <= p1.y)) {
 			output.push_back(unit[i]);
 			//TRACE("Entity: %d\n", i);
 		}
@@ -231,9 +245,11 @@ vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 }
 
 void World::moveEntityToLocation(vector<Unit::Entity*> allEntity, CPoint p) {
+	/*
 	for (unsigned int i = 0; i < allEntity.size(); i++) {
 		allEntity[i]->GetComponent<Unit::Navigator>()->FindPath(Screen2Global(p));
 	}
+	*/
 }
 
 void World::spawningEntity(int bitmap) {
@@ -242,7 +258,7 @@ void World::spawningEntity(int bitmap) {
 	spawningEntityBitmap = MB;
 	switch (bitmap){
 	case IDB_VILLAGER000:
-		spawningEntityType = Villager;
+		spawningEntityType = EntityTypes::Villager;
 		break;
 	default:
 		break;

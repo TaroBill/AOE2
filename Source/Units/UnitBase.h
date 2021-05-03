@@ -29,12 +29,14 @@ namespace Unit
 		template<typename T>
 		T* GetComponent()
 		{
+
 			for (unsigned int i = 0; i < _components.size(); i++)
 				if (dynamic_cast<T*>(_components.at(i)))
 					return dynamic_cast<T*>(_components.at(i));
 			return nullptr;
+			
 		}
-
+		
 
 		//新增組件時，請使用new
 		//AddComponent(new 組件型別())

@@ -100,7 +100,8 @@ namespace game_framework {
 
 		CMovingBitmap	help;		// »¡©ú¹Ï
 		CPoint LButtonDownPoint;
-		vector<Unit::Entity*> LE;
+		CPoint mouseLocation;
+		bool isLButtonDown = false;
 		
 	};
 

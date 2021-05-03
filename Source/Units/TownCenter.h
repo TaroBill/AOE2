@@ -11,10 +11,7 @@ namespace Unit
 			string str = ".\\RES\\Building\\TownCenter.bmp";
 			animations[State::Idle][Direction::Down].AddBitmap(const_cast<char*>(str.c_str()), RGB(0, 0, 0));
 		}
-		void SetTarget(CPoint point) override
-		{
-			
-		}
+
 		void onMove() override
 		{
 

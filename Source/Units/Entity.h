@@ -1,6 +1,7 @@
 #pragma once
 #include "./UnitBase.h"
 #include <map>
+#include "../ID.h"
 
 namespace Unit
 {
@@ -60,6 +61,7 @@ namespace Unit
 		//所屬玩家的ID
 		int playerId;
 
+		unsigned int ID;
 		//點座標
 		//int pointX, pointY;
 		CPoint point;
@@ -85,11 +87,12 @@ namespace Unit
 		{
 			animations[entityState][faceDirection].SetTopLeft(screenX, screenY);
 			animations[entityState][faceDirection].OnShow();
-
 		}
 
 		//virtual void SetTarget(Entity* target) = NULL;
-		virtual void SetTarget(CPoint point) = NULL;
+		//virtual void SetTarget(CPoint point) = NULL;
+		virtual void SetTarget(CPoint point,vector<Entity*> group) = NULL;
+
 		virtual void SetBitmap() = NULL;
 		void Init()
 		{
@@ -99,6 +102,14 @@ namespace Unit
 			this->hp = this->maxHP;;
 			this->entityState = State::Idle;
 			this->faceDirection = Direction::Down;
+			this->ID = ID::getInstance()->GetID();
+		}
+		bool operator==(Entity& other) {
+			if (this->ID == other.ID)
+			{
+				return true;
+			}
+			return false;
 		}
 		Entity()
 		{

@@ -9,18 +9,18 @@
 #include <Vector>
 #include "Units/Villager.h"
 #include "Units/Navigator.h"
-
-
+#include "Player/Player.h"
+#include <typeinfo>
+#include "Units/EntityFactory.h"
 
 
 	enum mapItem { GRASS, RIVER };
-	enum EntityTypes {
-		Villager = 10000
-	};
 	class World {
 	public:
 		static World* getInstance();
 		World();
+		~World();
+		Player player;
 		void OnShow();									//顯示地圖
 		void setScreenLocation(int, int);				//設置sx,sy，螢幕最左上點座標
 		void setScreenLocation(CPoint);					//設置sx,sy，螢幕最左上點座標
@@ -43,20 +43,23 @@
 		void UnitOnMove();								//移動單位
 		void UnitOnShow();								//顯示單位
 		bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
-		void spwanVillager(int, int);					//生成村民在座標
-		void spwanVillager(CPoint);					//生成村民在座標
+		void spwan(EntityTypes, CPoint);					//生成實體在座標
+		void spwan(EntityTypes, int, int);					//生成實體在座標
 		vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
 		void spawningEntity(int);
 		bool isSpawningEntity = false;
 		CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
-		int spawningEntityType;
+		EntityTypes spawningEntityType;
 		CPoint mouseLocation;
 		void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
+		vector<Unit::Entity*> LE;
 	private:
+		EntityFactory entityFactory;
 		static World* instance;
 		vector<Unit::Entity*> unit;
 		bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 		void initMap();
+		void calculatePopulation();
 		int map[120][120];
 		int sx, sy;
 	};

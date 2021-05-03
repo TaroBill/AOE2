@@ -17,6 +17,7 @@
     <ClCompile Include="Source\mygame.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
     <ClCompile Include="Source\World.cpp" />
+    <ClCompile Include="Source\ID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Source\Units\UnitBase.h" />
     <ClInclude Include="Source\Units\Villager.h" />
     <ClInclude Include="Source\World.h" />
+    <ClInclude Include="Source\ID.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
