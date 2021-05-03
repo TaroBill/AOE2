@@ -110,6 +110,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -279,6 +280,7 @@
     <ClCompile Include="Source\GUI\GUI.cpp" />
     <ClCompile Include="Source\GUI\miniMap.cpp" />
     <ClCompile Include="Source\GUI\ResourceFrame.cpp" />
+    <ClCompile Include="Source\ID.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -322,6 +324,7 @@
     <ClInclude Include="Source\GUI\GUI.h" />
     <ClInclude Include="Source\GUI\miniMap.h" />
     <ClInclude Include="Source\GUI\ResourceFrame.h" />
+    <ClInclude Include="Source\ID.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
     <ClInclude Include="Source\Player\Player.h" />

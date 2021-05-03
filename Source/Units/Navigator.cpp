@@ -42,6 +42,45 @@ void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
 	normal[0] = delta.x / l;
 	normal[1] = delta.y / l;
 }
+
+void Unit::Navigator::SetLeader(vector<Entity*> entities, CPoint centre)
+{
+	float smallDis = static_cast<float>(INT32_MAX);
+	unsigned int index = -1;
+	for (unsigned int i = 0; i < entities.size(); i++)
+	{
+		float dis = GetLength(centre - entities[i]->point);
+		if (dis <= smallDis)
+		{
+			index = i;
+			smallDis = dis;
+		}
+		auto p = this->GetParent<Entity>();
+		if ((entities[i])->ID != p->ID)
+		{
+			others.push_back(entities[i]->GetComponent<Navigator>());
+		}
+	}
+	entities[index]->GetComponent<Navigator>()->isLeader = true;
+	this->Leader = entities[index]->GetComponent<Navigator>();
+}
+
+CPoint Unit::Navigator::GetCentre(vector<Entity*> entityList)
+{
+	CPoint c = CPoint(0, 0);
+	for (unsigned int i = 0; i < entityList.size(); i++)
+	{
+		c += entityList[i]->point;
+	}
+	c.x = c.x / entityList.size();
+	c.y = c.y / entityList.size();
+	return c;
+}
+
+CPoint Unit::Navigator::GetNowPoint()
+{
+	return (this->GetParent<Entity>()->point);
+}
 #pragma endregion
 
 #pragma region BoidsNavigator
@@ -51,57 +90,75 @@ void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
 
 //對齊
 //朝向群體的平均方向移動
-CPoint Unit::Navigator::Alignment()
+void Unit::Navigator::Alignment(float p[2])
 {
-	CPoint pv = CPoint(0, 0);
+	float _x = 0, _y = 0;
 	for (unsigned int i = 0; i < others.size(); i++)
 	{
-		//可能出問題，應該考慮自己寫一個PointF or VectorF
-		pv.x = pv.x + (int)(*others[i]).velocity[0];
-		pv.y = pv.y + (int)(*others[i]).velocity[1];
+		_x = _x + (*others[i]).velocity[0];
+		_y = _y + (*others[i]).velocity[1];
 	}
-	pv.x = pv.x / alignment;
-	pv.y = pv.y / alignment;
-	return pv;
+	_x /= alignment;
+	_y /= alignment;
+	p[0] = _x;
+	p[1] = _y;
 }
 
 //凝聚
 //向群體的平均位置移動
-CPoint Unit::Navigator::Cohesion()
+void Unit::Navigator::Cohesion(float p[2])
 {
-	CPoint pc = CPoint(0, 0);
+	float fp[2] = { 0,0 };
 	for (unsigned int i = 0; i < others.size(); i++)
 	{
-		pc += *others[i]->nowPoint;
+		fp[0] += others[i]->GetNowPoint().x;
+		fp[1] += others[i]->GetNowPoint().y;
 	}
-	pc.x = pc.x / others.size();
-	pc.y = pc.y / others.size();
-	pc.x = pc.x / coherence;
-	pc.y = pc.y / coherence;
-	return pc;
+	fp[0] /= others.size();
+	fp[1] /= others.size();
+	CPoint cp = CPoint(static_cast<int>(p[0]), static_cast<int>(p[1]));
+	Normalization(this->GetNowPoint(), cp, fp);
+	p[0] = fp[0]/coherence;
+	p[1] = fp[1]/coherence;
 }
 
 //分離
 //在群體內避免過於擁擠
 //包含避開障礙物
-CPoint Unit::Navigator::Separation()
+void Unit::Navigator::Separation(float p[2])
 {
-	CPoint c = CPoint(0, 0);
+	float _x = 0, _y = 0;
 	for (unsigned int i = 0; i < others.size(); i++)
 	{
+		float ax = 0, ay = 0, bx = 0, by = 0;
 		float dis = 0;
-		CPoint a;
-		CPoint b;
-		a = *others[i]->nowPoint;
-		b = *this->nowPoint;
-		dis = static_cast<float>(sqrt(a.x * a.x + b.y * b.y));
+		ax = static_cast<float>(others[i]->GetNowPoint().x);
+		ay = static_cast<float>(others[i]->GetNowPoint().y);
+		bx = static_cast<float>(this->GetNowPoint().x);
+		by = static_cast<float>(this->GetNowPoint().y);
+		dis = static_cast<float>(sqrt(ax * ax + by * by));
 
 		if (dis < separationRange)
 		{
-			c = c - (b - a);
+			_x = _x - (bx - ax);
+			_y = _y - (by - ay);
 		}
 	}
-	return c;
+	p[0] = _x;
+	p[1] = _y;
+}
+
+void Unit::Navigator::BoidsFlocking(CPoint* point)
+{
+	float v1[2] = { 0,0 }, v2[2] = { 0,0 }, v3[2] = { 0,0 };
+
+	Alignment(v1);
+	Cohesion(v2);
+	Separation(v3);
+	this->velocity[0] = v1[0] + v2[0] + v3[0];
+	this->velocity[1] = v1[1] + v2[1] + v3[1];
+	point->x += static_cast<int>(velocity[0]);
+	point->y += static_cast<int>(velocity[1]);
 }
 #pragma endregion 
 
@@ -131,30 +188,63 @@ int Unit::Navigator::onMove(CPoint* point)
 {
 	if (isLeader)
 	{
+		
 		if (pathDistances.size() > 0)
 		{
 			//GetParent<Entity>()->entityState = Entity::State::Move;
 			Normalization(*point, (pathPoints.front()), normalNextPoint);
-
+			velocity[0] = normalNextPoint[0];
+			velocity[1] = normalNextPoint[1];
 			MoveStraight(point);
 			if (pathDistances.front() <= speedFixed)
 			{
 
 				pathDistances.erase(pathDistances.begin());
 				pathPoints.erase(pathPoints.begin());
+				findPathState = 1;
+				if (pathDistances.size() == 1)
+				{
+					normalNextPoint[0] = 0;
+					normalNextPoint[1] = 0;
+					velocity[0] = 0;
+					velocity[1] = 0;
+					isLeader = false;
+				}
 				return 1;
 			}
+			findPathState = 0;
 			return 0;
 		}
 		else
 		{
+			isLeader = false;
+			findPathState = -1;
+			normalNextPoint[0] = 0;
+			normalNextPoint[1] = 0;
 			return -1;
 		}
 	}
 	else
 	{
-
+		if (findPathState == 0)
+		{
+			findPathState = Leader->findPathState;
+			if (findPathState)//Leader到了
+			{
+				normalNextPoint[0] = 0;
+				normalNextPoint[1] = 0;
+				velocity[0] = 0;
+				velocity[1] = 0;
+				isLeader = false;
+				//其他
+			}
+			BoidsFlocking(point);
+		}
 	}
+	normalNextPoint[0] = 0;
+	normalNextPoint[1] = 0;
+	velocity[0] = 0;
+	velocity[1] = 0;
 	return -1;
 }
 
@@ -305,25 +395,40 @@ void Unit::Navigator::AStar()
 }
 
 //開始尋路
-void Unit::Navigator::FindPath(CPoint targetPoint)
+void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 {
-	int canPass = World::getInstance()->getLocationItem(targetPoint.x, targetPoint.y);
+	int canPass = World::getInstance()->getLocationItem(targrtP.x, targrtP.y);
 
 	if (canPass)
 	{
 		TRACE("Find Path Fail\n");
 		return;
 	}
-	startPoint = GetParent<Entity>()->point;
-	startTile = GetParent<Entity>()->GetTile();
+	for (unsigned int i = 0; i < entityList.size(); i++)
+	{
+		TRACE("Group Id %d\n",entityList[i]->ID);
+	}
+	if (entityList.size() == 1)
+	{
+		isLeader = true;
+	}
+	else
+	{
+		CPoint centre = GetCentre(entityList);
+		SetLeader(entityList, centre);
+	}
+	startPoint = this->GetParent<Entity>()->point;
+	startTile = this->GetParent<Entity>()->GetTile();
 	pathPoints.clear();
 	pathDistances.clear();
-	this->targetPoint = targetPoint;
-	targetTile = Point2Tile(targetPoint);
-	AStar();
-	//Straight();
+	this->targetPoint = targrtP;
+	targetTile = Point2Tile(targrtP);
+	findPathState = 0;
+	if (this->isLeader)
+	{
+		AStar();
+	}
 }
-
 Unit::Navigator::Navigator()
 {
 	speedFixed = 5;
@@ -333,5 +438,18 @@ Unit::Navigator::Navigator()
 	normalNextPoint[1] = 0;
 	counterF[0] = 0;
 	counterF[1] = 0;
-	isLeader = 1;
+	isLeader = 0;
+	findPathState = -1;
+	velocity[0] = 0;
+	velocity[1] = 0;
+	//分離值
+	separation = 0;
+	//對齊值
+	alignment = 2;
+	//凝聚值
+	//
+	coherence = 2;
+	//感測範圍
+	//用來偵測範圍內是否有障礙物
+	separationRange = 50;
 }

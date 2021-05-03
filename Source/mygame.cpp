@@ -349,8 +349,17 @@ namespace game_framework {
 			return;
 		}
 		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-
-		World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
+		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
+		{
+			
+			World::getInstance()->
+				LE[i]->
+				SetTarget(
+					World::getInstance()->Screen2Global(point),
+					World::getInstance()->LE);
+			
+		}
+		//World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
 		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
 		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
 
