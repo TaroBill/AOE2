@@ -45,6 +45,10 @@ void Unit::Navigator::Normalization(CPoint start, CPoint end, float normal[2])
 #pragma endregion
 
 #pragma region BoidsNavigator
+//TODO List
+//velocity或許可以直接用normalNextPoint
+//VectorF
+
 //對齊
 //朝向群體的平均方向移動
 CPoint Unit::Navigator::Alignment()
