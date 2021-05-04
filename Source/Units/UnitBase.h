@@ -29,12 +29,14 @@ namespace Unit
 		template<typename T>
 		T* GetComponent()
 		{
+
 			for (unsigned int i = 0; i < _components.size(); i++)
 				if (dynamic_cast<T*>(_components.at(i)))
 					return dynamic_cast<T*>(_components.at(i));
 			return nullptr;
+			
 		}
-
+		
 
 		//新增組件時，請使用new
 		//AddComponent(new 組件型別())
@@ -59,6 +61,19 @@ namespace Unit
 			return false;
 		}
 
+		void RemoveComponents(vector<UnitBase*> components)
+		{
+			for (unsigned int i = 0; i < components.size(); i++)
+			{
+				if (components.at(i)->_components.size() > 0)
+				{
+					RemoveComponents(components.at(i)->_components);
+				}
+				delete components.at(i);
+			}
+			components.clear();
+		}
+
 		template<typename T>
 		T* GetParent()
 		{
@@ -67,10 +82,12 @@ namespace Unit
 		UnitBase()
 		{
 		}
-
+		
 		~UnitBase()
 		{
-
+			RemoveComponents(_components);
+			
 		}
+		
 	};
 }

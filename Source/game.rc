@@ -372,6 +372,8 @@ IDB_DATABACKGROUND      BITMAP                  "..\\RES\\EntityDataBackGround.b
 
 IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
 
+IDB_TOWNCENTER			BITMAP                  "..\\RES\\Building\\TownCenter.bmp"
+
 IDB_BUILDING_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Building.bmp"
 
 IDB_CANCEL_BUTTON       BITMAP                  "..\\RES\\Button_Icon\\Cancel.bmp"

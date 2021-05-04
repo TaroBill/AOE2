@@ -245,9 +245,11 @@ vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 }
 
 void World::moveEntityToLocation(vector<Unit::Entity*> allEntity, CPoint p) {
+	/*
 	for (unsigned int i = 0; i < allEntity.size(); i++) {
 		allEntity[i]->GetComponent<Unit::Navigator>()->FindPath(Screen2Global(p));
 	}
+	*/
 }
 
 void World::spawningEntity(int bitmap) {

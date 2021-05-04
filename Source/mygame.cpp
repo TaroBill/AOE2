@@ -193,7 +193,7 @@ namespace game_framework {
 	CGameStateRun::CGameStateRun(CGame* g)
 		: CGameState(g)
 	{
-		
+
 	}
 
 	CGameStateRun::~CGameStateRun()
@@ -206,6 +206,7 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
+
 
 
 
@@ -352,8 +353,17 @@ namespace game_framework {
 			return;
 		}
 		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
-
-		World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
+		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
+		{
+			
+			World::getInstance()->
+				LE[i]->
+				SetTarget(
+					World::getInstance()->Screen2Global(point),
+					World::getInstance()->LE);
+			
+		}
+		//World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
 		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
 		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
 
@@ -376,7 +386,6 @@ namespace game_framework {
 		//
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
-
 		World::getInstance()->UnitOnShow();
 		GUI::getInstance()->onShow();
 		if (isLButtonDown) {
