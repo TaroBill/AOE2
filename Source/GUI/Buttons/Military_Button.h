@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "../../socket/NetWork.h"
 
+
 class Military_Button : public Button {
 
 public:
@@ -18,8 +19,8 @@ public:
 	}
 
 	void onClicked() override {
-		char* buf = "SEND TEST";
-		int len = strlen(buf);
-		NetWork::getInstance()->clientsocket.Send(buf, len);  //send the data back to the Client   
+		CSocketFile file(&NetWork::getInstance()->clientsocket);
+		CArchive ar(&file, CArchive::store);
+		dynamic_cast<Unit::Villager*>(World::getInstance()->LE.at(0))->Serialize(ar);
 	}
 };

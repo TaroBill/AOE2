@@ -1,7 +1,7 @@
 #pragma once
 #include "../StdAfx.h"
 
-class ClientSocket : public CAsyncSocket
+class ClientSocket : public CSocket
 {
 	// Attributes
 public:

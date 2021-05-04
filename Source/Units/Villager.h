@@ -6,8 +6,29 @@
 #include "../World.h"
 namespace Unit
 {
-	class Villager :public Entity
+	class Villager :public Entity , public CObject
 	{
+	public: // 用來包裝成為CObject
+
+		void* Villager::operator new(size_t nSize)
+		{
+			return malloc(nSize);
+		}
+
+		void operator delete(void* p)
+		{
+			free(p);
+		}
+
+		void Serialize(CArchive& ar) 
+		{
+			CObject::Serialize(ar);
+			if (ar.IsStoring())
+				ar << this->hp << this->maxHP << this->point << this->ID << this->playerId;
+			else
+				ar >> this->hp >> this->maxHP >> this->point >> this->ID >> this->playerId;
+		}
+
 	public:
 		enum class VillagerState
 		{
