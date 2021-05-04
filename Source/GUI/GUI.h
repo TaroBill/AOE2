@@ -19,6 +19,7 @@ public:
 	static GUI* getInstance();
 	void loadBitmap();
 	void onShow();
+	void printTest();
 	bool isInGUI(int, int);
 	bool isInGUI(CPoint);
 	void triggerOnClicked(CPoint);

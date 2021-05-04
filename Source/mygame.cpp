@@ -58,7 +58,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
-#include "socket/Server.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
@@ -95,22 +95,8 @@ namespace game_framework {
 		const char KEY_ESC = 27;
 		const char KEY_SPACE = ' ';
 		if (nChar == KEY_SPACE) {
-			CSocket cserversocket;
-			if (cserversocket.Create(1234)) {
-				if (cserversocket.Listen()) {
-					CSocket* client = new CSocket();
-					SOCKADDR_IN addr;
-					memset(&addr, 0, sizeof(addr));
-					int addrLen = sizeof(addr);
-
-					cserversocket.Accept(*client, (SOCKADDR*)&addr, &addrLen);
-					cserversocket.Close();
-				}
-			}
-			else {
-				AfxMessageBox(_T("創建Socket失敗"));
-			}
-
+			//TRACE("TEST\n");
+			NetWork::getInstance()->createServer();
 			GotoGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
 		}
 		else if (nChar == KEY_ESC)								// Demo 關閉遊戲的方法

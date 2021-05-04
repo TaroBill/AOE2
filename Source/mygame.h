@@ -38,8 +38,11 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include "StdAfx.h"
 #include "World.h"
 #include "GUI/GUI.h"
+#include "Socket/NetWork.h"
+
 
 #include "Units/Villager.h"
 #include "Units/Entity.h"

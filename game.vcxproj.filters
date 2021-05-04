@@ -17,6 +17,9 @@
     <ClCompile Include="Source\mygame.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
     <ClCompile Include="Source\World.cpp" />
+    <ClCompile Include="Source\socket\NetWork.cpp" />
+    <ClCompile Include="Source\socket\ServerSocket.cpp" />
+    <ClCompile Include="Source\socket\ClientSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -50,6 +53,9 @@
     <ClInclude Include="Source\Units\UnitBase.h" />
     <ClInclude Include="Source\Units\Villager.h" />
     <ClInclude Include="Source\World.h" />
+    <ClInclude Include="Source\socket\NetWork.h" />
+    <ClInclude Include="Source\socket\ServerSocket.h" />
+    <ClInclude Include="Source\socket\ClientSocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />

@@ -1,11 +1,11 @@
-#include "ServerSocket.h"
+#include "ClientSocket.h"
 #include "NetWork.h"
 
-ServerSocket::ServerSocket()
+ClientSocket::ClientSocket()
 {
 }
 
-ServerSocket::~ServerSocket()
+ClientSocket::~ClientSocket()
 {
 }
 
@@ -21,29 +21,21 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // MyEchoSocket member functions
 
-void ServerSocket::OnAccept(int nErrorCode)
+void ClientSocket::OnAccept(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
-	if (nErrorCode == 0)
-	{
-		NetWork::getInstance()->OnAccept();
-	}
+
 	CAsyncSocket::OnAccept(nErrorCode);
 }
 
-void ServerSocket::OnClose(int nErrorCode)
+void ClientSocket::OnClose(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
-	if (nErrorCode == 0)
-	{
-
-	}
-
 
 	CAsyncSocket::OnClose(nErrorCode);
 }
 
-void ServerSocket::OnConnect(int nErrorCode)
+void ClientSocket::OnConnect(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
 
@@ -51,14 +43,14 @@ void ServerSocket::OnConnect(int nErrorCode)
 	CAsyncSocket::OnConnect(nErrorCode);
 }
 
-void ServerSocket::OnOutOfBandData(int nErrorCode)
+void ClientSocket::OnOutOfBandData(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
 
 	CAsyncSocket::OnOutOfBandData(nErrorCode);
 }
 
-void ServerSocket::OnReceive(int nErrorCode)
+void ClientSocket::OnReceive(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
 	if (nErrorCode == 0)
@@ -69,7 +61,7 @@ void ServerSocket::OnReceive(int nErrorCode)
 	CAsyncSocket::OnReceive(nErrorCode);
 }
 
-void ServerSocket::OnSend(int nErrorCode)
+void ClientSocket::OnSend(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
 

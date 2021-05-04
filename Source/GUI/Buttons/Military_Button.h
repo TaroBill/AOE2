@@ -1,6 +1,6 @@
 #pragma once
 #include "Button.h"
-
+#include "../../socket/NetWork.h"
 
 class Military_Button : public Button {
 
@@ -18,6 +18,8 @@ public:
 	}
 
 	void onClicked() override {
-
+		char* buf = "SEND TEST";
+		int len = strlen(buf);
+		NetWork::getInstance()->clientsocket.Send(buf, len);  //send the data back to the Client   
 	}
 };

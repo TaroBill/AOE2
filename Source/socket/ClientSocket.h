@@ -1,15 +1,15 @@
 #pragma once
 #include "../StdAfx.h"
 
-class ServerSocket : public CAsyncSocket
+class ClientSocket : public CAsyncSocket
 {
 	// Attributes
 public:
 
 	// Operations
 public:
-	ServerSocket();
-	virtual ~ServerSocket();
+	ClientSocket();
+	virtual ~ClientSocket();
 
 	// Overrides
 public:

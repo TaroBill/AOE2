@@ -55,4 +55,8 @@ void GUI::triggerOnClicked(CPoint p) {
 	}
 }
 
+void GUI::printTest() {
+	TRACE("TEST\n");
+}
+
 GUI* GUI::instance;
