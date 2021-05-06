@@ -274,6 +274,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
     <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
     <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />

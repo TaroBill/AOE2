@@ -53,6 +53,7 @@ public:
 	CPoint mouseLocation;
 	void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
 	vector<Unit::Entity*> LE;
+	vector<Unit::Entity*> EnemyLE;
 private:
 	EntityFactory entityFactory;
 	static World* instance;

@@ -21,6 +21,7 @@
     <ClCompile Include="Source\socket\ServerSocket.cpp" />
     <ClCompile Include="Source\socket\ClientSocket.cpp" />
     <ClCompile Include="Source\ID.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
