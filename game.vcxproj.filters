@@ -22,6 +22,8 @@
     <ClCompile Include="Source\socket\ClientSocket.cpp" />
     <ClCompile Include="Source\ID.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
+    <ClCompile Include="ServerControler.cpp" />
+    <ClCompile Include="ServerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -59,6 +61,8 @@
     <ClInclude Include="Source\socket\ServerSocket.h" />
     <ClInclude Include="Source\socket\ClientSocket.h" />
     <ClInclude Include="Source\ID.h" />
+    <ClInclude Include="ServerControler.h" />
+    <ClInclude Include="ServerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -212,6 +216,7 @@
     <Image Include="RES\Villager\VillagerIdle_7_9.bmp" />
     <Image Include="RES\water.bmp" />
     <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
+    <Image Include="RES\Building\TownCenter.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

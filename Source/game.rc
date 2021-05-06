@@ -372,7 +372,7 @@ IDB_DATABACKGROUND      BITMAP                  "..\\RES\\EntityDataBackGround.b
 
 IDB_RESOURCEBACKGROUND  BITMAP                  "..\\RES\\resource.bmp"
 
-IDB_TOWNCENTER			BITMAP                  "..\\RES\\Building\\TownCenter.bmp"
+IDB_TOWNCENTER          BITMAP                  "..\\RES\\Building\\TownCenter.bmp"
 
 IDB_BUILDING_BUTTON     BITMAP                  "..\\RES\\Button_Icon\\Building.bmp"
 
@@ -418,6 +418,52 @@ IDC_GAMECURSOR          CURSOR                  "..\\res\\gamecurs.cur"
 
 IDR_RIBBON1             RT_RIBBON_XML           "..\\res\\ribbon1.mfcribbon-ms"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVERCONTROLLER DIALOGEX 0, 0, 496, 245
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "新細明體", 400, 0, 0x0
+BEGIN
+    PUSHBUTTON      "開啟伺服器",IDC_BUTTON1,67,116,50,14
+    PUSHBUTTON      "關閉伺服器",IDC_BUTTON2,66,147,50,14
+    EDITTEXT        IDC_EDIT1,56,71,176,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,281,70,150,18,ES_AUTOHSCROLL
+    LTEXT           "IP",IDC_STATIC,28,74,18,8
+    LTEXT           "Port",IDC_STATIC,251,74,18,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_SERVERCONTROLLER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 384
+        BOTTOMMARGIN, 184
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_SERVERCONTROLLER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 #endif    // 中文 (繁體，台灣) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -435,6 +481,46 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 IDR_MAINFRAME           BITMAP                  "..\\res\\Toolbar.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 218, 79
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About game"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "Game Framework Version 4.8",IDC_STATIC,39,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2002-2012",IDC_STATIC,39,23,119,8
+    DEFPUSHBUTTON   "OK",IDOK,172,7,39,14,WS_GROUP
+    LTEXT           "Liense: GPL",IDC_STATIC,39,35,119,8
+    PUSHBUTTON      "ReadMe",IDC_README,172,24,39,13,WS_GROUP
+    LTEXT           "Author: Woei-Kae Chen, CSIE Department, NTUT",IDC_STATIC,39,47,159,8
+    LTEXT           "http://www.ntut.edu.tw/~wkchen/game",IDC_STATIC,39,60,159,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 68
+    END
+END
+#endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -514,27 +600,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog
-//
-
-IDD_ABOUTBOX DIALOGEX 0, 0, 218, 79
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About game"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Game Framework Version 4.8",IDC_STATIC,39,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2002-2012",IDC_STATIC,39,23,119,8
-    DEFPUSHBUTTON   "OK",IDOK,172,7,39,14,WS_GROUP
-    LTEXT           "Liense: GPL",IDC_STATIC,39,35,119,8
-    PUSHBUTTON      "ReadMe",IDC_README,172,24,39,13,WS_GROUP
-    LTEXT           "Author: Woei-Kae Chen, CSIE Department, NTUT",IDC_STATIC,39,47,159,8
-    LTEXT           "http://www.ntut.edu.tw/~wkchen/game",IDC_STATIC,39,60,159,8
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Version
 //
 
@@ -569,25 +634,6 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_ABOUTBOX, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 211
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 68
-    END
-END
-#endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////

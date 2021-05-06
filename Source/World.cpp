@@ -275,16 +275,17 @@ void World::spwanEnemy(EntityTypes ET, CPoint p) {
 }
 
 void World::LoadEnemyFromArchive(int amount, CArchive& ar) {
-	if (amount > EnemyUnit.size()) {
-		for (int i = 0; i < amount - EnemyUnit.size(); i++) {
+	int size = EnemyUnit.size() ;
+	if (amount > size) {
+		for (int i = 0; i < amount - size; i++) {
 			spwanEnemy(EntityTypes::Villager, 0, 0);
 		}
 	}
-	else if (amount < EnemyUnit.size()) {
+	else if (amount < size) {
 		
 	}
 	for (int i = 0; i < amount; i++) {
-		dynamic_cast<Unit::Villager*>(EnemyUnit[i])->Serialize(ar);
+		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->Serialize(ar);
 	}
 }
 World* World::instance;
