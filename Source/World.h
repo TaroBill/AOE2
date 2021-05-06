@@ -45,6 +45,8 @@ public:
 	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
 	void spwan(EntityTypes, CPoint);					//生成實體在座標
 	void spwan(EntityTypes, int, int);					//生成實體在座標
+	void spwanEnemy(EntityTypes, CPoint);					//生成實體在座標
+	void spwanEnemy(EntityTypes, int, int);					//生成實體在座標
 	vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
 	void spawningEntity(int);
 	bool isSpawningEntity = false;
@@ -53,8 +55,8 @@ public:
 	CPoint mouseLocation;
 	void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
 	vector<Unit::Entity*> LE;
-	vector<Unit::Entity*> EnemyLE;
-private:
+	vector<Unit::Entity*> EnemyUnit;
+	void LoadEnemyFromArchive(int, CArchive&);
 	EntityFactory entityFactory;
 	static World* instance;
 	vector<Unit::Entity*> unit;

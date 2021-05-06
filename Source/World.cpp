@@ -266,4 +266,25 @@ void World::spawningEntity(int bitmap) {
 	isSpawningEntity = true;
 }
 
+void World::spwanEnemy(EntityTypes ET, int x, int y) {
+	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
+}
+
+void World::spwanEnemy(EntityTypes ET, CPoint p) {
+	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
+}
+
+void World::LoadEnemyFromArchive(int amount, CArchive& ar) {
+	if (amount > EnemyUnit.size()) {
+		for (int i = 0; i < amount - EnemyUnit.size(); i++) {
+			spwanEnemy(EntityTypes::Villager, 0, 0);
+		}
+	}
+	else if (amount < EnemyUnit.size()) {
+		
+	}
+	for (int i = 0; i < amount; i++) {
+		dynamic_cast<Unit::Villager*>(EnemyUnit[i])->Serialize(ar);
+	}
+}
 World* World::instance;
