@@ -72,6 +72,9 @@ void NetWork::OnReceive() {
     }*/
     CSocketFile file(&clientsocket);
     CArchive ar(&file, CArchive::load);
+    int test;
+    ar >> test;
+    World::getInstance()->player.food = test;
     dynamic_cast<Unit::Villager*>(World::getInstance()->LE.at(0))->Serialize(ar);
 }
 

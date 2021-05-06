@@ -21,6 +21,7 @@ public:
 	void onClicked() override {
 		CSocketFile file(&NetWork::getInstance()->clientsocket);
 		CArchive ar(&file, CArchive::store);
+		ar << 10 + World::getInstance()->player.population;
 		dynamic_cast<Unit::Villager*>(World::getInstance()->LE.at(0))->Serialize(ar);
 	}
 };
