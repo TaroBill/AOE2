@@ -96,7 +96,7 @@ namespace game_framework {
 		const char KEY_SPACE = ' ';
 		if (nChar == KEY_SPACE) {
 			//TRACE("TEST\n");
-			NetWork::getInstance()->createServer();
+			NetWork::getInstance()->ConnectToServer();
 			GotoGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
 		}
 		else if (nChar == KEY_ESC)								// Demo 關閉遊戲的方法

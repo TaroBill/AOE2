@@ -6,8 +6,17 @@
 #include "../World.h"
 namespace Unit
 {
-	class Villager :public Entity , public CObject
+	class Villager :public Entity, public CObject
 	{
+		/*
+		TODO : CObject移到Entity(or unitbase)
+		(或是測試僅CObject Serialize，序列化資料)
+		資源場地指標改成座標
+		元件、Navigator：要注意指標不可傳，僅能序列化數值
+		
+		
+		*/
+
 	public: // 用來包裝成為CObject
 
 		void* Villager::operator new(size_t nSize)
@@ -20,13 +29,14 @@ namespace Unit
 			free(p);
 		}
 
-		void Serialize(CArchive& ar) 
+		void Serialize(CArchive& ar)
 		{
 			CObject::Serialize(ar);
 			if (ar.IsStoring())
 				ar << this->hp << this->maxHP << this->point << this->ID << this->playerId;
 			else
 				ar >> this->hp >> this->maxHP >> this->point >> this->ID >> this->playerId;
+		
 		}
 
 	public:
@@ -38,14 +48,14 @@ namespace Unit
 			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
 
 		};
-		
+
 		VillagerState vs = VillagerState::Base;
 
 		int resourceCounter = 0;
 
 		//資源的攜帶上限
 		int carryLimit;
-		
+
 		//攜帶物
 		GameResource carryResource;
 
@@ -82,7 +92,7 @@ namespace Unit
 			//但先不管
 			this->carryResource.amount +=
 				resourcePlace->GetComponent<Gatherable>()->resource.GetResource();
-			
+
 		}
 
 
@@ -125,7 +135,7 @@ namespace Unit
 					vs = VillagerState::Gathering;
 				}
 				break;
-			//採集中
+				//採集中
 			case VillagerState::Gathering:
 				//採集
 				Gathering();
@@ -150,7 +160,7 @@ namespace Unit
 				break;
 
 			case VillagerState::ReturnResourceOnRoad:
-				
+
 				if (navigatorState == 1)
 				{
 					//放資源
@@ -190,7 +200,7 @@ namespace Unit
 			SetBitmap();
 		}
 
-		Villager(CPoint point):Entity(point)
+		Villager(CPoint point) :Entity(point)
 		{
 			Navigator* n = new Navigator();
 			AddComponent(n);
@@ -200,7 +210,6 @@ namespace Unit
 		}
 		Villager()
 		{
-
 			SetBitmap();
 		}
 		~Villager()

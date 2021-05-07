@@ -34,7 +34,7 @@ void NetWork::createServer() {
 
 void NetWork::ConnectToServer() {
     clientsocket.Create();
-    clientsocket.Connect("127.0.0.1", 1234);
+    clientsocket.Connect("172.20.10.4", 1234);
 }
 
 void NetWork::OnAccept() {
