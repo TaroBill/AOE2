@@ -227,7 +227,6 @@ namespace game_framework {
 		GUI::getInstance()->minimap.setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
 
 		World::getInstance()->UnitOnMove();
-		//Test
 	}
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定

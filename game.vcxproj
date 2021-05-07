@@ -310,7 +310,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="Source\Units\minecpp.cpp" />
+    <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
     <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
