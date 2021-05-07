@@ -79,6 +79,7 @@ CGameApp theApp;
 
 BOOL CGameApp::InitInstance()
 {
+	AfxOleInit();
 	if (!AfxSocketInit())
 	{
 		AfxMessageBox(IDP_SOCKETS_INIT_FAILED);

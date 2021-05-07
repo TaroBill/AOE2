@@ -128,6 +128,11 @@ void World::UnitOnShow() {
 			unit[i]->onShow(GlobalX2ScreenX(unit[i]->point.x), GlobalY2ScreenY(unit[i]->point.y));
 		}
 	}
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		if (isOnScreen(EnemyUnit[i]->point.x, EnemyUnit[i]->point.y)) {
+			unit[i]->onShow(GlobalX2ScreenX(EnemyUnit[i]->point.x), GlobalY2ScreenY(EnemyUnit[i]->point.y));
+		}
+	}
 }
 
 bool World::isOnScreen(int x,int y) {

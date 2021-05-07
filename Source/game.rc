@@ -418,52 +418,6 @@ IDC_GAMECURSOR          CURSOR                  "..\\res\\gamecurs.cur"
 
 IDR_RIBBON1             RT_RIBBON_XML           "..\\res\\ribbon1.mfcribbon-ms"
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_SERVERCONTROLLER DIALOGEX 0, 0, 496, 245
-STYLE DS_SETFONT | WS_CHILD
-FONT 9, "新細明體", 400, 0, 0x0
-BEGIN
-    PUSHBUTTON      "開啟伺服器",IDC_BUTTON1,67,116,50,14
-    PUSHBUTTON      "關閉伺服器",IDC_BUTTON2,66,147,50,14
-    EDITTEXT        IDC_EDIT1,56,71,176,15,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT2,281,70,150,18,ES_AUTOHSCROLL
-    LTEXT           "IP",IDC_STATIC,28,74,18,8
-    LTEXT           "Port",IDC_STATIC,251,74,18,8
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_SERVERCONTROLLER, DIALOG
-    BEGIN
-        RIGHTMARGIN, 384
-        BOTTOMMARGIN, 184
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// AFX_DIALOG_LAYOUT
-//
-
-IDD_SERVERCONTROLLER AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
 #endif    // 中文 (繁體，台灣) resources
 /////////////////////////////////////////////////////////////////////////////
 
