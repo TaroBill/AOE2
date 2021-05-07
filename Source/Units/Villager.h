@@ -22,7 +22,6 @@ namespace Unit
 
 		void Serialize(CArchive& ar) 
 		{
-			CObject::Serialize(ar);
 			if (ar.IsStoring())
 				ar << this->hp << this->maxHP << this->point << this->ID << this->playerId;
 			else

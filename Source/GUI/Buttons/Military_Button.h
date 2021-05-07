@@ -20,21 +20,14 @@ public:
 
 	void onClicked() override {
 		//Test
-		CMemFile memfile;
-		//CSocketFile file(&NetWork::getInstance()->clientsocket);
-		CArchive ar(&memfile, CArchive::store);
+	/*	CSocketFile file(&NetWork::getInstance()->clientsocket);
+		CArchive ar(&file, CArchive::store, 4096);
 		int size = World::getInstance()->unit.size();
 		ar << size;
 		for (int i = 0; i < size; i++) {
 			dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(ar);
 		}
-		ar.Close();
-		INT dataLen = (INT)memfile.GetLength();
-		BYTE* data = memfile.Detach();
+		ar.Close();*/
 
-		// Copy serialized data to some buffer, or to Socket, File, etc.
-		NetWork::getInstance()->clientsocket.Send(data, dataLen);
-
-		free(data); // after detach and when no longer needed must be freed with free()
 	}
 };

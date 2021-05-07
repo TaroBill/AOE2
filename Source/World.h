@@ -66,4 +66,5 @@ private:
 	void calculatePopulation();
 	int map[120][120];
 	int sx, sy;
+
 };

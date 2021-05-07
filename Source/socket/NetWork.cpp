@@ -54,7 +54,7 @@ void NetWork::OnAccept() {
 }
 
 void NetWork::OnReceive() {
-    /*TRACE("OnReceive\n");
+   /* TRACE("OnReceive\n");
     char* pBuf = new char[1025];
     CString strData;
     int iLen;
@@ -69,14 +69,18 @@ void NetWork::OnReceive() {
         strData = pBuf;
         AfxMessageBox(_T(strData));
         //display in server              
-    }*/
+    }
+    delete pBuf;*/
+
+
     CSocketFile file(&clientsocket);
-    CArchive ar(&file, CArchive::load);
+    CArchive ar(&file, CArchive::load, 4096);
     int amount;
     ar >> amount;
     World::getInstance()->LoadEnemyFromArchive(amount, ar);
     ar.Close();
     file.Close();
+
 }
 
 NetWork* NetWork::instance;

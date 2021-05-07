@@ -130,7 +130,7 @@ void World::UnitOnShow() {
 	}
 	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
 		if (isOnScreen(EnemyUnit[i]->point.x, EnemyUnit[i]->point.y)) {
-			unit[i]->onShow(GlobalX2ScreenX(EnemyUnit[i]->point.x), GlobalY2ScreenY(EnemyUnit[i]->point.y));
+			EnemyUnit[i]->onShow(GlobalX2ScreenX(EnemyUnit[i]->point.x), GlobalY2ScreenY(EnemyUnit[i]->point.y));
 		}
 	}
 }
