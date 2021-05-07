@@ -11,13 +11,11 @@ namespace Unit
 	class Mine :public Entity
 	{
 	public:
-
-		Mine()
-		{
-
-		}
-		~Mine()
-		{
-		}
+		Mine();
+		~Mine();
+	private:
+		void loadBitmap();
+		int remainAmount;
+		CPoint point;
 	};
 }

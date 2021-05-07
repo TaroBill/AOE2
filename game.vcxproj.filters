@@ -22,7 +22,7 @@
     <ClCompile Include="Source\socket\ClientSocket.cpp" />
     <ClCompile Include="Source\ID.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
-    <ClCompile Include="ServerController.cpp" />
+    <ClCompile Include="Source\Units\minecpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -60,7 +60,6 @@
     <ClInclude Include="Source\socket\ServerSocket.h" />
     <ClInclude Include="Source\socket\ClientSocket.h" />
     <ClInclude Include="Source\ID.h" />
-    <ClInclude Include="ServerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />

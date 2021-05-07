@@ -26,5 +26,7 @@ public:
 		for (int i = 0; i < size; i++) {
 			dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(ar);
 		}
+		ar.Close();
+		file.Close();
 	}
 };
