@@ -56,10 +56,11 @@ public:
 	void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
 	vector<Unit::Entity*> LE;
 	vector<Unit::Entity*> EnemyUnit;
+	vector<Unit::Entity*> unit;
 	void LoadEnemyFromArchive(int, CArchive&);
 	EntityFactory entityFactory;
+private:
 	static World* instance;
-	vector<Unit::Entity*> unit;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	void calculatePopulation();

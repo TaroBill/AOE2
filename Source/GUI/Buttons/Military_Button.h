@@ -19,12 +19,12 @@ public:
 	}
 
 	void onClicked() override {
-		/*CSocketFile file(&NetWork::getInstance()->clientsocket);
+		CSocketFile file(&NetWork::getInstance()->clientsocket);
 		CArchive ar(&file, CArchive::store);
 		int size = World::getInstance()->unit.size();
 		ar << size;
 		for (int i = 0; i < size; i++) {
 			dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(ar);
-		}*/
+		}
 	}
 };

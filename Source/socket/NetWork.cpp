@@ -75,6 +75,8 @@ void NetWork::OnReceive() {
     int amount;
     ar >> amount;
     World::getInstance()->LoadEnemyFromArchive(amount, ar);
+    ar.Close();
+    file.Close();
 }
 
 NetWork* NetWork::instance;

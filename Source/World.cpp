@@ -281,6 +281,7 @@ void World::spwanEnemy(EntityTypes ET, CPoint p) {
 
 void World::LoadEnemyFromArchive(int amount, CArchive& ar) {
 	int size = EnemyUnit.size() ;
+	TRACE("Size: %d\n", amount);
 	if (amount > size) {
 		for (int i = 0; i < amount - size; i++) {
 			spwanEnemy(EntityTypes::Villager, 0, 0);
