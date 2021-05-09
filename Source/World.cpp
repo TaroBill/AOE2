@@ -279,7 +279,7 @@ void World::spwanEnemy(EntityTypes ET, CPoint p) {
 	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
 }
 
-void World::LoadEnemyFromArchive(int amount, CArchive& ar) {
+void World::LoadEnemyFromArchive(int amount, stringstream& ss) {
 	int size = EnemyUnit.size() ;
 	TRACE("Size: %d\n", amount);
 	if (amount > size) {
@@ -291,7 +291,7 @@ void World::LoadEnemyFromArchive(int amount, CArchive& ar) {
 		
 	}
 	for (int i = 0; i < amount; i++) {
-		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->Serialize(ar);
+		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->Serialize(ss);
 	}
 }
 World* World::instance;

@@ -13,7 +13,6 @@ public:
 
 	// Overrides
 public:
-public:
 	virtual void OnAccept(int nErrorCode);
 	virtual void OnClose(int nErrorCode);
 	virtual void OnConnect(int nErrorCode);

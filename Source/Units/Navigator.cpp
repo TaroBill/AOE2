@@ -10,8 +10,8 @@
 using namespace std;
 #pragma region Utility
 //point2tile
-CPoint Unit::Navigator::Point2Tile(CPoint p) 
-{ 
+CPoint Unit::Navigator::Point2Tile(CPoint p)
+{
 	CPoint np;
 	np.x = p.x / 50;
 	np.y = p.y / 50;
@@ -31,7 +31,7 @@ CPoint Unit::Navigator::Tile2Point(CPoint p)
 float Unit::Navigator::GetLength(CPoint p)
 {
 	float temp = static_cast<float>(sqrt(p.x * p.x + p.y * p.y));
-	return temp>0 ? temp : 1;
+	return temp > 0 ? temp : 1;
 }
 
 //正規化
@@ -120,10 +120,10 @@ void Unit::Navigator::Straight(CPoint a, CPoint b)
 //將每個轉角or格子設為下個點
 void Unit::Navigator::AStar()
 {
-	
+
 	vector<CPoint*> close;//封閉list，存放已經被走訪的點
 	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
-	CPoint* cp =new CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
+	CPoint* cp = new CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
 	std::map<CPoint*, int> gScore;//起點到CP點的距離
 	std::map<CPoint*, int> hScore;//評估函式，可以用距離、難易度
 	std::map<CPoint*, int> fScore;//g+h
@@ -259,7 +259,7 @@ void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 		TRACE("Find Path Fail\n");
 		return;
 	}
-	
+
 	startPoint = this->GetParent<Entity>()->point;
 	startTile = this->GetParent<Entity>()->GetTile();
 	pathPoints.clear();
@@ -298,5 +298,5 @@ Unit::Navigator::Navigator()
 	counterF[0] = 0;
 	counterF[1] = 0;
 
-	
+
 }

@@ -4,6 +4,7 @@
 #include "Navigator.h"
 #include "Gatherable.h"
 #include "../World.h"
+#include <sstream>
 namespace Unit
 {
 	class Villager :public Entity , public CObject
@@ -20,12 +21,14 @@ namespace Unit
 			free(p);
 		}
 
-		void Serialize(CArchive& ar) 
+		void Serialize(stringstream &in)
 		{
-			if (ar.IsStoring())
-				ar << this->hp << this->maxHP << this->point << this->ID << this->playerId;
-			else
-				ar >> this->hp >> this->maxHP >> this->point >> this->ID >> this->playerId;
+			in << this->hp << this->maxHP << this->point.x << this->point.y << this->ID << this->playerId;
+		}
+
+		void deSerialize(stringstream &in)
+		{
+			in >> this->hp >> this->maxHP >> this->point.x >> this->point.y >> this->ID >> this->playerId;
 		}
 
 	public:

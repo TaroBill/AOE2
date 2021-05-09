@@ -96,6 +96,7 @@ namespace game_framework {
 		const char KEY_SPACE = ' ';
 		if (nChar == KEY_SPACE) {
 			//TRACE("TEST\n");
+			NetWork::getInstance()->play();
 			GotoGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
 		}
 		else if (nChar == KEY_ESC)								// Demo 關閉遊戲的方法
@@ -227,15 +228,7 @@ namespace game_framework {
 		GUI::getInstance()->minimap.setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
 
 		World::getInstance()->UnitOnMove();
-
-		CSocketFile file(&NetWork::getInstance()->clientsocket);
-		CArchive ar(&file, CArchive::store, 4096);
-		int size = World::getInstance()->unit.size();
-		ar << size;
-		for (int i = 0; i < size; i++) {
-			dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(ar);
-		}
-		ar.Close();
+		//NetWork::getInstance()->SendData();
 	}
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定

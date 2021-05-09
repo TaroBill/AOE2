@@ -25,12 +25,11 @@ void ServerSocket::OnAccept(int nErrorCode)
 
 void ServerSocket::OnClose(int nErrorCode)
 {
+	TRACE("On Close\n");
 	// TODO: Add your specialized code here and/or call the base class
 	if (nErrorCode == 0)
 	{
-
 	}
-
 
 	CSocket::OnClose(nErrorCode);
 }
@@ -64,7 +63,6 @@ void ServerSocket::OnReceive(int nErrorCode)
 void ServerSocket::OnSend(int nErrorCode)
 {
 	// TODO: Add your specialized code here and/or call the base class
-
 	CSocket::OnSend(nErrorCode);
 }
 
