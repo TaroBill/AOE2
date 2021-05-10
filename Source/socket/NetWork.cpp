@@ -64,6 +64,7 @@ void NetWork::createServer() {
 void NetWork::ConnectToServer() {
     clientsocket.Create();
     clientsocket.Connect("127.0.0.1", 1234);
+    isConnectedToClient = true;
 }
 
 void NetWork::OnAccept() {
@@ -88,6 +89,8 @@ void NetWork::OnReceive() {
     TRACE("OnReceive\n");
     char* pBuf = new char[4096];
     CString strData;
+    stringstream ss;
+    string erase;
     int iLen;
     iLen = clientsocket.Receive(pBuf, 4096);
     if (iLen == SOCKET_ERROR)
@@ -98,8 +101,14 @@ void NetWork::OnReceive() {
     {
         //pBuf[iLen] = NULL;
         strData = pBuf;
-        TRACE(pBuf);
-        //display in server              
+        //TRACE(pBuf);
+        ss << strData;
+        int size;
+        ss >> erase >> size;
+        World::getInstance()->LoadEnemyFromStringStream(size, ss);
+        //display in server        
+        if (!isOpened)
+            SendData();
     }
     delete pBuf;
 
@@ -113,16 +122,21 @@ void NetWork::OnReceive() {
 }
 
 void NetWork::SendData() {
+    if (!isConnectedToClient) {
+        //TRACE("Haven't Connect to client\n");
+        return;
+    }
     stringstream packet;
     int size = World::getInstance()->unit.size();
-    packet << size;
+    packet << "VillagersSize " << size << " ";
     for (int i = 0; i < size; i++) {
         dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(packet);
     }
-    TRACE("SENDING DATA\n");
+    //TRACE("SENDING DATA\n");
     string str = packet.str();
     char* output = new char[str.length() + 1];
     strcpy(output, str.c_str());
+    //TRACE(output);
     
     clientsocket.Send(output, 4096);
     delete[] output;

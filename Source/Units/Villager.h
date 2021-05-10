@@ -5,6 +5,7 @@
 #include "Gatherable.h"
 #include "../World.h"
 #include <sstream>
+
 namespace Unit
 {
 	class Villager :public Entity , public CObject
@@ -23,12 +24,23 @@ namespace Unit
 
 		void Serialize(stringstream &in)
 		{
-			in << this->hp << this->maxHP << this->point.x << this->point.y << this->ID << this->playerId;
+			in << "HP " << this->hp << " ";
+			in << "maxHP " << this->maxHP << " ";
+			in << "PointX " << this->point.x << " ";
+			in << "PointY " << this->point.y << " ";
+			in << "ID " << this->ID << " ";
+			in << "playerID " << this->playerId << " ";
 		}
 
 		void deSerialize(stringstream &in)
 		{
-			in >> this->hp >> this->maxHP >> this->point.x >> this->point.y >> this->ID >> this->playerId;
+			string erase;
+			in >> erase >> this->hp;
+			in >> erase >> this->maxHP;
+			in >> erase >> this->point.x;
+			in >> erase >> this->point.y;
+			in >> erase >> this->ID;
+			in >> erase >> this->playerId;
 		}
 
 	public:

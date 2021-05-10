@@ -57,7 +57,7 @@ public:
 	vector<Unit::Entity*> LE;
 	vector<Unit::Entity*> EnemyUnit;
 	vector<Unit::Entity*> unit;
-	void LoadEnemyFromArchive(int, stringstream&);
+	void LoadEnemyFromStringStream(int, stringstream&);
 	EntityFactory entityFactory;
 private:
 	static World* instance;
