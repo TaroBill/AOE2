@@ -19,8 +19,11 @@ public:
 	int GetResource()
 	{
 		if (amount == 0)
+		{
 			return 0;
-		return amount--;
+		}
+		amount--;
+		return 1;
 	}
 	int GetResource(int n)
 	{

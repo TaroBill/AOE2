@@ -7,10 +7,10 @@
 #include "gamelib.h"
 #include <Vector>
 #include "Units/Villager.h"
-
+#include "Units/Mine.h"
 enum EntityTypes {
     Villager = 100000,
-
+	GoldMine,
 };
 
 class EntityFactory {
@@ -22,6 +22,8 @@ public:
         case EntityTypes::Villager:
             entity = new Unit::Villager(p);
             break;
+		case EntityTypes::GoldMine:
+			entity = new Unit::Mine(p,ResourceType::Gold);
         default:
             break;
         }
@@ -34,6 +36,8 @@ public:
         case EntityTypes::Villager:
             entity = new Unit::Villager(x, y);
             break;
+		case EntityTypes::GoldMine:
+			entity = new Unit::Mine(CPoint(x, y),ResourceType::Gold );
         default:
             break;
         }

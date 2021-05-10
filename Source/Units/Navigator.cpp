@@ -6,6 +6,7 @@
 #include "Navigator.h"
 #include "Entity.h"
 #include "../World.h"
+#include <memory> 
 
 using namespace std;
 #pragma region Utility
@@ -57,8 +58,9 @@ CPoint Unit::Navigator::GetNowPoint()
 //是移動的基礎
 void Unit::Navigator::MoveStraight(CPoint* point)
 {
+	
 	//浮點數counter累計
-	for (unsigned int i = 0; i < 2; i++)counterF[i] += normalNextPoint[i] * speedFixed;
+	for (unsigned int i = 0; i < 2; i++)counterF[i] += velocity[i] * speedFixed;
 	//角色位移浮點數counter的整數部分
 	*point += CPoint(static_cast<int>(counterF[0]), static_cast<int>(counterF[1]));
 	//計算與下一個點的距離
@@ -76,28 +78,40 @@ void Unit::Navigator::MoveStraight(CPoint* point)
 //-1目前沒有路徑要進行
 int Unit::Navigator::onMove(CPoint* point)
 {
+	targetPoint = Info.targetPoint;
+	targetTile = Info.targetTile;
+	pathPoints = Info.pathPoints;
+	pathDistances = Info.pathDistance;
+	startPoint = Info.startPoint;
+	startTile = Info.startTile;
 
-
-	if (pathDistances.size() > 0)
+	if (pathDistances.size() > 0 && pathPoints.size() > 0)
 	{
+		for (size_t i = 0; i < pathPoints.size(); i++)
+		{
+
+			TRACE("%d,%d\n", pathPoints[i].x, pathPoints[i].y);
+		}
+		TRACE("----\n");
 		//GetParent<Entity>()->entityState = Entity::State::Move;
-		Normalization(*point, (pathPoints.front()), normalNextPoint);
+		Normalization(*point, (pathPoints.front()), velocity);
 
 		MoveStraight(point);
 		if (pathDistances.front() <= speedFixed)
 		{
-
-			pathDistances.erase(pathDistances.begin());
-			pathPoints.erase(pathPoints.begin());
-
-			return 1;
+			Info.pathPoints.erase(Info.pathPoints.begin());
+			Info.pathDistance.erase(Info.pathDistance.begin());
+			if (pathDistances.size() <= 1)
+			{
+				return 1;
+			}
 		}
 		return 0;
 	}
 	else
 	{
-		normalNextPoint[0] = 0;
-		normalNextPoint[1] = 0;
+		velocity[0] = 0;
+		velocity[1] = 0;
 		return -1;
 	}
 	return -1;
@@ -116,11 +130,153 @@ void Unit::Navigator::Straight(CPoint a, CPoint b)
 	pathDistances.push_back(GetLength(a - b));
 }
 
+
+
+
+
+
+
+
+//Astar尋路
+//將每個轉角or格子設為下個點
+DWORD WINAPI AStarSync(LPVOID p)
+{
+
+	
+
+	vector<std::shared_ptr<CPoint>> close;//封閉list，存放已經被走訪的點
+	vector<std::shared_ptr<CPoint>> open;//開啟list，存放可能被做為起點的點
+	std::shared_ptr<CPoint> cp =std::make_shared<CPoint>( CPoint(((threadInfo*)p)->startTile.x, ((threadInfo*)p)->startTile.y));//每一輪起點
+	std::map<std::shared_ptr<CPoint>, int> gScore;//起點到CP點的距離
+	std::map<std::shared_ptr<CPoint>, int> hScore;//評估函式，可以用距離、難易度
+	std::map<std::shared_ptr<CPoint>, int> fScore;//g+h
+	std::map<std::shared_ptr<CPoint>, std::shared_ptr<CPoint>> come_from;//父節點
+	open.push_back(cp);//起點加入openList
+
+	//起點加入fscore
+	fScore.insert(std::pair<std::shared_ptr<CPoint>, int>(cp, 0));
+	hScore.insert(std::pair<std::shared_ptr<CPoint>, int>(cp, 0));
+	gScore.insert(std::pair<std::shared_ptr<CPoint>, int>(cp, 0));
+
+
+	while (open.size() > 0)
+	{
+		int minIndex = 0, minValue = INT32_MAX;
+		//在openList中找最小值的CPoint作為這圈的開始
+#pragma region FindMin
+
+
+		for (unsigned int i = 0; i < open.size(); i++)
+		{
+			//比最小值還小
+			if (fScore[open[i]] < minValue)
+			{
+				minValue = fScore[open[i]];
+				minIndex = i;
+			}
+		}
+#pragma endregion
+		cp = open.at(minIndex);//起點變成有最小值f的點
+		//周圍八方向的點
+		for (int y = -1; y <= 1; y++)
+		{
+			for (int x = -1; x <= 1; x++)
+			{
+				if (!(y == 0 && x == 0))//非自己
+				{
+					std::shared_ptr<CPoint> newPoint =  std::make_shared<CPoint>( CPoint(cp->x + x, cp->y + y) );
+					bool continueFlag = false;
+					for (unsigned i = 0; i < close.size(); i++)
+					{
+						if (*close[i] == *newPoint)
+						{
+							continueFlag = true;
+							break;
+						}
+					}
+					if (continueFlag)continue;
+
+					//目前到這裡的cost
+					int newGScore = gScore[cp] + 1;
+
+					//評估cost
+					int canPass = World::getInstance()->getLocationItem((*newPoint).x * 50, (*newPoint).y * 50);
+
+					//canPass = 1 - canPass;
+					//曼哈頓距離預測
+					int newHScore = 1000 * canPass + (abs(((threadInfo*)p)->targetTile.x - (*newPoint).x) + abs(((threadInfo*)p)->targetTile.y - (*newPoint).y));
+
+					int newFScore = newGScore + newHScore;
+
+
+					gScore.insert(pair<shared_ptr<CPoint>, int>(newPoint, newGScore));
+					hScore.insert(pair<shared_ptr<CPoint>, int>(newPoint, newHScore));
+					fScore.insert(pair<shared_ptr<CPoint>, int>(newPoint, newFScore));
+					open.push_back(newPoint);
+					come_from.insert(pair<shared_ptr<CPoint>, shared_ptr<CPoint>>(newPoint, cp));
+
+				}
+			}
+		}
+		//cp加入close list
+		close.push_back(cp);
+		//cp從open list中刪除
+		auto it = open.begin();
+		for (unsigned int i = 0; i < open.size(); it++, i++)
+		{
+			if (*it == cp)
+			{
+				open.erase(it);
+				break;
+			}
+		}
+
+
+
+		if (*cp == ((threadInfo*)p)->targetTile)//到了
+		{
+			stack<CPoint>stackPath;
+			while (true)
+			{
+				stackPath.push(*cp);
+				if (*cp == ((threadInfo*)p)->startTile)break;
+				cp = come_from[cp];
+			}
+			unsigned int s = stackPath.size();
+			for (unsigned int i = 0; i < s; i++)
+			{
+				((threadInfo*)p)->pathPoints.push_back(std::move(Unit::Navigator::Tile2Point(stackPath.top())));
+				stackPath.pop();
+				TRACE("%d,%d", ((threadInfo*)p)->pathPoints[i].x,((threadInfo*)p)->pathPoints[i].y)	;
+			}
+			for (unsigned int i = 0; i < ((threadInfo*)p)->pathPoints.size() - 1; i++)
+			{
+				((threadInfo*)p)->pathDistance.push_back(std::move(Unit::Navigator::GetLength(((threadInfo*)p)->pathPoints[i] - ((threadInfo*)p)->pathPoints[i + 1])));
+			}
+
+			((threadInfo*)p)->pathPoints.push_back(std::move( ((threadInfo*)p)->targetPoint));
+			((threadInfo*)p)->pathDistance.push_back(std::move(Unit::Navigator::GetLength(((threadInfo*)p)->pathPoints.back() - ((threadInfo*)p)->targetPoint)));
+			
+
+			gScore.clear();
+			hScore.clear();
+			fScore.clear();
+			come_from.clear();
+
+			return 0;
+
+			//回傳(存放)路徑
+		}
+	}
+	return 0;
+}
+
+
+
 //Astar尋路
 //將每個轉角or格子設為下個點
 void Unit::Navigator::AStar()
 {
-
 	vector<CPoint*> close;//封閉list，存放已經被走訪的點
 	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
 	CPoint* cp = new CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
@@ -249,6 +405,7 @@ void Unit::Navigator::AStar()
 	}
 }
 
+
 //開始尋路
 void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 {
@@ -266,7 +423,17 @@ void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 	pathDistances.clear();
 	this->targetPoint = targrtP;
 	targetTile = Point2Tile(targrtP);
-	AStar();
+
+	Info = threadInfo();
+	Info.pathDistance.clear();
+	Info.pathPoints.clear();
+	Info.startPoint = startPoint;
+	Info.startTile = startTile;
+	Info.targetPoint = targetPoint;
+	Info.targetTile = targetTile;
+
+	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0,&dwThreadID);
+	
 }
 
 //開始尋路
@@ -293,8 +460,8 @@ Unit::Navigator::Navigator()
 	speedFixed = 5;
 	targetPoint = CPoint(0, 0);
 	targetTile = CPoint(0, 0);
-	normalNextPoint[0] = 0;
-	normalNextPoint[1] = 0;
+	velocity[0] = 0;
+	velocity[1] = 0;
 	counterF[0] = 0;
 	counterF[1] = 0;
 

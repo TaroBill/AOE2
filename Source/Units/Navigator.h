@@ -5,13 +5,33 @@
 #include <algorithm>
 #include "UnitBase.h"
 #include "Entity.h"
-//using namespace std;
+#include <memory> 
 
+using namespace std;
+ struct threadInfo
+{
+	CPoint targetPoint;
+	CPoint targetTile;
+	CPoint startPoint;
+	CPoint startTile;
+	vector<CPoint> pathPoints;
+	vector<float> pathDistance;
+	threadInfo()
+	{
+		targetPoint = CPoint(0, 0);
+		 targetTile = CPoint(0,0);
+		 startPoint = CPoint(0, 0);
+		 startTile = CPoint(0, 0);
+	}
+};
 namespace Unit
 {
 	class Navigator :public UnitBase
 	{
 	public:
+		threadInfo Info;//傳遞給執行序函數的參數
+		HANDLE hThead;//儲存直行序Handle
+		DWORD dwThreadID;//儲存多執行序ID
 		//移動用計數器
 		//當位移量小於1時，會將位移量累加至計數器
 		//當計數器數值達到至少正負1時，將數值使用於移動
@@ -39,8 +59,7 @@ namespace Unit
 		vector<float> pathDistances;
 
 		//正規化的下個點座標
-		float normalNextPoint[2];
-
+		float velocity[2];
 
 		//point2tile
 		static CPoint Point2Tile(CPoint);
@@ -55,6 +74,8 @@ namespace Unit
 		//現在點座標
 		CPoint GetNowPoint();
 		
+
+
 		//開始尋路
 		void FindPath(CPoint targrtPoint, vector<Entity*> entityList);
 		void FindPath(CPoint targrtPoint);
@@ -84,7 +105,8 @@ namespace Unit
 		//Astar尋路
 		//將每個轉角or格子設為下個點
 		void AStar();
-
+		//多執行序版Astar
+		//DWORD WINAPI AStarSync(LPVOID pParam);
 		Navigator();
 	};
 };

@@ -67,6 +67,17 @@ namespace game_framework {
 	CGameStateInit::CGameStateInit(CGame* g)
 		: CGameState(g)
 	{
+		//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
+		//_CrtSetBreakAlloc(2037	 );
+		//_CrtSetBreakAlloc(	2025 );
+		//_CrtSetBreakAlloc(	2012 );
+		//_CrtSetBreakAlloc(	2000 );
+		//_CrtSetBreakAlloc(	1987 );
+		//_CrtSetBreakAlloc(	1975 );
+		//_CrtSetBreakAlloc(	1962 );
+
 	}
 
 	void CGameStateInit::OnInit()
@@ -141,6 +152,7 @@ namespace game_framework {
 	CGameStateOver::CGameStateOver(CGame* g)
 		: CGameState(g)
 	{
+
 	}
 
 	void CGameStateOver::OnMove()
@@ -353,7 +365,6 @@ namespace game_framework {
 			World::getInstance()->isSpawningEntity = false;
 			return;
 		}
-		//testVillager->GetComponent<Unit::Navigator>()->FindPath(testVillager->pointX, testVillager->pointY,World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
 		{
 			
@@ -364,9 +375,7 @@ namespace game_framework {
 					World::getInstance()->LE);
 			
 		}
-		//World::getInstance()->moveEntityToLocation(World::getInstance()->LE, point);
-		//TRACE("%d,%d\n", testVillager->Point2Tile(clickPoint.x), testVillager->Point2Tile(clickPoint.y));
-		//TRACE("canpass:%d\n", World::getInstance()->getLocationItem(clickPoint.x, clickPoint.y));
+
 
 	}
 

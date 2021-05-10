@@ -10,6 +10,7 @@
 #include "Units/Villager.h"
 #include "Units/Navigator.h"
 #include "Player/Player.h"
+#include "Player/GameResource.h"
 #include <typeinfo>
 #include "Units/EntityFactory.h"
 

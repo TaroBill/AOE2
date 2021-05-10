@@ -23,6 +23,7 @@
     <ClCompile Include="Source\ID.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\Units\Mine.cpp" />
+    <ClCompile Include="Source\Units\Villager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />

@@ -312,6 +312,7 @@
     </ClCompile>
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
+    <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -67,6 +67,8 @@ namespace Unit
 		CPoint point;
 		//為0時是角色單位，大於1為建築
 		int sizeXY;
+		//角色的圖大小
+		CRect rect;
 
 		//血量
 		int hp;

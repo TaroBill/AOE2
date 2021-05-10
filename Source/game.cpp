@@ -25,7 +25,6 @@
  *   2008-02-17
  *      Force Invalidate() to display CTRL-Q when the about dialog is displayed.
  */
-
 #include "stdafx.h"
 #include "game.h"
 #include "MainFrm.h"

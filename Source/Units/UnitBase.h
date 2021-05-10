@@ -37,7 +37,6 @@ namespace Unit
 			
 		}
 		
-
 		//新增組件時，請使用new
 		//AddComponent(new 組件型別())
 		virtual void AddComponent(UnitBase* component)
@@ -73,7 +72,10 @@ namespace Unit
 			}
 			components.clear();
 		}
+		void RemoveComponents()
+		{
 
+		}
 		template<typename T>
 		T* GetParent()
 		{
@@ -85,7 +87,6 @@ namespace Unit
 		
 		~UnitBase()
 		{
-			RemoveComponents(_components);
 			
 		}
 		
