@@ -1,5 +1,5 @@
 #pragma once
-#include "stdafx.h"
+#include "../StdAfx.h"
 #include "../Player/GameResource.h"
 namespace Unit
 {

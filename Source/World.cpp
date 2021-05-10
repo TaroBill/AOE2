@@ -187,6 +187,7 @@ void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
 	spwan(EntityTypes::Villager, 3000, 3000);
+	spwan(EntityTypes::GoldMine, 2950, 2950);
 }
 
 void World::setScreenLocation(int x, int y) {
