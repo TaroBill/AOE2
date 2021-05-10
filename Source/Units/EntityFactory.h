@@ -1,13 +1,13 @@
 #pragma once
-#include "stdafx.h"
-#include "Resource.h"
+#include "../stdafx.h"
+#include "../Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
-#include "audio.h"
-#include "gamelib.h"
+#include "../audio.h"
+#include "../gamelib.h"
 #include <Vector>
-#include "Units/Villager.h"
-#include "Units/Mine.h"
+#include "Villager.h"
+#include "Mine.h"
 enum EntityTypes {
     Villager = 100000,
 	GoldMine,
@@ -29,6 +29,7 @@ public:
         }
         return entity;
     }
+
     Unit::Entity* SpawnEntity(int type, int x, int y) {
         Unit::Entity* entity;
         switch (type)
@@ -37,7 +38,7 @@ public:
             entity = new Unit::Villager(x, y);
             break;
 		case EntityTypes::GoldMine:
-			entity = new Unit::Mine(CPoint(x, y),ResourceType::Gold );
+			entity = new Unit::Mine(CPoint(x, y),ResourceType::Gold);
         default:
             break;
         }

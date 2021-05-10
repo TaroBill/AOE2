@@ -87,8 +87,9 @@ namespace Unit
 		
 		~UnitBase()
 		{
-			
+			RemoveComponents(_components);
 		}
+
 		
 	};
 }

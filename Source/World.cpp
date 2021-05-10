@@ -2,11 +2,7 @@
 
 World* World::getInstance()
 {
-	if (instance==nullptr)
-	{
-		instance = new World();
-	}
-	return instance;
+	return &instance;
 }
 
 
@@ -42,7 +38,11 @@ World::~World() {
 		delete unit[i];
 	}
 	unit.clear();
-
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		delete EnemyUnit[i];
+	}
+	EnemyUnit.clear();
+	TRACE("~World()\n");
 }
 
 int World::getLocationItem(int x, int y) {
@@ -295,4 +295,4 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->deSerialize(ss);
 	}
 }
-World* World::instance;
+World World::instance;

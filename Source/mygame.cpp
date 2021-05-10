@@ -67,9 +67,8 @@ namespace game_framework {
 	CGameStateInit::CGameStateInit(CGame* g)
 		: CGameState(g)
 	{
+
 		//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-
 		//_CrtSetBreakAlloc(2037	 );
 		//_CrtSetBreakAlloc(	2025 );
 		//_CrtSetBreakAlloc(	2012 );
@@ -365,6 +364,8 @@ namespace game_framework {
 			World::getInstance()->isSpawningEntity = false;
 			return;
 		}
+		if (CPoint(10, 10) == CPoint(10, 10))
+			TRACE("Equal\n");
 		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
 		{
 			

@@ -1,10 +1,7 @@
 #include "GUI.h"
 
 GUI* GUI::getInstance() {
-	if (instance == nullptr) {
-		instance = new GUI();
-	}
-	return instance;
+	return &instance;
 }
 
 
@@ -59,4 +56,4 @@ void GUI::printTest() {
 	TRACE("TEST\n");
 }
 
-GUI* GUI::instance;
+GUI GUI::instance;

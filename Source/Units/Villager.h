@@ -1,27 +1,16 @@
 #pragma once
 #include "Entity.h"
 #include "UnitBase.h"
-#include "Navigator.h"
+//#include "Navigator.h"
 #include "Gatherable.h"
-#include "../World.h"
 #include <sstream>
 
 #include "../Player/GameResource.h"
 namespace Unit
 {
-	class Villager :public Entity , public CObject
+	class Villager :public Entity 
 	{
-	public: // 用來包裝成為CObject
-
-		void* Villager::operator new(size_t nSize)
-		{
-			return malloc(nSize);
-		}
-
-		void operator delete(void* p)
-		{
-			free(p);
-		}
+	public:
 
 		void Serialize(stringstream &in)
 		{
@@ -73,6 +62,7 @@ namespace Unit
 
 		//把資源放到主城，讓對應的玩家增加資源
 		void ReturnResource();
+
 		bool FindResouce();
 
 		bool FindRecyclingPlace();

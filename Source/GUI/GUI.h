@@ -28,5 +28,5 @@ public:
 	EntityDataFrame entityDataFrame;
 	EntityDataButtonFrame entityDataButtonFrame;
 private:
-	static GUI* instance;
+	static GUI instance;
 };

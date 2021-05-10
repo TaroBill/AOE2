@@ -1,10 +1,7 @@
 #include "NetWork.h"
 #include "../World.h"
 NetWork* NetWork::getInstance() {
-    if (instance == nullptr) {
-        instance = new NetWork();
-    }
-    return instance;
+    return &instance;
 }
 
 
@@ -16,24 +13,8 @@ NetWork::NetWork() {
 
 NetWork::~NetWork() {
     isOpened = false;
+    TRACE("~NetWork()\n");
 }
-
-/*DWORD WINAPI NetWork::ServerTickThread(LPVOID lpParam) {
-    while (instance->isOpened) {
-        if (instance->isPlaying == false) {
-            Sleep(300);
-            continue;
-        }
-        if (instance->isConnectedToClient == false) {
-            TRACE("Haven't connected to client\n");
-            Sleep(300);
-            continue;
-        }
-        instance->SendData();
-        Sleep(300);
-    }
-    return 0;
-}*/
 
 void NetWork::play() {
     isPlaying = true;
@@ -45,10 +26,10 @@ void NetWork::pause() {
 
 void NetWork::createServer() {
     TRACE("Creating Server\n");
-    if (instance->cserversocket.Create(1234)) {
-        if (!instance->cserversocket.Listen()) {
+    if (cserversocket.Create(1234)) {
+        if (!cserversocket.Listen()) {
             AfxMessageBox(_T("無法listen此port"));
-            instance->cserversocket.Close();
+            cserversocket.Close();
             return;
         }
     }
@@ -57,8 +38,6 @@ void NetWork::createServer() {
     }
     TRACE("Listening for Connections!!!\n");
     isOpened = true;
-    //hThread = CreateThread(NULL, 0, ServerTickThread, NULL, 0, &dwThreadID);  //採用多線程固定tick送data失敗，MFC CSocket類不支援多線程
-    //GAME_ASSERT(hThread != NULL, "NetWork error: Create Thread failed!"); 
 }
 
 void NetWork::ConnectToServer() {
@@ -76,8 +55,6 @@ void NetWork::OnAccept() {
         clientsocket.GetSockName(strIP, port);
         TRACE("isConnectedToClient %s %d\n", strIP, port);
         isConnectedToClient = true;
-        //m_status = "Client Connected,IP :" + strIP;
-      //  clientsocket.Send("Connected To Server", strlen("Connected To  Server"));
     }
     else
     {
@@ -110,14 +87,8 @@ void NetWork::OnReceive() {
         if (!isOpened)
             SendData();
     }
-    delete pBuf;
+    delete [] pBuf;
 
-
-    /*  CArchive ar(file, CArchive::load, 4096);
-      int amount;
-      ar >> amount;
-      World::getInstance()->LoadEnemyFromArchive(amount, ar);
-      ar.Close();*/
 
 }
 
@@ -139,7 +110,7 @@ void NetWork::SendData() {
     //TRACE(output);
     
     clientsocket.Send(output, 4096);
-    delete[] output;
+    delete [] output;
 }
 
-NetWork* NetWork::instance;
+NetWork NetWork::instance;

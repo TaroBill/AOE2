@@ -1,7 +1,6 @@
 #pragma once
 #include "../World.h"
 
-
 //把資源放到主城，讓對應的玩家增加資源
 void Unit::Villager::ReturnResource()
 {
@@ -157,10 +156,9 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 }
 Unit::Villager::Villager()
 {
-
 	SetBitmap();
 }
 Unit::Villager::~Villager()
 {
-
+	TRACE("Release Villager\n");
 }

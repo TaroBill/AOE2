@@ -3,7 +3,6 @@
 #include "../Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
-#include <mutex>
 #include "../audio.h"
 #include "../gamelib.h"
 #include "ServerSocket.h"
@@ -26,12 +25,8 @@ public:
     ServerSocket cserversocket;
     ClientSocket clientsocket;
 private:
-    static NetWork* instance;
-    static DWORD WINAPI ServerTickThread(LPVOID lpParam);
-    mutex gMutex;
+    static NetWork instance;
     bool isOpened;
     bool isPlaying;
     bool isConnectedToClient;
-    HANDLE	hThread;	
-    DWORD dwThreadID;
 };

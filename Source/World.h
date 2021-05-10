@@ -61,7 +61,7 @@ public:
 	void LoadEnemyFromStringStream(int, stringstream&);
 	EntityFactory entityFactory;
 private:
-	static World* instance;
+	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	void calculatePopulation();

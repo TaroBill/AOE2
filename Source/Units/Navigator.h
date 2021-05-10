@@ -108,5 +108,7 @@ namespace Unit
 		//¦h°õ¦æ§Çª©Astar
 		//DWORD WINAPI AStarSync(LPVOID pParam);
 		Navigator();
+
+		~Navigator();
 	};
 };

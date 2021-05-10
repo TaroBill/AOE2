@@ -13,6 +13,7 @@ using namespace std;
 //point2tile
 CPoint Unit::Navigator::Point2Tile(CPoint p)
 {
+
 	CPoint np;
 	np.x = p.x / 50;
 	np.y = p.y / 50;
@@ -58,7 +59,7 @@ CPoint Unit::Navigator::GetNowPoint()
 //是移動的基礎
 void Unit::Navigator::MoveStraight(CPoint* point)
 {
-	
+
 	//浮點數counter累計
 	for (unsigned int i = 0; i < 2; i++)counterF[i] += velocity[i] * speedFixed;
 	//角色位移浮點數counter的整數部分
@@ -142,11 +143,10 @@ void Unit::Navigator::Straight(CPoint a, CPoint b)
 DWORD WINAPI AStarSync(LPVOID p)
 {
 
-	
 
 	vector<std::shared_ptr<CPoint>> close;//封閉list，存放已經被走訪的點
 	vector<std::shared_ptr<CPoint>> open;//開啟list，存放可能被做為起點的點
-	std::shared_ptr<CPoint> cp =std::make_shared<CPoint>( CPoint(((threadInfo*)p)->startTile.x, ((threadInfo*)p)->startTile.y));//每一輪起點
+	std::shared_ptr<CPoint> cp = std::make_shared<CPoint>(CPoint(((threadInfo*)p)->startTile.x, ((threadInfo*)p)->startTile.y));//每一輪起點
 	std::map<std::shared_ptr<CPoint>, int> gScore;//起點到CP點的距離
 	std::map<std::shared_ptr<CPoint>, int> hScore;//評估函式，可以用距離、難易度
 	std::map<std::shared_ptr<CPoint>, int> fScore;//g+h
@@ -184,7 +184,7 @@ DWORD WINAPI AStarSync(LPVOID p)
 			{
 				if (!(y == 0 && x == 0))//非自己
 				{
-					std::shared_ptr<CPoint> newPoint =  std::make_shared<CPoint>( CPoint(cp->x + x, cp->y + y) );
+					std::shared_ptr<CPoint> newPoint = std::make_shared<CPoint>(CPoint(cp->x + x, cp->y + y));
 					bool continueFlag = false;
 					for (unsigned i = 0; i < close.size(); i++)
 					{
@@ -247,16 +247,16 @@ DWORD WINAPI AStarSync(LPVOID p)
 			{
 				((threadInfo*)p)->pathPoints.push_back(std::move(Unit::Navigator::Tile2Point(stackPath.top())));
 				stackPath.pop();
-				TRACE("%d,%d", ((threadInfo*)p)->pathPoints[i].x,((threadInfo*)p)->pathPoints[i].y)	;
+				TRACE("%d,%d", ((threadInfo*)p)->pathPoints[i].x, ((threadInfo*)p)->pathPoints[i].y);
 			}
 			for (unsigned int i = 0; i < ((threadInfo*)p)->pathPoints.size() - 1; i++)
 			{
 				((threadInfo*)p)->pathDistance.push_back(std::move(Unit::Navigator::GetLength(((threadInfo*)p)->pathPoints[i] - ((threadInfo*)p)->pathPoints[i + 1])));
 			}
 
-			((threadInfo*)p)->pathPoints.push_back(std::move( ((threadInfo*)p)->targetPoint));
+			((threadInfo*)p)->pathPoints.push_back(std::move(((threadInfo*)p)->targetPoint));
 			((threadInfo*)p)->pathDistance.push_back(std::move(Unit::Navigator::GetLength(((threadInfo*)p)->pathPoints.back() - ((threadInfo*)p)->targetPoint)));
-			
+
 
 			gScore.clear();
 			hScore.clear();
@@ -271,25 +271,31 @@ DWORD WINAPI AStarSync(LPVOID p)
 	return 0;
 }
 
-
+struct CPointCompare
+{
+	bool operator() (const CPoint& p1, const CPoint& p2) const
+	{
+		return p1.x < p2.x;
+	}
+};
 
 //Astar尋路
 //將每個轉角or格子設為下個點
 void Unit::Navigator::AStar()
 {
-	vector<CPoint*> close;//封閉list，存放已經被走訪的點
-	vector<CPoint*> open;//開啟list，存放可能被做為起點的點
-	CPoint* cp = new CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
-	std::map<CPoint*, int> gScore;//起點到CP點的距離
-	std::map<CPoint*, int> hScore;//評估函式，可以用距離、難易度
-	std::map<CPoint*, int> fScore;//g+h
-	std::map<CPoint*, CPoint*> come_from;//父節點
+	vector<CPoint> close;//封閉list，存放已經被走訪的點
+	vector<CPoint> open;//開啟list，存放可能被做為起點的點
+	CPoint cp = CPoint(GetParent<Entity>()->GetTileX(), GetParent<Entity>()->GetTileY());//每一輪起點
+	std::map<CPoint, int, CPointCompare> gScore;//起點到CP點的距離
+	std::map<CPoint, int, CPointCompare> hScore;//評估函式，可以用距離、難易度
+	std::map<CPoint, int, CPointCompare> fScore;//g+h
+	std::map<CPoint, CPoint, CPointCompare> come_from;//父節點
 	open.push_back(cp);//起點加入openList
 
 	//起點加入fscore
-	fScore.insert(std::pair<CPoint*, int>(cp, 0));
-	hScore.insert(std::pair<CPoint*, int>(cp, 0));
-	gScore.insert(std::pair<CPoint*, int>(cp, 0));
+	fScore.insert(std::pair<CPoint, int>(cp, 0));
+	hScore.insert(std::pair<CPoint, int>(cp, 0));
+	gScore.insert(std::pair<CPoint, int>(cp, 0));
 
 
 	while (open.size() > 0)
@@ -317,11 +323,11 @@ void Unit::Navigator::AStar()
 			{
 				if (!(y == 0 && x == 0))//非自己
 				{
-					CPoint* newPoint = new CPoint(cp->x + x, cp->y + y);
+					CPoint newPoint = CPoint(cp.x + x, cp.y + y);
 					bool continueFlag = false;
 					for (unsigned i = 0; i < close.size(); i++)
 					{
-						if (*close[i] == *newPoint)
+						if (close[i] == newPoint)
 						{
 							continueFlag = true;
 							break;
@@ -333,20 +339,20 @@ void Unit::Navigator::AStar()
 					int newGScore = gScore[cp] + 1;
 
 					//評估cost
-					int canPass = World::getInstance()->getLocationItem((*newPoint).x * 50, (*newPoint).y * 50);
+					int canPass = World::getInstance()->getLocationItem((newPoint).x * 50, (newPoint).y * 50);
 
 					//canPass = 1 - canPass;
 					//曼哈頓距離預測
-					int newHScore = 1000 * canPass + (abs(targetTile.x - (*newPoint).x) + abs(targetTile.y - (*newPoint).y));
+					int newHScore = 1000 * canPass + (abs(targetTile.x - (newPoint).x) + abs(targetTile.y - (newPoint).y));
 
 					int newFScore = newGScore + newHScore;
 
 
-					gScore.insert(pair<CPoint*, int>(newPoint, newGScore));
-					hScore.insert(pair<CPoint*, int>(newPoint, newHScore));
-					fScore.insert(pair<CPoint*, int>(newPoint, newFScore));
+					gScore.insert(pair<CPoint, int>(newPoint, newGScore));
+					hScore.insert(pair<CPoint, int>(newPoint, newHScore));
+					fScore.insert(pair<CPoint, int>(newPoint, newFScore));
 					open.push_back(newPoint);
-					come_from.insert(pair<CPoint*, CPoint*>(newPoint, cp));
+					come_from.insert(pair<CPoint, CPoint>(newPoint, cp));
 
 				}
 			}
@@ -366,13 +372,13 @@ void Unit::Navigator::AStar()
 
 
 
-		if (*cp == targetTile)//到了
+		if (cp == targetTile)//到了
 		{
 			stack<CPoint>stackPath;
 			while (true)
 			{
-				stackPath.push(*cp);
-				if (*cp == startTile)break;
+				stackPath.push(cp);
+				if (cp == startTile)break;
 				cp = come_from[cp];
 			}
 			unsigned int s = stackPath.size();
@@ -389,10 +395,7 @@ void Unit::Navigator::AStar()
 			Straight(pathPoints.back(), targetPoint);
 			pathDistances.push_back(GetLength(pathPoints.back() - targetPoint));
 
-			for (unsigned int i = 0; i < close.size(); i++)
-				delete close[i];
-			for (unsigned int i = 0; i < open.size(); i++)
-				delete open[i];
+
 			gScore.clear();
 			hScore.clear();
 			fScore.clear();
@@ -432,8 +435,8 @@ void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 	Info.targetPoint = targetPoint;
 	Info.targetTile = targetTile;
 
-	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0,&dwThreadID);
-	
+	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0, &dwThreadID);
+
 }
 
 //開始尋路
