@@ -93,7 +93,7 @@ namespace Unit
 
 		//virtual void SetTarget(Entity* target) = NULL;
 		//virtual void SetTarget(CPoint point) = NULL;
-		virtual void SetTarget(CPoint point,vector<Entity*> group) = NULL;
+		virtual void SetTarget(CPoint point, vector<Entity*> group) = NULL;
 
 		virtual void SetBitmap() = NULL;
 		void Init()
@@ -117,22 +117,22 @@ namespace Unit
 		{
 			Init();
 		}
-		Entity(int pointX, int pointY) 
+		Entity(int pointX, int pointY)
 		{
 			Init();
 
 			this->point.x = pointX;
 			this->point.y = pointY;
-			
+
 		}
 		Entity(CPoint point) :Entity()
 		{
 			Init();
 			this->point = point;
 		}
-		~Entity()
+		virtual ~Entity()
 		{
-
+			TRACE("~Entity%d\n",this->ID);
 		}
 	};
 }

@@ -160,5 +160,5 @@ Unit::Villager::Villager()
 }
 Unit::Villager::~Villager()
 {
-	TRACE("Release Villager\n");
+	TRACE("~Villager\n");
 }

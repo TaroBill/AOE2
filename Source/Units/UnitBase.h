@@ -81,13 +81,15 @@ namespace Unit
 		{
 			return dynamic_cast<T*>(_parent);
 		}
+
 		UnitBase()
 		{
 		}
 		
-		~UnitBase()
+		virtual ~UnitBase()
 		{
 			RemoveComponents(_components);
+			TRACE("~UnitBase\n");
 		}
 
 		

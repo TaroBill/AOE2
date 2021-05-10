@@ -23,6 +23,10 @@ using namespace std;
 		 startPoint = CPoint(0, 0);
 		 startTile = CPoint(0, 0);
 	}
+	~threadInfo()
+	{
+
+	}
 };
 namespace Unit
 {
@@ -95,6 +99,7 @@ namespace Unit
 		//直線移動
 		//往下個點直線走去
 		void MoveStraight(CPoint* point);
+
 		//直線尋路
 		//直接將終點設為下個點
 		void Straight();

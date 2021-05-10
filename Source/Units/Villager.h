@@ -84,6 +84,6 @@ namespace Unit
 
 		Villager(CPoint point) ;
 		Villager();
-		~Villager();
+		 ~Villager();
 	};
 }

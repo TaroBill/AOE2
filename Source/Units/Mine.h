@@ -26,6 +26,6 @@ namespace Unit
 
 		void onMove()override;
 
-		~Mine() ;
+		 ~Mine() ;
 	};
 }

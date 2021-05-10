@@ -19,10 +19,6 @@ namespace Unit
 		SetBitmap();
 	}
 
-	Mine::~Mine()
-	{
-		TRACE("沒資源了\n");
-	}
 
 	void Mine::SetBitmap()
 	{
@@ -32,14 +28,13 @@ namespace Unit
 	void  Mine::SetTarget(CPoint point, vector<Entity*> group) {}
 
 	void Mine::onMove() {
-		{
-			/*if (this->GetComponent<Gatherable>()->resource.amount == 0)
-			{
-				delete this; //不該在這delete
-			}*/
-		}
+		
 	}
 
+	Mine::~Mine()
+	{
+		TRACE("~Mine\n");
+	}
 
 
 
