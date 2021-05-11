@@ -24,6 +24,7 @@
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Villager.cpp" />
+    <ClCompile Include="Source\Units\EntityFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />

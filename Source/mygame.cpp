@@ -374,8 +374,8 @@ namespace game_framework {
 			World::getInstance()->isSpawningEntity = false;
 			return;
 		}
-		if (CPoint(10, 10) == CPoint(10, 10))
-			TRACE("Equal\n");
+
+
 		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
 		{
 			

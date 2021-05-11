@@ -27,7 +27,7 @@ void Unit::Villager::Gathering()
 	//累計到應該獲得一點資源的時候才+1
 	//但先不管
 	this->carryResource.amount +=
-		resourcePlace->GetComponent<Gatherable>()->resource.GetResource();
+		target->GetComponent<Gatherable>()->resource.GetResource();
 
 }
 
@@ -40,15 +40,17 @@ void Unit::Villager::Gathering()
 //設定目標(尋路)
 void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 {
-	vector<Entity*> temp = World::getInstance()->listAllEntityInRange(
-		CPoint(point.x - 100, point.y - 100),
-		CPoint(point.x + 100, point.y + 100));
-	if (temp.size() > 0 && temp[0]->GetComponent<Gatherable>() != nullptr)
-	{
-		vs = VillagerState::GetResourceOnRoad;
-		resourcePlace = temp[0];
-		this->carryResource.ResetType(
-			temp[0]->GetComponent<Gatherable>()->resource.type);
+	Entity* temp = World::getInstance()->getNearestEntity(point);
+	if (temp != NULL) {
+		TRACE("Target set to %d\n", temp->ID);
+		if (temp->GetComponent<Gatherable>() != nullptr)
+		{
+			TRACE("On gather road\n");
+			vs = VillagerState::GetResourceOnRoad;
+			target = temp;
+			this->carryResource.ResetType(
+				temp->GetComponent<Gatherable>()->resource.type);
+		}
 	}
 	this->GetComponent<Unit::Navigator>()->FindPath(point, group);
 }
@@ -152,6 +154,7 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 	AddComponent(n);
 	carryLimit = 10;
 	maxHP = 100;
+	damage = 10;
 	SetBitmap();
 }
 Unit::Villager::Villager()

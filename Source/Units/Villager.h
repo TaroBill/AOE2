@@ -40,10 +40,12 @@ namespace Unit
 			GetResourceOnRoad,//正在採集的路上
 			Gathering,//採集中
 			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
-
+			Attacking
 		};
 		
 		VillagerState vs;
+
+		int damage;
 
 		int resourceCounter;
 
@@ -55,7 +57,7 @@ namespace Unit
 		GameResource carryResource;
 
 		//鎖定的資源源地
-		Entity* resourcePlace;
+		Entity* target;
 
 		//資源回收站點(還暫時沒有分出分支)
 		Entity* recyclePlace;
@@ -75,7 +77,6 @@ namespace Unit
 		void SetBitmap();
 
 		void onMove();
-
 
 		void FSM(int navigatorState);
 

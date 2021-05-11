@@ -20,6 +20,7 @@ void World::initMap() {
 							 {1,1,1,0,0,0,0,1,1,1} };
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
+			buildingMap[i][j] = 0;
 			int a = i / 12;
 			int b = j / 12;
 			map[i][j] = resource[a][b];
@@ -52,7 +53,7 @@ World::~World() {
 int World::getLocationItem(int x, int y) {
 	int GX = x / 50;
 	int GY = y / 50;
-	return map[GY][GX];
+	return map[GY][GX] /*|| buildingMap[GY][GX]*/;
 }
 
 void World::OnShow() {
@@ -203,6 +204,7 @@ void World::LoadBitmap() {
 	river.LoadBitmap(IDB_WaterBig);
 	spwan(EntityTypes::Villager, 3000, 3000);
 	spwanResaurce(EntityTypes::GoldMine, 2900, 2900);
+	spwanEnemy(EntityTypes::Villager, 3100, 2900);
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -229,28 +231,34 @@ void World::setScreenLocation(CPoint point) {
 
 void World::spwan(EntityTypes ET, int x, int y) {
 	unit.push_back(entityFactory.SpawnEntity(ET, x, y));
+	unit[unit.size() - 1]->playerId = 0;						//0是自己1是敵人-1是資源
 	calculatePopulation();
 }
 
 void World::spwan(EntityTypes ET, CPoint p) {
 	unit.push_back(entityFactory.SpawnEntity(ET, p));
+	unit[unit.size() - 1]->playerId = 0;						//0是自己1是敵人-1是資源
 	calculatePopulation();
 }
 
 void World::spwanEnemy(EntityTypes ET, int x, int y) {
 	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
+	EnemyUnit[unit.size() - 1]->playerId = 1;						//0是自己1是敵人-1是資源
 }
 
 void World::spwanEnemy(EntityTypes ET, CPoint p) {
 	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
+	EnemyUnit[unit.size() - 1]->playerId = 1;						//0是自己1是敵人-1是資源
 }
 
 void World::spwanResaurce(EntityTypes ET, int x, int y) {
 	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
+	ResaurceUnit[unit.size() - 1]->playerId = -1;						//0是自己1是敵人-1是資源
 }
 
 void World::spwanResaurce(EntityTypes ET, CPoint p) {
 	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, p));
+	ResaurceUnit[unit.size() - 1]->playerId = -1;						//0是自己1是敵人-1是資源
 }
 
 void World::calculatePopulation() {
@@ -282,7 +290,8 @@ Unit::Entity* World::getNearestEntity(CPoint point) {
 	CPoint offset = (unit[0]->point - point);
 	int nearestLength = abs(offset.x * offset.x + offset.y * offset.y);
 
-	for (unsigned int i = 1; i < unit.size(); i++) {
+
+	for (unsigned int i = 0; i < unit.size(); i++) {
 		offset = (unit[i]->point - point);
 		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
 		if (nearestLength > tempLength){
@@ -352,4 +361,28 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->deSerialize(ss);
 	}
 }
+
+Unit::Entity* World::getEntityByID(unsigned int ID) {
+	for (unsigned int i = 1; i < unit.size(); i++) {
+		if (unit[i]->ID == ID) 
+			return unit[i];
+	}
+
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		for (unsigned int i = 1; i < EnemyUnit.size(); i++) {
+			if (EnemyUnit[i]->ID == ID)
+				return EnemyUnit[i];
+		}
+	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		for (unsigned int i = 1; i < ResaurceUnit.size(); i++) {
+			if (ResaurceUnit[i]->ID == ID)
+				return ResaurceUnit[i];
+		}
+	}
+	return NULL;
+}
+
+
 World World::instance;

@@ -50,6 +50,17 @@ void EntityDataFrame::OnShow() {
 		char str[80];								// Demo 數字對字串的轉換
 		sprintf(str, "HP: (%d / %d)", showDataEntity->hp, showDataEntity->maxHP);
 		pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		switch (showDataEntity->playerId) {
+		case 0:
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 30, "這是你的實體");
+			break;
+		case 1:
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 30, "這是敵人的實體");
+			break;
+		case -1:
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 30, "這是資源");
+			break;
+		}
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 	}

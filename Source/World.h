@@ -49,21 +49,23 @@ public:
 	void spwanEnemy(EntityTypes, CPoint);				//生成實體在座標
 	void spwanEnemy(EntityTypes, int, int);				//生成實體在座標
 	void spwanResaurce(EntityTypes, CPoint);			//生成實體在座標
-	void spwanResaurce(EntityTypes ET, int x, int y);
-	vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
+	void spwanResaurce(EntityTypes ET, int x, int y);	//生成實體在座標
+	vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);	//取得範圍內的己方實體
 	Unit::Entity* getNearestEntity(CPoint);				//取得與滑鼠點擊最近的實體(滑鼠點擊50p*50p內)
-	void spawningEntity(int);
-	bool isSpawningEntity = false;
+	void spawningEntity(int);							//生成實體的預覽圖示
+	bool isSpawningEntity = false;						//是否正在生成實體
 	CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
 	EntityTypes spawningEntityType;
 	CPoint mouseLocation;
 	void moveEntityToLocation(vector<Unit::Entity*>, CPoint);
-	vector<Unit::Entity*> LE;
-	vector<Unit::Entity*> EnemyUnit;
-	vector<Unit::Entity*> unit;
-	vector<Unit::Entity*> ResaurceUnit;
-	void LoadEnemyFromStringStream(int, stringstream&);
+	vector<Unit::Entity*> LE;							//目前所選取所有實體
+	vector<Unit::Entity*> EnemyUnit;					//敵人所有實體
+	vector<Unit::Entity*> unit;							//己方所有實體
+	vector<Unit::Entity*> ResaurceUnit;					//系統所有資源實體
+	void LoadEnemyFromStringStream(int, stringstream&);	
 	EntityFactory entityFactory;
+	Unit::Entity* getEntityByID(unsigned int);				//取得與實體ID相符的實體
+	int buildingMap[120][120];
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
