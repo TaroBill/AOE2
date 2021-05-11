@@ -205,6 +205,8 @@ void World::LoadBitmap() {
 	spwan(EntityTypes::Villager, 3000, 3000);
 	spwanResaurce(EntityTypes::GoldMine, 2900, 2900);
 	spwanEnemy(EntityTypes::Villager, 3100, 2900);
+	spwan(EntityTypes::TownCenter, 3800, 3300);
+
 }
 
 void World::setScreenLocation(int x, int y) {

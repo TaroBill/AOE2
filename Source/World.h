@@ -13,7 +13,7 @@
 #include "Player/GameResource.h"
 #include <typeinfo>
 #include "Units/EntityFactory.h"
-
+#include "Units/TownCenter.h"
 
 enum mapItem { GRASS, RIVER };
 class World {

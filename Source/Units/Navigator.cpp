@@ -437,6 +437,10 @@ void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 	Info.targetPoint = targetPoint;
 	Info.targetTile = targetTile;
 
+	if ((int)hThead!=0xcdcdcdcd)
+	{
+		CloseHandle(hThead);
+	}
 	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0, &dwThreadID);
 	
 
@@ -465,7 +469,22 @@ void Unit::Navigator::FindPath(CPoint targrtP)
 	pathDistances.clear();
 	this->targetPoint = targrtP;
 	targetTile = Point2Tile(targrtP);
-	AStar();
+
+	Info = threadInfo();
+	Info.pathDistance.clear();
+	Info.pathPoints.clear();
+	Info.startPoint = startPoint;
+	Info.startTile = startTile;
+	Info.targetPoint = targetPoint;
+	Info.targetTile = targetTile;
+
+	if ((int)hThead != 0xcdcdcdcd)
+	{
+		CloseHandle(hThead);
+	}
+	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0, &dwThreadID);
+
+
 }
 Unit::Navigator::Navigator()
 {

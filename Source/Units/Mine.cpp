@@ -23,6 +23,9 @@ namespace Unit
 	void Mine::SetBitmap()
 	{
 		animations[State::Idle][Direction::Down].AddBitmap(IDB_GOLD, RGB(255, 255, 255));
+		size.x = animations[State::Idle][Direction::Down].Width();
+		size.y = animations[State::Idle][Direction::Down].Height();
+
 	}
 
 	void  Mine::SetTarget(CPoint point, vector<Entity*> group) {}

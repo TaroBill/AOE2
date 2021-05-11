@@ -11,6 +11,11 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
     case EntityTypes::GoldMine:
         entity = new Unit::Mine(p, ResourceType::Gold);
         World::getInstance()->buildingMap[(int)(p.y / 50)][(int)(p.x / 50)] = 1;
+		break;
+	case EntityTypes::TownCenter:
+		entity = new Unit::TownCenter(p);
+		World::getInstance()->buildingMap[(int)(p.y / 50)][(int)(p.x / 50)] = 1;
+		break;
     default:
         break;
     }
@@ -27,6 +32,11 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, int x, int y) {
     case EntityTypes::GoldMine:
         entity = new Unit::Mine(CPoint(x, y), ResourceType::Gold);
         World::getInstance()->buildingMap[(int)(y / 50)][(int)(x / 50)] = 1;
+		break;
+	case EntityTypes::TownCenter:
+		entity = new Unit::TownCenter(x,y);
+		World::getInstance()->buildingMap[(int)(x / 50)][(int)(x / 50)] = 1;
+		break;
     default:
         break;
     }

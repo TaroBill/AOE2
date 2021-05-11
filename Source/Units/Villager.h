@@ -73,6 +73,7 @@ namespace Unit
 		void Gathering();
 
 		void SetTarget(CPoint point , vector<Entity*> group);
+		void SetTarget(CPoint point);
 
 		void SetBitmap();
 

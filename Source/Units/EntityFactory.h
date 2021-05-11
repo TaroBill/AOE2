@@ -11,6 +11,7 @@
 enum EntityTypes {
     Villager = 100000,
 	GoldMine,
+	TownCenter
 };
 
 class EntityFactory {

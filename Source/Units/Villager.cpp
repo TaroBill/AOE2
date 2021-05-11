@@ -4,19 +4,49 @@
 //把資源放到主城，讓對應的玩家增加資源
 void Unit::Villager::ReturnResource()
 {
-	TRACE("=========== now Return Resource =========== \n");
+	switch (this->carryResource.type)
+	{
+	case ResourceType::Gold:
+		World::getInstance()->player.gold += this->carryResource.amount;
+		break;
+	case ResourceType::Food:
+		World::getInstance()->player.food += this->carryResource.amount;
+		break;
+	case ResourceType::Stone:
+		World::getInstance()->player.stone += this->carryResource.amount;
+		break;
+	case ResourceType::Wood:
+		World::getInstance()->player.wood += this->carryResource.amount;
+		break;
+	case ResourceType::None:
+		break;
+	default:
+		break;
+	}
+	this->carryResource.amount = 0;
 	//目前僅實作歸零，並未實作將資源放到相對應的玩家身上
 }
 
 bool Unit::Villager::FindResouce()
 {
-	TRACE("=========== now Find Resouce =========== \n");
-	return false;
+
+	//TRACE("=========== now Find Resouce =========== \n");
+	this->GetComponent<Unit::Navigator>()->FindPath(target->point);
+	return true;
 }
 
 bool Unit::Villager::FindRecyclingPlace()
 {
-	TRACE("=========== now Find Recycling Place =========== \n");
+	//TRACE("=========== now Find Recycling Place =========== \n");
+
+	for (size_t i = 0; i < World::getInstance()->unit.size(); i++)
+	{
+		if (dynamic_cast<TownCenter*>( World::getInstance()->unit.at(i)))
+		{
+			recyclePlace = World::getInstance()->unit.at(i);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -26,8 +56,14 @@ void Unit::Villager::Gathering()
 	//應該有個counter累計值
 	//累計到應該獲得一點資源的時候才+1
 	//但先不管
-	this->carryResource.amount +=
-		target->GetComponent<Gatherable>()->resource.GetResource();
+	resourceCounter++;
+	if (resourceCounter >= 15)
+	{
+		resourceCounter = 0;
+		this->carryResource.amount +=
+			target->GetComponent<Gatherable>()->resource.GetResource();
+		TRACE("ID:%d now carryResource:%d\n", this->ID,this->carryResource.amount);
+	}
 
 }
 
@@ -51,8 +87,43 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 			this->carryResource.ResetType(
 				temp->GetComponent<Gatherable>()->resource.type);
 		}
+		else if (dynamic_cast<TownCenter*>(temp))
+		{
+			//TRACE("TC\n");
+			vs = VillagerState::ReturnResourceOnRoad;
+		}
+	}
+	else
+	{
+		vs = VillagerState::Base;
 	}
 	this->GetComponent<Unit::Navigator>()->FindPath(point, group);
+}
+void Unit::Villager::SetTarget(CPoint point)
+{
+	Entity* temp = World::getInstance()->getNearestEntity(point);
+	if (temp != NULL) {
+		TRACE("Target set to %d\n", temp->ID);
+		if (temp->GetComponent<Gatherable>() != nullptr)
+		{
+			TRACE("On gather road\n");
+			vs = VillagerState::GetResourceOnRoad;
+			target = temp;
+			this->carryResource.ResetType(
+				temp->GetComponent<Gatherable>()->resource.type);
+			
+		}
+		else if (dynamic_cast<TownCenter*>( temp ))
+		{
+			//TRACE("TC\n");
+			vs = VillagerState::ReturnResourceOnRoad;
+		}
+	}
+	else
+	{
+		vs = VillagerState::Base;
+	}
+	this->GetComponent<Unit::Navigator>()->FindPath(point);
 }
 
 void Unit::Villager::SetBitmap()
@@ -68,6 +139,8 @@ void Unit::Villager::SetBitmap()
 			animations[es][d].AddBitmap(const_cast<char*>(str.c_str()), RGB(255, 255, 255));
 		}
 	}
+	size.x = animations[State::Idle][Direction::Down].Width();
+	size.y = animations[State::Idle][Direction::Down].Height();
 }
 
 void Unit::Villager::FSM(int navigatorState)
@@ -77,6 +150,8 @@ void Unit::Villager::FSM(int navigatorState)
 	case VillagerState::Base:
 		break;
 	case VillagerState::GetResourceOnRoad:
+		//TRACE("GetResourceOnRoad\n");
+
 		//到了
 		if (navigatorState == 1)
 		{
@@ -85,10 +160,12 @@ void Unit::Villager::FSM(int navigatorState)
 		break;
 		//採集中
 	case VillagerState::Gathering:
+		//TRACE("Gathering\n");
+
 		//採集
 		Unit::Villager::Gathering();
 		//若滿了
-		if (carryLimit == carryResource.amount)
+		if (carryResource.amount>= carryLimit )
 		{
 			//就找地方放
 			if (FindRecyclingPlace())//找到
@@ -97,6 +174,7 @@ void Unit::Villager::FSM(int navigatorState)
 
 				//切換狀態至放資源的路上
 				vs = VillagerState::ReturnResourceOnRoad;
+				SetTarget(recyclePlace->point );
 			}
 			else//沒找到，發呆
 			{
@@ -108,7 +186,7 @@ void Unit::Villager::FSM(int navigatorState)
 		break;
 
 	case VillagerState::ReturnResourceOnRoad:
-
+		//TRACE("ReturnResourceOnRoad\n");
 		if (navigatorState == 1)
 		{
 			//放資源
@@ -145,6 +223,7 @@ Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 	AddComponent(n);
 	carryLimit = 10;
 	maxHP = 100;
+	resourceCounter = 0;
 	SetBitmap();
 }
 
@@ -155,6 +234,7 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 	carryLimit = 10;
 	maxHP = 100;
 	damage = 10;
+	resourceCounter = 0;
 	SetBitmap();
 }
 Unit::Villager::Villager()

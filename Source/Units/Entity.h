@@ -65,10 +65,8 @@ namespace Unit
 		//點座標
 		//int pointX, pointY;
 		CPoint point;
-		//為0時是角色單位，大於1為建築
-		int sizeXY;
 		//角色的圖大小
-		CRect rect;
+		CPoint size;
 
 		//血量
 		int hp;
@@ -93,13 +91,13 @@ namespace Unit
 
 		//virtual void SetTarget(Entity* target) = NULL;
 		//virtual void SetTarget(CPoint point) = NULL;
-		virtual void SetTarget(CPoint point, vector<Entity*> group) = NULL;
+		virtual void SetTarget(CPoint point, vector<Entity*> group) {};
+		virtual void SetTarget(CPoint point) {};
 
 		virtual void SetBitmap() = NULL;
 		void Init()
 		{
 			this->playerId = 0;
-			this->sizeXY = 0;
 			this->maxHP = 100;
 			this->hp = this->maxHP;;
 			this->entityState = State::Idle;

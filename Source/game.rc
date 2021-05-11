@@ -402,7 +402,7 @@ IDB_STOP_BUTTON         BITMAP                  "..\\RES\\Button_Icon\\Stop.bmp"
 
 IDB_VILLAGERICON        BITMAP                  "..\\RES\\Entity_Icon\\VillagerIcon.bmp"
 
-IDB_GOLDICON            BITMAP                  "D:\\school\\AOE2\\RES\\Entity_Icon\\GoldIcon.bmp"
+IDB_GOLDICON            BITMAP                  "..\\RES\\Entity_Icon\\GoldIcon.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

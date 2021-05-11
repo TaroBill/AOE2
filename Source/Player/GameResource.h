@@ -1,7 +1,7 @@
 #pragma once
 enum class ResourceType
 {
-	None,Gold, Stone, Meat, Wood
+	None,Gold, Stone, Food, Wood
 };
 
 
