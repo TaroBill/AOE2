@@ -42,6 +42,10 @@ World::~World() {
 		delete EnemyUnit[i];
 	}
 	EnemyUnit.clear();
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		delete ResaurceUnit[i];
+	}
+	ResaurceUnit.clear();
 	TRACE("~World()\n");
 }
 
@@ -133,6 +137,12 @@ void World::UnitOnShow() {
 			EnemyUnit[i]->onShow(GlobalX2ScreenX(EnemyUnit[i]->point.x), GlobalY2ScreenY(EnemyUnit[i]->point.y));
 		}
 	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		if (isOnScreen(ResaurceUnit[i]->point.x, ResaurceUnit[i]->point.y)) {
+			ResaurceUnit[i]->onShow(GlobalX2ScreenX(ResaurceUnit[i]->point.x), GlobalY2ScreenY(ResaurceUnit[i]->point.y));
+		}
+	}
 }
 
 bool World::isOnScreen(int x,int y) {
@@ -192,7 +202,7 @@ void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
 	spwan(EntityTypes::Villager, 3000, 3000);
-	spwan(EntityTypes::GoldMine, 2950, 2950);
+	spwanResaurce(EntityTypes::GoldMine, 2900, 2900);
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -227,6 +237,22 @@ void World::spwan(EntityTypes ET, CPoint p) {
 	calculatePopulation();
 }
 
+void World::spwanEnemy(EntityTypes ET, int x, int y) {
+	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
+}
+
+void World::spwanEnemy(EntityTypes ET, CPoint p) {
+	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
+}
+
+void World::spwanResaurce(EntityTypes ET, int x, int y) {
+	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
+}
+
+void World::spwanResaurce(EntityTypes ET, CPoint p) {
+	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, p));
+}
+
 void World::calculatePopulation() {
 	int total = 0;
 	for (unsigned int i = 0; i < unit.size(); i++) {
@@ -250,6 +276,45 @@ vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 	return output;
 }
 
+Unit::Entity* World::getNearestEntity(CPoint point) {
+	Unit::Entity* output = unit[0];
+	output = unit[0];
+	CPoint offset = (unit[0]->point - point);
+	int nearestLength = abs(offset.x * offset.x + offset.y * offset.y);
+
+	for (unsigned int i = 1; i < unit.size(); i++) {
+		offset = (unit[i]->point - point);
+		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
+		if (nearestLength > tempLength){
+			nearestLength = tempLength;
+			output = unit[i];
+		}
+	}
+
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		offset = (EnemyUnit[i]->point - point);
+		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
+		if (nearestLength > tempLength) {
+			nearestLength = tempLength;
+			output = EnemyUnit[i];
+		}
+	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		offset = (ResaurceUnit[i]->point - point);
+		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
+		if (nearestLength > tempLength) {
+			nearestLength = tempLength;
+			output = ResaurceUnit[i];
+		}
+	}
+
+	if (sqrt(nearestLength) > 50)
+		return NULL;
+	return output;
+
+}
+
 void World::moveEntityToLocation(vector<Unit::Entity*> allEntity, CPoint p) {
 	/*
 	for (unsigned int i = 0; i < allEntity.size(); i++) {
@@ -270,14 +335,6 @@ void World::spawningEntity(int bitmap) {
 		break;
 	}
 	isSpawningEntity = true;
-}
-
-void World::spwanEnemy(EntityTypes ET, int x, int y) {
-	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
-}
-
-void World::spwanEnemy(EntityTypes ET, CPoint p) {
-	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
 }
 
 void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {

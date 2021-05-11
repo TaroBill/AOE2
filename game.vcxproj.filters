@@ -215,6 +215,7 @@
     <Image Include="RES\water.bmp" />
     <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
     <Image Include="RES\Building\TownCenter.bmp" />
+    <Image Include="RES\Entity_Icon\GoldIcon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

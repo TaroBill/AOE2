@@ -337,7 +337,18 @@ namespace game_framework {
 		}
 		CPoint LButtonUpPoint = World::getInstance()->Screen2Global(point);
 		//("(%d, %d), (%d, %d)\n", LButtonDownPoint.x, LButtonDownPoint.y, LButtonUpPoint.x, LButtonUpPoint.y);
-		World::getInstance()->LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
+		CPoint p = (LButtonDownPoint - LButtonUpPoint);
+		if (abs(p.x) < 50 && abs(p.y) < 50) {
+			World::getInstance()->LE.clear();
+			Unit::Entity* tempEntity = World::getInstance()->getNearestEntity(LButtonUpPoint);
+			if(tempEntity != NULL)
+				World::getInstance()->LE.push_back(tempEntity);
+		}
+		else {
+			World::getInstance()->LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
+		}
+
+		GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
 		if (!World::getInstance()->LE.empty()) {
 			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
 			if (typeid(Unit::Villager) == typeid(*World::getInstance()->LE[0])) {
@@ -345,7 +356,6 @@ namespace game_framework {
 			}
 		}
 		else {
-			GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
 			GUI::getInstance()->entityDataFrame.clearEntitysBitmap();
 		}
 		isLButtonDown = false;

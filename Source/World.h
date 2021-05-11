@@ -46,9 +46,12 @@ public:
 	bool isOnScreen(int, int);						//世界座標x, y 是否在現在螢幕要顯示的位子	
 	void spwan(EntityTypes, CPoint);					//生成實體在座標
 	void spwan(EntityTypes, int, int);					//生成實體在座標
-	void spwanEnemy(EntityTypes, CPoint);					//生成實體在座標
-	void spwanEnemy(EntityTypes, int, int);					//生成實體在座標
+	void spwanEnemy(EntityTypes, CPoint);				//生成實體在座標
+	void spwanEnemy(EntityTypes, int, int);				//生成實體在座標
+	void spwanResaurce(EntityTypes, CPoint);			//生成實體在座標
+	void spwanResaurce(EntityTypes ET, int x, int y);
 	vector<Unit::Entity*> listAllEntityInRange(CPoint, CPoint);
+	Unit::Entity* getNearestEntity(CPoint);				//取得與滑鼠點擊最近的實體(滑鼠點擊50p*50p內)
 	void spawningEntity(int);
 	bool isSpawningEntity = false;
 	CMovingBitmap spawningEntityBitmap;		// 滑鼠移動時預覽生成位置
@@ -58,6 +61,7 @@ public:
 	vector<Unit::Entity*> LE;
 	vector<Unit::Entity*> EnemyUnit;
 	vector<Unit::Entity*> unit;
+	vector<Unit::Entity*> ResaurceUnit;
 	void LoadEnemyFromStringStream(int, stringstream&);
 	EntityFactory entityFactory;
 private:
