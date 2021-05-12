@@ -141,6 +141,7 @@ void Unit::Villager::SetBitmap()
 	}
 	size.x = animations[State::Idle][Direction::Down].Width();
 	size.y = animations[State::Idle][Direction::Down].Height();
+	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 }
 
 void Unit::Villager::FSM(int navigatorState)

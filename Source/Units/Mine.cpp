@@ -25,7 +25,7 @@ namespace Unit
 		animations[State::Idle][Direction::Down].AddBitmap(IDB_GOLD, RGB(255, 255, 255));
 		size.x = animations[State::Idle][Direction::Down].Width();
 		size.y = animations[State::Idle][Direction::Down].Height();
-
+		HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 	}
 
 	void  Mine::SetTarget(CPoint point, vector<Entity*> group) {}

@@ -14,8 +14,6 @@ namespace Unit
 	public:
 		int remainAmount;
 
-		CPoint point;
-
 		Mine(CPoint, ResourceType);
 
 		Mine(int, int, ResourceType );

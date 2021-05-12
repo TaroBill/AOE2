@@ -287,41 +287,27 @@ vector<Unit::Entity*> World::listAllEntityInRange(CPoint p1, CPoint p2) {
 }
 
 Unit::Entity* World::getNearestEntity(CPoint point) {
-	Unit::Entity* output = unit[0];
-	output = unit[0];
-	CPoint offset = (unit[0]->point - point);
-	int nearestLength = abs(offset.x * offset.x + offset.y * offset.y);
-
-
+	Unit::Entity* output = NULL;
 	for (unsigned int i = 0; i < unit.size(); i++) {
-		offset = (unit[i]->point - point);
-		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
-		if (nearestLength > tempLength){
-			nearestLength = tempLength;
+		if (unit[i]->HitBox.PtInRect(point)){
 			output = unit[i];
+			return output;
 		}
 	}
 
 	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
-		offset = (EnemyUnit[i]->point - point);
-		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
-		if (nearestLength > tempLength) {
-			nearestLength = tempLength;
+		if (EnemyUnit[i]->HitBox.PtInRect(point)) {
 			output = EnemyUnit[i];
+			return output;
 		}
 	}
 
 	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
-		offset = (ResaurceUnit[i]->point - point);
-		int tempLength = abs(offset.x * offset.x + offset.y * offset.y);
-		if (nearestLength > tempLength) {
-			nearestLength = tempLength;
+		if (ResaurceUnit[i]->HitBox.PtInRect(point)) {
 			output = ResaurceUnit[i];
+			return output;
 		}
 	}
-
-	if (sqrt(nearestLength) > 50)
-		return NULL;
 	return output;
 
 }

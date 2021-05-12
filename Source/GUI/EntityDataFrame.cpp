@@ -24,6 +24,9 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		else if (typeid(*en[i]) == typeid(Unit::Mine)) {
 			entitys[i].LoadBitmap(IDB_GOLDICON);
 		}
+		else if (typeid(*en[i]) == typeid(Unit::TownCenter)) {
+			entitys[i].LoadBitmap(IDB_TOWNCENTER_ICON);
+		}
 		entitys[i].SetTopLeft(firstLocation.x + i%20 * 40, firstLocation.y + (int)(i / 20) * 40);
 	}
 	if (entitys.size() == 1) {

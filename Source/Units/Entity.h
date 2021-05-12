@@ -67,6 +67,8 @@ namespace Unit
 		CPoint point;
 		//角色的圖大小
 		CPoint size;
+		//角色的點擊HitBox
+		CRect HitBox;
 
 		//血量
 		int hp;
