@@ -310,6 +310,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\Units\Attack.cpp" />
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
     <ClInclude Include="Source\tools.h" />
+    <ClInclude Include="Source\Units\Attack.h" />
     <ClInclude Include="Source\Units\Building.h" />
     <ClInclude Include="Source\Units\Entity.h" />
     <ClInclude Include="Source\Units\Gatherable.h" />

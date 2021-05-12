@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
+    <ClCompile Include="Source\Units\Attack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Source\socket\ServerSocket.h" />
     <ClInclude Include="Source\socket\ClientSocket.h" />
     <ClInclude Include="Source\ID.h" />
+    <ClInclude Include="Source\Units\Attack.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />

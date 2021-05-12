@@ -69,6 +69,22 @@ void Unit::Villager::Gathering()
 
 }
 
+//攻擊
+void Unit::Villager::Attacking()
+{
+	attackCounter++;
+	if (attackCounter >= 20)
+	{
+		attackCounter = 0;
+		if (!this->GetComponent<Attack>()->doAttack()) {
+			this->GetComponent<Unit::Navigator>()->FindPath(target.point);
+			vs = VillagerState::GoAttackOnRoad; //追擊
+		}
+		TRACE("ID:%d now attacking:%d\n", this->ID, this->target.ID);
+	}
+
+}
+
 
 /*
 點擊時觸發一次
@@ -95,6 +111,12 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 		{
 			//TRACE("TC\n");
 			vs = VillagerState::ReturnResourceOnRoad;
+		}
+		else if (temp->playerId == 1) {
+			vs = VillagerState::GoAttackOnRoad;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
 		}
 	}
 	else
@@ -125,6 +147,12 @@ void Unit::Villager::SetTarget(CPoint point)
 			//TRACE("TC\n");
 			vs = VillagerState::ReturnResourceOnRoad;
 		}
+		else if (temp->playerId == 1) {
+			vs = VillagerState::GoAttackOnRoad;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
+		}
 	}
 	else
 	{
@@ -132,6 +160,25 @@ void Unit::Villager::SetTarget(CPoint point)
 		vs = VillagerState::Base;
 	}
 	this->GetComponent<Unit::Navigator>()->FindPath(point);
+}
+
+void Unit::Villager::SetTargetByRange(CPoint point)
+{
+	CRect nearbyRange = CRect(point.x - 100, point.y - 100, point.x + 100, point.y + 100);
+	vector<Entity*> EnemyUnit = World::getInstance()->EnemyUnit;
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		if (nearbyRange.PtInRect(EnemyUnit[i]->point)) {
+			vs = VillagerState::GoAttackOnRoad;
+			target.ID = EnemyUnit[i]->ID;
+			target.point = EnemyUnit[i]->point;
+			target.isLive = true;
+			this->GetComponent<Unit::Navigator>()->FindPath(point);
+			return;
+		}
+	}
+	target.isLive = false;
+	entityState = Entity::State::Idle;
+	vs = VillagerState::Base;
 }
 
 void Unit::Villager::SetBitmap()
@@ -212,6 +259,20 @@ void Unit::Villager::FSM(int navigatorState)
 		}
 		break;
 
+	case VillagerState::GoAttackOnRoad:
+		if (navigatorState == 1)
+		{
+			vs = VillagerState::Attacking;
+		}
+		break;
+		
+	case VillagerState::Attacking:
+		Unit::Villager::Attacking();
+		if (World::getInstance()->getEntityByID(ID) == NULL) { //  若打死人
+			target.isLive = false;
+			SetTargetByRange(target.point); //自動尋找周圍其他敵人
+		}
+		break;
 
 	default:
 		break;
@@ -221,8 +282,15 @@ void Unit::Villager::FSM(int navigatorState)
 
 void Unit::Villager::onMove()
 {
+	if (hp <= 0)
+		World::getInstance()->killByID(ID);
 	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 	navigatorState = GetComponent<Navigator>()->onMove(&point);
+	Entity* tempTarget = World::getInstance()->getEntityByID(target.ID);
+	if (target.isLive && tempTarget != NULL)
+		target.point = tempTarget->point;
+	else
+		target.isLive = false;
 	this->FSM(navigatorState);
 }
 
@@ -230,6 +298,8 @@ Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 {
 	Navigator* n = new Navigator();
 	AddComponent(n);
+	Attack* attack = new Attack(10, 20);
+	AddComponent(attack);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;
@@ -241,9 +311,10 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 {
 	Navigator* n = new Navigator();
 	AddComponent(n);
+	Attack* attack = new Attack(10, 20);
+	AddComponent(attack);
 	carryLimit = 10;
 	maxHP = 100;
-	damage = 10;
 	resourceCounter = 0;
 	entityType = EntityTypes::Villager;
 	SetBitmap();

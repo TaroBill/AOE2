@@ -1,8 +1,9 @@
 #pragma once
 #include "Entity.h"
 #include "UnitBase.h"
-//#include "Navigator.h"
+#include "Navigator.h"
 #include "Gatherable.h"
+#include "Attack.h"
 #include <sstream>
 
 #include "../Player/GameResource.h"
@@ -40,14 +41,15 @@ namespace Unit
 			GetResourceOnRoad,//正在採集的路上
 			Gathering,//採集中
 			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
-			Attacking
+			GoAttackOnRoad,//行軍路上
+			Attacking //正在攻擊
 		};
 		
 		VillagerState vs;
 
-		int damage;
+		int resourceCounter = 0;
 
-		int resourceCounter;
+		int attackCounter = 0;
 
 		//資源的攜帶上限
 		int carryLimit;
@@ -55,13 +57,6 @@ namespace Unit
 		int navigatorState;
 		//攜帶物
 		GameResource carryResource;
-
-		//鎖定的資源源地
-		struct ShortEntity {
-			unsigned int ID;
-			CPoint point;
-			bool isLive;
-		}target;
 
 		//資源回收站點(還暫時沒有分出分支)
 		Entity* recyclePlace;
@@ -75,9 +70,14 @@ namespace Unit
 
 		//採集
 		void Gathering();
+		//攻擊
+		void Attacking();
 
 		void SetTarget(CPoint point , vector<Entity*> group);
+
 		void SetTarget(CPoint point);
+		//設置離點最近的敵人為target
+		void SetTargetByRange(CPoint point);
 
 		void SetBitmap();
 

@@ -75,7 +75,12 @@ namespace Unit
 		CPoint size;
 		//角色的點擊HitBox
 		CRect HitBox;
-
+		//鎖定的實體
+		struct ShortEntity {
+			unsigned int ID;
+			CPoint point;
+			bool isLive = false;
+		}target;
 		//血量
 		int hp;
 		int maxHP;
