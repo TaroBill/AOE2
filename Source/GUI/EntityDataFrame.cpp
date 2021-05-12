@@ -50,9 +50,16 @@ void EntityDataFrame::OnShow() {
 		fp = pDC->SelectObject(&f);					// 選用 font f
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255, 255, 0));
-		char str[80];								// Demo 數字對字串的轉換
-		sprintf(str, "HP: (%d / %d)", showDataEntity->hp, showDataEntity->maxHP);
-		pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		if (typeid(*showDataEntity) == typeid(Unit::Mine)) {
+			char str[80];								// Demo 數字對字串的轉換
+			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Mine*>(showDataEntity)->remainAmount);
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		}
+		else {
+			char str[80];								// Demo 數字對字串的轉換
+			sprintf(str, "HP: (%d / %d)", showDataEntity->hp, showDataEntity->maxHP);
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		}
 		switch (showDataEntity->playerId) {
 		case 0:
 			pDC->TextOut(300 + 40, SIZE_Y - 240 + 30, "這是你的實體");

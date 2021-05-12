@@ -3,6 +3,12 @@
 #include <map>
 #include "../ID.h"
 
+enum EntityTypes {
+	Villager = 100000,
+	GoldMine,
+	TownCenter
+};
+
 namespace Unit
 {
 	class Entity :public UnitBase
@@ -74,6 +80,9 @@ namespace Unit
 		int hp;
 		int maxHP;
 
+		//這個實體的entityType
+		EntityTypes entityType;
+
 		int GetTileX() { return point.x / 50; }
 		int GetTileY() { return point.y / 50; }
 		CPoint GetTile() { return CPoint(GetTileX(), GetTileY()); }
@@ -96,7 +105,7 @@ namespace Unit
 		virtual void SetTarget(CPoint point, vector<Entity*> group) {};
 		virtual void SetTarget(CPoint point) {};
 
-		virtual void SetBitmap() = NULL;
+		virtual void SetBitmap(){};
 		void Init()
 		{
 			this->playerId = 0;
@@ -130,9 +139,40 @@ namespace Unit
 			Init();
 			this->point = point;
 		}
+
 		virtual ~Entity()
 		{
 			TRACE("~Entity%d\n",this->ID);
 		}
+
+		//copy constructor
+		Entity(const Entity& entity) {
+			this->entityType = entity.entityType;
+			this->playerId = entity.playerId;
+			this->maxHP = entity.maxHP;
+			this->hp = entity.hp;
+			this->entityState = entity.entityState;
+			this->faceDirection = entity.faceDirection;
+			this->ID = entity.ID;
+			this->point = entity.point;
+			this->size = entity.size;
+			this->HitBox = entity.HitBox;
+		}
+
+		//copy assignment
+		Entity operator=(const Entity& entity) {
+			this->entityType = entity.entityType;
+			this->playerId = entity.playerId;
+			this->maxHP = entity.maxHP;
+			this->hp = entity.hp;
+			this->entityState = entity.entityState;
+			this->faceDirection = entity.faceDirection;
+			this->ID = entity.ID;
+			this->point = entity.point;
+			this->size = entity.size;
+			this->HitBox = entity.HitBox;
+			return *this;
+		}
+
 	};
 }

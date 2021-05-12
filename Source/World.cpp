@@ -1,5 +1,5 @@
 #include "World.h"
-
+#include "GUI/GUI.h"
 World* World::getInstance()
 {
 	return &instance;
@@ -124,6 +124,10 @@ void World::onMove() {
 void World::UnitOnMove() {
 	for (unsigned int i = 0; i < unit.size(); i++) {
 		unit[i]->onMove();
+	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		ResaurceUnit[i]->onMove();
 	}
 }
 
@@ -351,26 +355,59 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 }
 
 Unit::Entity* World::getEntityByID(unsigned int ID) {
-	for (unsigned int i = 1; i < unit.size(); i++) {
+	for (unsigned int i = 0; i < unit.size(); i++) {
 		if (unit[i]->ID == ID) 
 			return unit[i];
 	}
 
 	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
-		for (unsigned int i = 1; i < EnemyUnit.size(); i++) {
-			if (EnemyUnit[i]->ID == ID)
-				return EnemyUnit[i];
-		}
+		if (EnemyUnit[i]->ID == ID)
+			return EnemyUnit[i];
 	}
 
 	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
-		for (unsigned int i = 1; i < ResaurceUnit.size(); i++) {
-			if (ResaurceUnit[i]->ID == ID)
-				return ResaurceUnit[i];
-		}
+		if (ResaurceUnit[i]->ID == ID)
+			return ResaurceUnit[i];
 	}
 	return NULL;
 }
 
+void World::killByID(UINT ID) {
+	for (unsigned int i = 0; i < LE.size(); i++) {
+		if (LE[i]->ID == ID) {
+			LE.erase(LE.begin() + i);
+		}
+	}
+
+	GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
+
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		if (unit[i]->ID == ID) {
+			delete unit[i];
+			unit.erase(unit.begin() + i);
+			return;
+		}
+	}
+
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		if (EnemyUnit[i]->ID == ID) {
+			delete EnemyUnit[i];
+			EnemyUnit.erase(EnemyUnit.begin() + i);
+			return;
+		}
+	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		if (ResaurceUnit[i]->ID == ID) {
+			delete ResaurceUnit[i];
+			ResaurceUnit.erase(ResaurceUnit.begin() + i);
+			return;
+		}
+	}
+
+
+
+	TRACE("ID: %d Not Found\n", ID);
+}
 
 World World::instance;

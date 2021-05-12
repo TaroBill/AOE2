@@ -8,11 +8,6 @@
 #include <Vector>
 #include "Villager.h"
 #include "Mine.h"
-enum EntityTypes {
-    Villager = 100000,
-	GoldMine,
-	TownCenter
-};
 
 class EntityFactory {
 public:

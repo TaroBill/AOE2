@@ -1,21 +1,21 @@
 #include "Mine.h"
-
+#include "../World.h"
 
 namespace Unit
 {
 	Mine::Mine(CPoint point, ResourceType rt) :Entity(point)
 	{
-		Gatherable* n = new Gatherable(rt, 800);
+		Gatherable* n = new Gatherable(rt, 10);
 		AddComponent(n);
-
+		entityType = EntityTypes::GoldMine;
 		SetBitmap();
 	}
 
 	Mine::Mine(int x, int y, ResourceType rt) : Entity(x, y)
 	{
-		Gatherable* n = new Gatherable(rt, 800);
+		Gatherable* n = new Gatherable(rt, 10);
 		AddComponent(n);
-
+		entityType = EntityTypes::GoldMine;
 		SetBitmap();
 	}
 
@@ -25,13 +25,15 @@ namespace Unit
 		animations[State::Idle][Direction::Down].AddBitmap(IDB_GOLD, RGB(255, 255, 255));
 		size.x = animations[State::Idle][Direction::Down].Width();
 		size.y = animations[State::Idle][Direction::Down].Height();
-		HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 	}
 
 	void  Mine::SetTarget(CPoint point, vector<Entity*> group) {}
 
 	void Mine::onMove() {
-		
+		HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
+		remainAmount = this->GetComponent<Gatherable>()->resource.amount;
+		if (remainAmount <= 0)
+			World::getInstance()->killByID(this->ID);
 	}
 
 	Mine::~Mine()

@@ -17,14 +17,16 @@ namespace Unit
 
 		void onMove() override
 		{
-
+			HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 		}
 		TownCenter(int pointX, int pointY) :Entity(pointX, pointY) 
 		{
+			entityType = EntityTypes::TownCenter;
 			SetBitmap();
 		}
 		TownCenter(CPoint point) :Entity(point)
 		{
+			entityType = EntityTypes::TownCenter;
 			SetBitmap();
 		}
 		TownCenter()

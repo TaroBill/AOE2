@@ -57,7 +57,11 @@ namespace Unit
 		GameResource carryResource;
 
 		//鎖定的資源源地
-		Entity* target;
+		struct ShortEntity {
+			unsigned int ID;
+			CPoint point;
+			bool isLive;
+		}target;
 
 		//資源回收站點(還暫時沒有分出分支)
 		Entity* recyclePlace;

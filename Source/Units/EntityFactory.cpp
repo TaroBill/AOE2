@@ -1,6 +1,8 @@
 #include "EntityFactory.h"
 #include "../World.h"
 
+
+
 Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
     Unit::Entity* entity = NULL;
     switch (type)

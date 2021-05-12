@@ -29,9 +29,11 @@ void Unit::Villager::ReturnResource()
 
 bool Unit::Villager::FindResouce()
 {
-
+	SetTarget(target.point);
+	if (!target.isLive)
+		return false;
 	//TRACE("=========== now Find Resouce =========== \n");
-	this->GetComponent<Unit::Navigator>()->FindPath(target->point);
+	this->GetComponent<Unit::Navigator>()->FindPath(target.point);
 	return true;
 }
 
@@ -61,7 +63,7 @@ void Unit::Villager::Gathering()
 	{
 		resourceCounter = 0;
 		this->carryResource.amount +=
-			target->GetComponent<Gatherable>()->resource.GetResource();
+			World::getInstance()->getEntityByID(target.ID)->GetComponent<Gatherable>()->resource.GetResource();
 		TRACE("ID:%d now carryResource:%d\n", this->ID,this->carryResource.amount);
 	}
 
@@ -83,7 +85,9 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 		{
 			TRACE("On gather road\n");
 			vs = VillagerState::GetResourceOnRoad;
-			target = temp;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
 			this->carryResource.ResetType(
 				temp->GetComponent<Gatherable>()->resource.type);
 		}
@@ -95,6 +99,7 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 	}
 	else
 	{
+		target.isLive = false;
 		vs = VillagerState::Base;
 	}
 	this->GetComponent<Unit::Navigator>()->FindPath(point, group);
@@ -108,7 +113,9 @@ void Unit::Villager::SetTarget(CPoint point)
 		{
 			TRACE("On gather road\n");
 			vs = VillagerState::GetResourceOnRoad;
-			target = temp;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
 			this->carryResource.ResetType(
 				temp->GetComponent<Gatherable>()->resource.type);
 			
@@ -121,6 +128,7 @@ void Unit::Villager::SetTarget(CPoint point)
 	}
 	else
 	{
+		target.isLive = false;
 		vs = VillagerState::Base;
 	}
 	this->GetComponent<Unit::Navigator>()->FindPath(point);
@@ -175,7 +183,7 @@ void Unit::Villager::FSM(int navigatorState)
 
 				//切換狀態至放資源的路上
 				vs = VillagerState::ReturnResourceOnRoad;
-				SetTarget(recyclePlace->point );
+				SetTarget(recyclePlace->point);
 			}
 			else//沒找到，發呆
 			{
@@ -192,7 +200,6 @@ void Unit::Villager::FSM(int navigatorState)
 		{
 			//放資源
 			ReturnResource();
-
 			if (FindResouce())//找到
 			{
 				vs = VillagerState::GetResourceOnRoad;
@@ -214,6 +221,7 @@ void Unit::Villager::FSM(int navigatorState)
 
 void Unit::Villager::onMove()
 {
+	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 	navigatorState = GetComponent<Navigator>()->onMove(&point);
 	this->FSM(navigatorState);
 }
@@ -225,6 +233,7 @@ Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;
+	entityType = EntityTypes::Villager;
 	SetBitmap();
 }
 
@@ -236,6 +245,7 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 	maxHP = 100;
 	damage = 10;
 	resourceCounter = 0;
+	entityType = EntityTypes::Villager;
 	SetBitmap();
 }
 Unit::Villager::Villager()
