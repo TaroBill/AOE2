@@ -29,11 +29,11 @@ void Unit::Villager::ReturnResource()
 
 bool Unit::Villager::FindResouce()
 {
-	SetTarget(target.point);
+	SetTarget(resourcePlace);
 	if (!target.isLive)
 		return false;
 	//TRACE("=========== now Find Resouce =========== \n");
-	this->GetComponent<Unit::Navigator>()->FindPath(target.point);
+	//this->GetComponent<Unit::Navigator>()->FindPath(target.point);
 	return true;
 }
 
@@ -53,7 +53,7 @@ bool Unit::Villager::FindRecyclingPlace()
 }
 
 //採集
-void Unit::Villager::Gathering()
+bool Unit::Villager::Gathering()
 {
 	//應該有個counter累計值
 	//累計到應該獲得一點資源的時候才+1
@@ -62,11 +62,13 @@ void Unit::Villager::Gathering()
 	if (resourceCounter >= 15)
 	{
 		resourceCounter = 0;
+		if (target.isLive == false)
+			return false;
 		this->carryResource.amount +=
 			World::getInstance()->getEntityByID(target.ID)->GetComponent<Gatherable>()->resource.GetResource();
 		TRACE("ID:%d now carryResource:%d\n", this->ID,this->carryResource.amount);
 	}
-
+	return true;
 }
 
 //攻擊
@@ -77,7 +79,7 @@ void Unit::Villager::Attacking()
 	{
 		attackCounter = 0;
 		if (!this->GetComponent<Attack>()->doAttack()) {
-			this->GetComponent<Unit::Navigator>()->FindPath(target.point);
+			this->SetTargetByRange(target.point, VillagerState::Attacking);
 			vs = VillagerState::GoAttackOnRoad; //追擊
 		}
 		TRACE("ID:%d now attacking:%d\n", this->ID, this->target.ID);
@@ -134,6 +136,7 @@ void Unit::Villager::SetTarget(CPoint point)
 		if (temp->GetComponent<Gatherable>() != nullptr)
 		{
 			TRACE("On gather road\n");
+			resourcePlace = temp->point;
 			vs = VillagerState::GetResourceOnRoad;
 			target.ID = temp->ID;
 			target.point = temp->point;
@@ -162,19 +165,39 @@ void Unit::Villager::SetTarget(CPoint point)
 	this->GetComponent<Unit::Navigator>()->FindPath(point);
 }
 
-void Unit::Villager::SetTargetByRange(CPoint point)
+void Unit::Villager::SetTargetByRange(CPoint point, VillagerState states)
 {
 	CRect nearbyRange = CRect(point.x - 100, point.y - 100, point.x + 100, point.y + 100);
-	vector<Entity*> EnemyUnit = World::getInstance()->EnemyUnit;
-	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
-		if (nearbyRange.PtInRect(EnemyUnit[i]->point)) {
-			vs = VillagerState::GoAttackOnRoad;
-			target.ID = EnemyUnit[i]->ID;
-			target.point = EnemyUnit[i]->point;
-			target.isLive = true;
-			this->GetComponent<Unit::Navigator>()->FindPath(point);
-			return;
+	vector<Entity*> entitys;
+	switch (states) {
+	case VillagerState::Attacking:
+		entitys = World::getInstance()->EnemyUnit;
+		for (unsigned int i = 0; i < entitys.size(); i++) {
+			if (nearbyRange.PtInRect(entitys[i]->point)) {
+				vs = VillagerState::GoAttackOnRoad;
+				target.ID = entitys[i]->ID;
+				target.point = entitys[i]->point;
+				target.isLive = true;
+				this->GetComponent<Unit::Navigator>()->FindPath(point);
+				return;
+			}
 		}
+		break;
+	case VillagerState::Gathering:
+		entitys = World::getInstance()->ResaurceUnit;
+		for (unsigned int i = 0; i < entitys.size(); i++) {
+			if (nearbyRange.PtInRect(entitys[i]->point)) {
+				vs = VillagerState::GoAttackOnRoad;
+				target.ID = entitys[i]->ID;
+				target.point = entitys[i]->point;
+				target.isLive = true;
+				this->GetComponent<Unit::Navigator>()->FindPath(point);
+				return;
+			}
+		}
+		break;
+	default:
+		break;
 	}
 	target.isLive = false;
 	entityState = Entity::State::Idle;
@@ -207,7 +230,7 @@ void Unit::Villager::FSM(int navigatorState)
 		break;
 	case VillagerState::GetResourceOnRoad:
 		//TRACE("GetResourceOnRoad\n");
-
+		//TRACE("target %d %d\n", target.point.x, target.point.y);
 		//到了
 		if (navigatorState == 1)
 		{
@@ -219,9 +242,11 @@ void Unit::Villager::FSM(int navigatorState)
 		//TRACE("Gathering\n");
 
 		//採集
-		Unit::Villager::Gathering();
+		if (!Unit::Villager::Gathering()) {//若採集完尋找附近可採集點
+			SetTargetByRange(target.point, VillagerState::Gathering);
+		}
 		//若滿了
-		if (carryResource.amount>= carryLimit )
+		if (carryResource.amount>= carryLimit || target.isLive == false)
 		{
 			//就找地方放
 			if (FindRecyclingPlace())//找到
@@ -230,6 +255,7 @@ void Unit::Villager::FSM(int navigatorState)
 
 				//切換狀態至放資源的路上
 				vs = VillagerState::ReturnResourceOnRoad;
+				resourcePlace = target.point;
 				SetTarget(recyclePlace->point);
 			}
 			else//沒找到，發呆
@@ -260,6 +286,7 @@ void Unit::Villager::FSM(int navigatorState)
 		break;
 
 	case VillagerState::GoAttackOnRoad:
+		//TRACE("GoAttackOnRoad\n");
 		if (navigatorState == 1)
 		{
 			vs = VillagerState::Attacking;
@@ -267,10 +294,10 @@ void Unit::Villager::FSM(int navigatorState)
 		break;
 		
 	case VillagerState::Attacking:
+		//TRACE("Attacking\n");
 		Unit::Villager::Attacking();
 		if (World::getInstance()->getEntityByID(ID) == NULL) { //  若打死人
 			target.isLive = false;
-			SetTargetByRange(target.point); //自動尋找周圍其他敵人
 		}
 		break;
 

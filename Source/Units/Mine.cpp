@@ -5,7 +5,7 @@ namespace Unit
 {
 	Mine::Mine(CPoint point, ResourceType rt) :Entity(point)
 	{
-		Gatherable* n = new Gatherable(rt, 10);
+		Gatherable* n = new Gatherable(rt, 35);
 		AddComponent(n);
 		entityType = EntityTypes::GoldMine;
 		SetBitmap();
@@ -13,7 +13,7 @@ namespace Unit
 
 	Mine::Mine(int x, int y, ResourceType rt) : Entity(x, y)
 	{
-		Gatherable* n = new Gatherable(rt, 10);
+		Gatherable* n = new Gatherable(rt, 35);
 		AddComponent(n);
 		entityType = EntityTypes::GoldMine;
 		SetBitmap();

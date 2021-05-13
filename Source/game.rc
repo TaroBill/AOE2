@@ -404,7 +404,7 @@ IDB_VILLAGERICON        BITMAP                  "..\\RES\\Entity_Icon\\VillagerI
 
 IDB_GOLDICON            BITMAP                  "..\\RES\\Entity_Icon\\GoldIcon.bmp"
 
-IDB_TOWNCENTER_ICON     BITMAP                  "D:\\school\\AOE2\\RES\\Entity_Icon\\TownCenterIcon.bmp"
+IDB_TOWNCENTER_ICON     BITMAP                  "..\\RES\\Entity_Icon\\TownCenterIcon.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

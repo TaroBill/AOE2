@@ -57,7 +57,8 @@ namespace Unit
 		int navigatorState;
 		//攜帶物
 		GameResource carryResource;
-
+		//用來儲存上個資源點位置
+		CPoint resourcePlace;
 		//資源回收站點(還暫時沒有分出分支)
 		Entity* recyclePlace;
 
@@ -69,15 +70,15 @@ namespace Unit
 		bool FindRecyclingPlace();
 
 		//採集
-		void Gathering();
+		bool Gathering();
 		//攻擊
 		void Attacking();
 
 		void SetTarget(CPoint point , vector<Entity*> group);
 
 		void SetTarget(CPoint point);
-		//設置離點最近的敵人為target
-		void SetTargetByRange(CPoint point);
+		//設置離點最近的敵人(或資源，依照正在做的行為判定)為target
+		void SetTargetByRange(CPoint point, VillagerState state);
 
 		void SetBitmap();
 

@@ -20,12 +20,13 @@ Unit::Attack::Attack(int damage, int range) {
 bool Unit::Attack::doAttack() {
 	Entity* target = World::getInstance()->getEntityByID(this->GetParent<Unit::Entity>()->target.ID);
 	if (target == NULL)
-		return true;
+		return false;
 	if (calculateLength(this->GetParent<Unit::Entity>()->point, target->point) < Range) {
 		target->hp -= Damage;
 		if (target->hp <= 0) {
 			this->GetParent<Unit::Entity>()->target.isLive = false;
 			World::getInstance()->killByID(target->ID);
+			return false;
 		}
 		return true;
 	}

@@ -209,6 +209,7 @@ void World::LoadBitmap() {
 	spwan(EntityTypes::Villager, 3000, 3000);
 	spwanResaurce(EntityTypes::GoldMine, 2900, 2900);
 	spwanEnemy(EntityTypes::Villager, 3100, 2900);
+	spwanEnemy(EntityTypes::Villager, 3150, 2900);
 	spwan(EntityTypes::TownCenter, 3800, 3300);
 
 }
@@ -236,35 +237,41 @@ void World::setScreenLocation(CPoint point) {
 }
 
 void World::spwan(EntityTypes ET, int x, int y) {
-	unit.push_back(entityFactory.SpawnEntity(ET, x, y));
-	unit[unit.size() - 1]->playerId = 0;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
+	en->playerId = 0;						//0是自己1是敵人-1是資源
+	unit.push_back(en);
 	calculatePopulation();
 }
 
 void World::spwan(EntityTypes ET, CPoint p) {
-	unit.push_back(entityFactory.SpawnEntity(ET, p));
-	unit[unit.size() - 1]->playerId = 0;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
+	en->playerId = 0;						//0是自己1是敵人-1是資源
+	unit.push_back(en);
 	calculatePopulation();
 }
 
 void World::spwanEnemy(EntityTypes ET, int x, int y) {
-	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
-	EnemyUnit[unit.size() - 1]->playerId = 1;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
+	en->playerId = 1;						//0是自己1是敵人-1是資源
+	EnemyUnit.push_back(en);
 }
 
 void World::spwanEnemy(EntityTypes ET, CPoint p) {
-	EnemyUnit.push_back(entityFactory.SpawnEntity(ET, p));
-	EnemyUnit[unit.size() - 1]->playerId = 1;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
+	en->playerId = 1;						//0是自己1是敵人-1是資源
+	EnemyUnit.push_back(en);
 }
 
 void World::spwanResaurce(EntityTypes ET, int x, int y) {
-	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, x, y));
-	ResaurceUnit[unit.size() - 1]->playerId = -1;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
+	en->playerId = -1;						//0是自己1是敵人-1是資源
+	ResaurceUnit.push_back(en);
 }
 
 void World::spwanResaurce(EntityTypes ET, CPoint p) {
-	ResaurceUnit.push_back(entityFactory.SpawnEntity(ET, p));
-	ResaurceUnit[unit.size() - 1]->playerId = -1;						//0是自己1是敵人-1是資源
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
+	en->playerId = -1;						//0是自己1是敵人-1是資源
+	ResaurceUnit.push_back(en);				//0是自己1是敵人-1是資源
 }
 
 void World::calculatePopulation() {
@@ -385,6 +392,7 @@ void World::killByID(UINT ID) {
 		if (unit[i]->ID == ID) {
 			delete unit[i];
 			unit.erase(unit.begin() + i);
+			calculatePopulation();
 			return;
 		}
 	}

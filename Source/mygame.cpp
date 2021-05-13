@@ -226,6 +226,9 @@ namespace game_framework {
 
 	void CGameStateRun::OnMove()							// 移動遊戲元素
 	{
+		if (World::getInstance()->player.population == 0) {
+			GotoGameState(GAME_STATE_OVER);
+		}
 		//
 		// 如果希望修改cursor的樣式，則將下面程式的commment取消即可
 		//
