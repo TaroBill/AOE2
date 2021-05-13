@@ -21,7 +21,8 @@ public:
     void OnReceive();
     void play();
     void pause();
-    void SendData();
+    void SendData(stringstream& command);
+    bool isServer();
     ServerSocket cserversocket;
     ClientSocket clientsocket;
 private:

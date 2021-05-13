@@ -1,5 +1,7 @@
 #include "NetWork.h"
 #include "../World.h"
+#include "../gamelib.h"
+
 NetWork* NetWork::getInstance() {
     return &instance;
 }
@@ -67,7 +69,7 @@ void NetWork::OnReceive() {
     char* pBuf = new char[4096];
     CString strData;
     stringstream ss;
-    string erase;
+    string contain;
     int iLen;
     iLen = clientsocket.Receive(pBuf, 4096);
     if (iLen == SOCKET_ERROR)
@@ -78,39 +80,70 @@ void NetWork::OnReceive() {
     {
         //pBuf[iLen] = NULL;
         strData = pBuf;
-        //TRACE(pBuf);
+        //TRACE("%s\n", pBuf);
         ss << strData;
-        int size;
-        ss >> erase >> size;
-        World::getInstance()->LoadEnemyFromStringStream(size, ss);
-        //display in server        
-        if (!isOpened)
-            SendData();
+        ss >> contain;
+        if (contain == "spawn") {// command = spawn EntityTypes x y
+            //TRACE("spawn entity from data\n");
+            int ET;
+            ss >> ET;//Entity type
+            int x, y;   //Entity Location
+            ss >> x >> y;
+            World::getInstance()->spawnEnemy(static_cast<EntityTypes>(ET), x, y);
+        }
+        else if (contain == "settarget") {// command = settarget <amount> <id id id ... id> x y
+            //TRACE("settarget from data\n");
+            int amount; //將多少實體設定目標
+            ss >> amount;
+            vector<UINT> entityID;
+            for (int i = 0; i < amount; i++) {
+                UINT id;
+                ss >> id;//實體ID
+                entityID.push_back(id);
+            }
+            int x, y;//目標的位置
+            ss >> x >> y;
+            vector<Unit::Entity*> ListEntity = World::getInstance()->getEntityByID(entityID);
+            for (unsigned int i = 0; i < ListEntity.size(); i++)
+            {
+
+                ListEntity[i]->
+                    SetTarget(
+                        CPoint(x,y),
+                        World::getInstance()->LE);
+
+            }
+        }
+        else if (contain == "killEntity") { // command = killEntity <amount> <id id id ... id>
+            UINT id;
+            ss >> id;//實體ID
+            World::getInstance()->killByID(id);
+        }
+        else if (contain == "EndGame") {// command = EndGame
+            //TRACE("EndGame from data\n");
+            game_framework::CGame::Instance()->SetGameState(GAME_STATE_OVER);
+        }
     }
     delete [] pBuf;
 
 
 }
 
-void NetWork::SendData() {
-    if (!isConnectedToClient) {
-        //TRACE("Haven't Connect to client\n");
+void NetWork::SendData(stringstream& command) {
+    if (!isConnectedToClient)
         return;
-    }
-    stringstream packet;
-    int size = World::getInstance()->unit.size();
-    packet << "VillagersSize " << size << " ";
-    for (int i = 0; i < size; i++) {
-        dynamic_cast<Unit::Villager*>(World::getInstance()->unit.at(i))->Serialize(packet);
-    }
     //TRACE("SENDING DATA\n");
-    string str = packet.str();
+    string str = command.str();
     char* output = new char[str.length() + 1];
     strcpy(output, str.c_str());
     //TRACE(output);
     
     clientsocket.Send(output, 4096);
     delete [] output;
+}
+
+bool NetWork::isServer() {
+    return isOpened;
 }
 
 NetWork NetWork::instance;

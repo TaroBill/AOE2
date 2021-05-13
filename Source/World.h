@@ -64,17 +64,17 @@ public:
 	//世界座標x, y 是否在現在螢幕要顯示的位子	
 	bool isOnScreen(int, int);						
 	//生成實體在座標
-	void spwan(EntityTypes, CPoint);		
+	void spawn(EntityTypes, CPoint);
 	//生成實體在座標
-	void spwan(EntityTypes, int, int);		
+	void spawn(EntityTypes, int, int);
 	//生成敵人實體在座標
-	void spwanEnemy(EntityTypes, CPoint);	
+	void spawnEnemy(EntityTypes, CPoint);
 	//生成敵人實體在座標
-	void spwanEnemy(EntityTypes, int, int);		
+	void spawnEnemy(EntityTypes, int, int);
 	//生成資源實體在座標
-	void spwanResaurce(EntityTypes, CPoint);	
+	void spawnResaurce(EntityTypes, CPoint);
 	//生成資源實體在座標
-	void spwanResaurce(EntityTypes ET, int x, int y);	
+	void spawnResaurce(EntityTypes ET, int x, int y);
 	//用ID刪除實體
 	void killByID(unsigned int);						
 	//取得範圍內的己方實體
@@ -101,14 +101,20 @@ public:
 	void LoadEnemyFromStringStream(int, stringstream&);	
 	EntityFactory entityFactory;
 	//取得與實體ID相符的實體
-	Unit::Entity* getEntityByID(unsigned int);				
+	Unit::Entity* getEntityByID(unsigned int ID);			
+	//取得與實體ID相符的實體(複數)
+	vector<Unit::Entity*> getEntityByID(vector<UINT> id);
+	// 建築物的障礙判斷
 	int buildingMap[120][120];
+	//生成世界時初始化的實體
+	void initWorld();
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
 	void initMap();
 	void calculatePopulation();
 	int map[120][120];
-	int sx, sy;
+	int sx, sy; //螢幕座標
+	bool isInitingWorld = true;
 
 };

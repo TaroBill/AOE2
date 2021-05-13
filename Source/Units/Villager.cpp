@@ -4,6 +4,11 @@
 //把資源放到主城，讓對應的玩家增加資源
 void Unit::Villager::ReturnResource()
 {
+	if (this->playerId != 0)//不是己方村民放資源不要理他
+	{
+		this->carryResource.amount = 0;
+		return;
+	}
 	switch (this->carryResource.type)
 	{
 	case ResourceType::Gold:
@@ -29,7 +34,7 @@ void Unit::Villager::ReturnResource()
 
 bool Unit::Villager::FindResouce()
 {
-	SetTarget(resourcePlace);
+	SetTargetByRange(resourcePlace, VillagerState::Gathering);
 	if (!target.isLive)
 		return false;
 	//TRACE("=========== now Find Resouce =========== \n");
@@ -40,13 +45,24 @@ bool Unit::Villager::FindResouce()
 bool Unit::Villager::FindRecyclingPlace()
 {
 	//TRACE("=========== now Find Recycling Place =========== \n");
-
-	for (size_t i = 0; i < World::getInstance()->unit.size(); i++)
-	{
-		if (dynamic_cast<TownCenter*>( World::getInstance()->unit.at(i)))
+	if (this->playerId == 0) {
+		for (size_t i = 0; i < World::getInstance()->unit.size(); i++)
 		{
-			recyclePlace = World::getInstance()->unit.at(i);
-			return true;
+			if (dynamic_cast<TownCenter*>(World::getInstance()->unit.at(i)))
+			{
+				recyclePlace = World::getInstance()->unit.at(i);
+				return true;
+			}
+		}
+	}
+	else if (this->playerId == 1) {
+		for (size_t i = 0; i < World::getInstance()->EnemyUnit.size(); i++)
+		{
+			if (dynamic_cast<TownCenter*>(World::getInstance()->EnemyUnit.at(i)))
+			{
+				recyclePlace = World::getInstance()->EnemyUnit.at(i);
+				return true;
+			}
 		}
 	}
 	return false;
@@ -114,7 +130,13 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 			//TRACE("TC\n");
 			vs = VillagerState::ReturnResourceOnRoad;
 		}
-		else if (temp->playerId == 1) {
+		else if (temp->playerId == 1 && this->playerId == 0) {
+			vs = VillagerState::GoAttackOnRoad;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
+		}
+		else if (temp->playerId == 0 && this->playerId == 1) {
 			vs = VillagerState::GoAttackOnRoad;
 			target.ID = temp->ID;
 			target.point = temp->point;
@@ -150,7 +172,13 @@ void Unit::Villager::SetTarget(CPoint point)
 			//TRACE("TC\n");
 			vs = VillagerState::ReturnResourceOnRoad;
 		}
-		else if (temp->playerId == 1) {
+		else if (temp->playerId == 1 && this->playerId == 0) {
+			vs = VillagerState::GoAttackOnRoad;
+			target.ID = temp->ID;
+			target.point = temp->point;
+			target.isLive = true;
+		}
+		else if (temp->playerId == 0 && this->playerId == 1) {
 			vs = VillagerState::GoAttackOnRoad;
 			target.ID = temp->ID;
 			target.point = temp->point;

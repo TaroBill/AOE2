@@ -19,6 +19,5 @@ public:
 	}
 
 	void onClicked() override {
-		NetWork::getInstance()->SendData();
 	}
 };

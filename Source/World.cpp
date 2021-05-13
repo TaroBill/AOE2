@@ -80,10 +80,10 @@ void World::OnShow() {
 			}
 		}
 	}
-	if (World::getInstance()->isSpawningEntity) {
+	if (isSpawningEntity) {
 		//TRACE("Mouse monitor Location: (%d, %d)\n", mouseLocation.x, mouseLocation.y);
-		World::getInstance()->spawningEntityBitmap.SetTopLeft(mouseLocation.x, mouseLocation.y);
-		World::getInstance()->spawningEntityBitmap.ShowBitmap();
+		spawningEntityBitmap.SetTopLeft(mouseLocation.x, mouseLocation.y);
+		spawningEntityBitmap.ShowBitmap();
 	}
 }
 void World::onMove() {
@@ -128,6 +128,10 @@ void World::UnitOnMove() {
 
 	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
 		ResaurceUnit[i]->onMove();
+	}
+
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		EnemyUnit[i]->onMove();
 	}
 }
 
@@ -206,12 +210,6 @@ int World::GlobalY2ScreenY(int y) {
 void World::LoadBitmap() {
 	grass.LoadBitmap(IDB_GRASS);
 	river.LoadBitmap(IDB_WaterBig);
-	spwan(EntityTypes::Villager, 3000, 3000);
-	spwanResaurce(EntityTypes::GoldMine, 2900, 2900);
-	spwanEnemy(EntityTypes::Villager, 3100, 2900);
-	spwanEnemy(EntityTypes::Villager, 3150, 2900);
-	spwan(EntityTypes::TownCenter, 3800, 3300);
-
 }
 
 void World::setScreenLocation(int x, int y) {
@@ -236,39 +234,53 @@ void World::setScreenLocation(CPoint point) {
 	}
 }
 
-void World::spwan(EntityTypes ET, int x, int y) {
+void World::spawn(EntityTypes ET, int x, int y) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
 	en->playerId = 0;						//0是自己1是敵人-1是資源
 	unit.push_back(en);
 	calculatePopulation();
+	if (isInitingWorld)
+		return;
+	stringstream ss;
+	ss << "spawn" << " ";
+	ss << ET << " ";
+	ss << x << " " << y;
+	NetWork::getInstance()->SendData(ss);
 }
 
-void World::spwan(EntityTypes ET, CPoint p) {
+void World::spawn(EntityTypes ET, CPoint p) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
 	en->playerId = 0;						//0是自己1是敵人-1是資源
 	unit.push_back(en);
 	calculatePopulation();
+	if (isInitingWorld)
+		return;
+	stringstream ss;
+	ss << "spawn" << " ";
+	ss << ET << " ";
+	ss << p.x << " " << p.y;
+	NetWork::getInstance()->SendData(ss);
 }
 
-void World::spwanEnemy(EntityTypes ET, int x, int y) {
+void World::spawnEnemy(EntityTypes ET, int x, int y) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
 	en->playerId = 1;						//0是自己1是敵人-1是資源
 	EnemyUnit.push_back(en);
 }
 
-void World::spwanEnemy(EntityTypes ET, CPoint p) {
+void World::spawnEnemy(EntityTypes ET, CPoint p) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
 	en->playerId = 1;						//0是自己1是敵人-1是資源
 	EnemyUnit.push_back(en);
 }
 
-void World::spwanResaurce(EntityTypes ET, int x, int y) {
+void World::spawnResaurce(EntityTypes ET, int x, int y) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
 	en->playerId = -1;						//0是自己1是敵人-1是資源
 	ResaurceUnit.push_back(en);
 }
 
-void World::spwanResaurce(EntityTypes ET, CPoint p) {
+void World::spawnResaurce(EntityTypes ET, CPoint p) {
 	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
 	en->playerId = -1;						//0是自己1是敵人-1是資源
 	ResaurceUnit.push_back(en);				//0是自己1是敵人-1是資源
@@ -324,11 +336,21 @@ Unit::Entity* World::getNearestEntity(CPoint point) {
 }
 
 void World::moveEntityToLocation(vector<Unit::Entity*> allEntity, CPoint p) {
-	/*
-	for (unsigned int i = 0; i < allEntity.size(); i++) {
-		allEntity[i]->GetComponent<Unit::Navigator>()->FindPath(Screen2Global(p));
+	if (allEntity.size() < 1)
+		return;
+	if (allEntity[0]->playerId != 0)
+		return;
+	stringstream ss;// command = settarget <amount> <id id id ... id> x y
+	ss << "settarget" << " ";
+	ss << allEntity.size() << " ";
+	for (unsigned int i = 0; i < allEntity.size(); i++)
+	{
+		ss << allEntity[i]->ID << " ";
+		allEntity[i]->SetTarget(p, allEntity);
 	}
-	*/
+	ss << p.x << " " << p.y;
+	NetWork::getInstance()->SendData(ss);
+	
 }
 
 void World::spawningEntity(int bitmap) {
@@ -350,7 +372,7 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 	//TRACE("Size: %d\n", amount);
 	if (amount > size) {
 		for (int i = 0; i < amount - size; i++) {
-			spwanEnemy(EntityTypes::Villager, 0, 0);
+			spawnEnemy(EntityTypes::Villager, 0, 0);
 		}
 	}
 	else if (amount < size) {
@@ -379,6 +401,34 @@ Unit::Entity* World::getEntityByID(unsigned int ID) {
 	return NULL;
 }
 
+vector<Unit::Entity*> World::getEntityByID(vector<UINT> id) {
+	vector<Unit::Entity*> output;
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		for (unsigned int j = 0; j < id.size(); j++) {
+			if (unit[i]->ID == id[j]) {
+				output.push_back(unit[i]);
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		for (unsigned int j = 0; j < id.size(); j++) {
+			if (EnemyUnit[i]->ID == id[j]) {
+				output.push_back(EnemyUnit[i]);
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		for (unsigned int j = 0; j < id.size(); j++) {
+			if (ResaurceUnit[i]->ID == id[j]) {
+				output.push_back(ResaurceUnit[i]);
+			}
+		}
+	}
+	return output;
+}
+
 void World::killByID(UINT ID) {
 	for (unsigned int i = 0; i < LE.size(); i++) {
 		if (LE[i]->ID == ID) {
@@ -388,10 +438,16 @@ void World::killByID(UINT ID) {
 
 	GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
 
+
 	for (unsigned int i = 0; i < unit.size(); i++) {
 		if (unit[i]->ID == ID) {
 			delete unit[i];
 			unit.erase(unit.begin() + i);
+			calculatePopulation();
+			stringstream command;
+			command << "killEntity" << " ";
+			command << ID;
+			NetWork::getInstance()->SendData(command);
 			calculatePopulation();
 			return;
 		}
@@ -401,6 +457,10 @@ void World::killByID(UINT ID) {
 		if (EnemyUnit[i]->ID == ID) {
 			delete EnemyUnit[i];
 			EnemyUnit.erase(EnemyUnit.begin() + i);
+			stringstream command;
+			command << "killEntity" << " ";
+			command << ID;
+			NetWork::getInstance()->SendData(command);
 			return;
 		}
 	}
@@ -409,6 +469,10 @@ void World::killByID(UINT ID) {
 		if (ResaurceUnit[i]->ID == ID) {
 			delete ResaurceUnit[i];
 			ResaurceUnit.erase(ResaurceUnit.begin() + i);
+			stringstream command;
+			command << "killEntity" << " ";
+			command << ID;
+			NetWork::getInstance()->SendData(command);
 			return;
 		}
 	}
@@ -416,6 +480,35 @@ void World::killByID(UINT ID) {
 
 
 	TRACE("ID: %d Not Found\n", ID);
+}
+
+void World::initWorld() {
+	//debug mode
+	/*spawnEnemy(EntityTypes::Villager, 3100, 2900);
+	spawnEnemy(EntityTypes::Villager, 3150, 2900);
+	spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
+	spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
+	spawn(EntityTypes::Villager, 3000, 3000);
+	spawn(EntityTypes::TownCenter, 3800, 3300);
+	return;*/
+	//end debug mode
+	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
+		spawn(EntityTypes::Villager, 3000, 3000);
+		spawn(EntityTypes::TownCenter, 3800, 3300);
+		spawnEnemy(EntityTypes::Villager, 3100, 2900);
+		spawnEnemy(EntityTypes::Villager, 3150, 2900);
+		spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
+		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
+	}
+	else {//順序要一樣確保初始ID相同
+		spawnEnemy(EntityTypes::Villager, 3000, 3000);
+		spawnEnemy(EntityTypes::TownCenter, 3800, 3300);
+		spawn(EntityTypes::Villager, 3100, 2900);
+		spawn(EntityTypes::Villager, 3150, 2900);
+		spawn(EntityTypes::TownCenter, 3100, 2600);
+		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
+	}
+	isInitingWorld = false;
 }
 
 World World::instance;

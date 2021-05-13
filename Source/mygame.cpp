@@ -218,16 +218,16 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
-
-
-
-
+		World::getInstance()->initWorld();
 	}
 
 	void CGameStateRun::OnMove()							// 移動遊戲元素
 	{
 		if (World::getInstance()->player.population == 0) {
 			GotoGameState(GAME_STATE_OVER);
+			stringstream ss;
+			ss << "EndGame";
+			NetWork::getInstance()->SendData(ss);
 		}
 		//
 		// 如果希望修改cursor的樣式，則將下面程式的commment取消即可
@@ -242,7 +242,7 @@ namespace game_framework {
 		GUI::getInstance()->minimap.setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
 
 		World::getInstance()->UnitOnMove();
-		NetWork::getInstance()->SendData();
+		//NetWork::getInstance()->SendData();
 	}
 
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -326,7 +326,7 @@ namespace game_framework {
 		if (World::getInstance()->isSpawningEntity) {
 			switch (World::getInstance()->spawningEntityType) {
 			case EntityTypes::Villager:
-				World::getInstance()->spwan(EntityTypes::Villager, LButtonDownPoint);
+				World::getInstance()->spawn(EntityTypes::Villager, LButtonDownPoint);
 				break;
 			}
 		}
@@ -354,7 +354,7 @@ namespace game_framework {
 		GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
 		if (!World::getInstance()->LE.empty()) {
 			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
-			if (typeid(Unit::Villager) == typeid(*World::getInstance()->LE[0])) {
+			if (typeid(Unit::Villager) == typeid(*World::getInstance()->LE[0]) && World::getInstance()->LE[0]->playerId == 0) {
 				GUI::getInstance()->entityDataButtonFrame.LoadVillagerButtons();
 			}
 		}
@@ -379,17 +379,8 @@ namespace game_framework {
 		}
 
 
-		for (unsigned int i = 0; i < World::getInstance()->LE.size(); i++)
-		{
-			
-			World::getInstance()->
-				LE[i]->
-				SetTarget(
-					World::getInstance()->Screen2Global(point),
-					World::getInstance()->LE);
-			
-		}
-
+		World::getInstance()->
+			moveEntityToLocation(World::getInstance()->LE, World::getInstance()->Screen2Global(point));
 
 	}
 
