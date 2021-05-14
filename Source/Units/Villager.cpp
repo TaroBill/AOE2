@@ -199,18 +199,34 @@ void Unit::Villager::SetTargetByRange(CPoint point, VillagerState states)
 	vector<Entity*> entitys;
 	switch (states) {
 	case VillagerState::Attacking:
-		entitys = World::getInstance()->EnemyUnit;
-		for (unsigned int i = 0; i < entitys.size(); i++) {
-			if (nearbyRange.PtInRect(entitys[i]->point)) {
-				vs = VillagerState::GoAttackOnRoad;
-				target.ID = entitys[i]->ID;
-				target.point = entitys[i]->point;
-				target.isLive = true;
-				this->GetComponent<Unit::Navigator>()->FindPath(point);
-				return;
+		if (this->playerId == 0) {
+			entitys = World::getInstance()->EnemyUnit;
+			for (unsigned int i = 0; i < entitys.size(); i++) {
+				if (nearbyRange.PtInRect(entitys[i]->point)) {
+					vs = VillagerState::GoAttackOnRoad;
+					target.ID = entitys[i]->ID;
+					target.point = entitys[i]->point;
+					target.isLive = true;
+					this->GetComponent<Unit::Navigator>()->FindPath(point);
+					return;
+				}
 			}
+			break;
 		}
-		break;
+		else if (this->playerId == 1) {
+			entitys = World::getInstance()->unit;
+			for (unsigned int i = 0; i < entitys.size(); i++) {
+				if (nearbyRange.PtInRect(entitys[i]->point)) {
+					vs = VillagerState::GoAttackOnRoad;
+					target.ID = entitys[i]->ID;
+					target.point = entitys[i]->point;
+					target.isLive = true;
+					this->GetComponent<Unit::Navigator>()->FindPath(point);
+					return;
+				}
+			}
+			break;
+		}
 	case VillagerState::Gathering:
 		entitys = World::getInstance()->ResaurceUnit;
 		for (unsigned int i = 0; i < entitys.size(); i++) {
