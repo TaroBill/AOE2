@@ -341,6 +341,7 @@ void Unit::Villager::onMove()
 	if (hp <= 0)
 		World::getInstance()->killByID(ID);
 	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
+
 	navigatorState = GetComponent<Navigator>()->onMove(&point);
 	Entity* tempTarget = World::getInstance()->getEntityByID(target.ID);
 	if (target.isLive && tempTarget != NULL)
@@ -352,10 +353,8 @@ void Unit::Villager::onMove()
 
 Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 {
-	Navigator* n = new Navigator();
-	AddComponent(n);
-	Attack* attack = new Attack(10, 20);
-	AddComponent(attack);
+	AddComponent<Navigator>();
+	AddComponent<Attack>(10,20);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;
@@ -365,10 +364,8 @@ Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 
 Unit::Villager::Villager(CPoint point) :Entity(point)
 {
-	Navigator* n = new Navigator();
-	AddComponent(n);
-	Attack* attack = new Attack(10, 20);
-	AddComponent(attack);
+	AddComponent<Navigator>();
+	AddComponent<Attack>(10, 20);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;

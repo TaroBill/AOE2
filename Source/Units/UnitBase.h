@@ -45,6 +45,21 @@ namespace Unit
 			component->SetParent(this);
 		}
 
+		template<typename T>
+		void AddComponent()
+		{
+			T* n = new T();
+			_components.push_back(n);
+			n->SetParent(this);
+		}
+		
+		template<typename T,typename ... A>
+		void AddComponent(A ... rest)
+		{
+			T* n = new T(rest ...);
+			_components.push_back(n);
+			n->SetParent(this);
+		}
 		//刪除指定的同型別組件
 		//RemoveComponent<組件型別>()
 		template<typename T>

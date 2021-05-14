@@ -493,7 +493,7 @@ void World::initWorld() {
 	return;*/
 	//end debug mode
 	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
-		spawn(EntityTypes::Villager, 3000, 3000);
+		spawn(EntityTypes::Villager, 2900, 3000);
 		spawn(EntityTypes::TownCenter, 3800, 3300);
 		spawnEnemy(EntityTypes::Villager, 3100, 2900);
 		spawnEnemy(EntityTypes::Villager, 3150, 2900);
@@ -501,7 +501,7 @@ void World::initWorld() {
 		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
 	}
 	else {//順序要一樣確保初始ID相同
-		spawnEnemy(EntityTypes::Villager, 3000, 3000);
+		spawnEnemy(EntityTypes::Villager, 2900, 3000);
 		spawnEnemy(EntityTypes::TownCenter, 3800, 3300);
 		spawn(EntityTypes::Villager, 3100, 2900);
 		spawn(EntityTypes::Villager, 3150, 2900);
