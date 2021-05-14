@@ -337,6 +337,7 @@ void Unit::Villager::FSM(int navigatorState)
 
 void Unit::Villager::onMove()
 {
+	Unit::Entity::onMove();
 	if (hp <= 0)
 		World::getInstance()->killByID(ID);
 	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);

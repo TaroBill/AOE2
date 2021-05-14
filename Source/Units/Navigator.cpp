@@ -92,6 +92,20 @@ int Unit::Navigator::onMove(CPoint* point)
 		Normalization(*point, (pathPoints.front()), velocity);
 
 		MoveStraight(point);
+#pragma region 改變方向
+		if (velocity[0]<0)
+			if (velocity[1] < 0)GetParent<Entity>()->faceDirection = Unit::Entity::Direction::LeftUp;
+			else if (velocity[1] > 0)GetParent<Entity>()->faceDirection = Unit::Entity::Direction::LeftDown;
+			else	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Left;
+		else if (velocity[0] > 0)
+			if (velocity[1] < 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::RightUp;
+			else if (velocity[1] > 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::RightDown;
+			else	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Right;
+		else
+			if (velocity[1] < 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Up;
+			else if (velocity[1] > 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Down;
+			else	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Down;
+#
 		if (pathDistances.front() <= speedFixed)
 		{
 			Info.pathPoints.erase(Info.pathPoints.begin());
@@ -105,8 +119,7 @@ int Unit::Navigator::onMove(CPoint* point)
 	}
 	else
 	{
-		velocity[0] = 0;
-		velocity[1] = 0;
+
 		return -1;
 	}
 	return -1;
