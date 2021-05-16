@@ -3,7 +3,7 @@
 
 ResourceFrame::ResourceFrame() : Frame(0, 0, 26, 1920)
 {
-
+	loadBitmap();
 }
 
 ResourceFrame::~ResourceFrame()
@@ -13,6 +13,10 @@ ResourceFrame::~ResourceFrame()
 
 void ResourceFrame::loadBitmap() {
 	texture.LoadBitmap(IDB_RESOURCEBACKGROUND);
+}
+
+void ResourceFrame::onMove() {
+	
 }
 
 void ResourceFrame::OnShow() {
@@ -42,6 +46,3 @@ void ResourceFrame::OnShow() {
 	CDDraw::ReleaseBackCDC();					// ©ñ±¼ Back Plain ªº CDC
 }
 
-void ResourceFrame::onClicked(CPoint p) {
-
-}

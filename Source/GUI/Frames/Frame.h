@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../stdafx.h"
-#include "../Resource.h"
+#include "../../stdafx.h"
+#include "../../Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
-#include "../audio.h"
-#include "../gamelib.h"
+#include "../../audio.h"
+#include "../../gamelib.h"
 #include <vector>
-#include "./Buttons/Button.h"
-#include "../World.h"
+#include "../Buttons/Button.h"
+#include "../../World.h"
 
 using namespace game_framework;
 
@@ -22,8 +22,8 @@ public:
 		Height = h;
 		Width = w;
 	}
-	~Frame() {
-
+	virtual ~Frame() {
+		freeButtons();
 	}
 	CPoint getLocation() const {
 		return CPoint(LocX, LocY);
@@ -40,8 +40,10 @@ public:
 	}
 	// 載入圖形s
 	virtual void loadBitmap() = 0;
+
+	virtual void onMove(){}
 	// 將圖形貼到畫面
-	void OnShow() {
+	virtual void OnShow() {
 		texture.SetTopLeft(LocX, LocY);
 		texture.ShowBitmap();
 	}
@@ -60,7 +62,25 @@ public:
 		return false;
 	}
 
-	virtual void onClicked(CPoint p) = 0;
+	virtual void onClicked(CPoint p) {
+		for (unsigned int i = 0; i < buttons.size(); i++) {
+			if (buttons[i]->isEnable() && buttons[i]->isInButton(p)) {
+				buttons[i]->onClicked();
+				break;
+			}
+		}
+	}
+
+	virtual void freeButtons() {
+		for (unsigned int i = 0; i < buttons.size(); i++) {
+			delete buttons[i];
+		}
+		buttons.clear();
+	}
+
+protected:
+	vector<Button*> buttons;
+
 private:
 	int LocX, LocY;
 	int Height, Width;

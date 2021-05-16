@@ -513,5 +513,5 @@ Unit::Navigator::Navigator()
 }
 Unit::Navigator::~Navigator()
 {
-	TRACE("~Navigator\n");
+	//TRACE("~Navigator\n");
 }

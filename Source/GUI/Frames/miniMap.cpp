@@ -7,16 +7,23 @@ MiniMap::MiniMap() : Frame(SIZE_X - 240, SIZE_Y - 240, 240, 240) {
 	this->Name = "";
 	this->CurrentLocationX = 0;
 	this->CurrentLocationY = 0;
+	loadBitmap();
 }
 
 MiniMap::~MiniMap() {
 
 }
 
+
 void MiniMap::OnShow() {
 	Frame::OnShow();
 	CurrentLocation.SetTopLeft(getLocation().x + CurrentLocationX, getLocation().y + CurrentLocationY);
 	CurrentLocation.ShowBitmap();
+}
+
+void MiniMap::onMove() {
+	setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
+	//TRACE("MiniMap onMove\n");
 }
 
 void MiniMap::loadBitmap() {
@@ -38,5 +45,5 @@ CPoint MiniMap::MiniMapLoc2GlobalLoc(CPoint point) {
 }
 
 void MiniMap::onClicked(CPoint point) {
-
+	World::getInstance()->setScreenLocation(MiniMapLoc2GlobalLoc(point));
 }

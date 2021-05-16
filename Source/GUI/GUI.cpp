@@ -1,4 +1,9 @@
 #include "GUI.h"
+#include "Frames/minimap.h"
+#include "Frames/ResourceFrame.h"
+#include "Frames/EntityDataFrame.h"
+#include "Frames/EntityDataButtonFrame.h"
+#include "Frames/StartMenuFrame.h"
 
 GUI* GUI::getInstance() {
 	return &instance;
@@ -10,50 +15,63 @@ GUI::GUI() {
 }
 
 GUI::~GUI() {
+	freeFrames();
+	TRACE("~GUI\n");
 }
 
-void GUI::loadBitmap() {
-	entityDataButtonFrame.loadBitmap();
-	entityDataFrame.loadBitmap();
-	resourceFrame.loadBitmap();
-	minimap.loadBitmap();
+void GUI::onMove() {
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		frames[i]->onMove();
+	}
 }
+
+void GUI::loadInGameGUI() {
+	freeFrames();
+	frames.push_back(new MiniMap());
+	frames.push_back(new ResourceFrame());
+	frames.push_back(new EntityDataFrame());
+	frames.push_back(new EntityDataButtonFrame());
+}
+
+void GUI::freeFrames() {
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		delete frames[i];
+	}
+	frames.clear();
+}
+
 void GUI::onShow() {
-	entityDataButtonFrame.OnShow();
-	entityDataFrame.OnShow();
-	resourceFrame.OnShow();
-	minimap.OnShow();
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		frames[i]->OnShow();
+	}
 }
 
 bool GUI::isInGUI(int x, int y) {
-	if (minimap.isInFrame(x, y) || entityDataButtonFrame.isInFrame(x, y) || entityDataFrame.isInFrame(x, y) || resourceFrame.isInFrame(x, y))
-		return true;
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		if (frames[i]->isInFrame(x,y))
+			return true;
+	}
 	return false;
 }
 
 bool GUI::isInGUI(CPoint p) {
-	if (minimap.isInFrame(p.x, p.y) || entityDataButtonFrame.isInFrame(p.x, p.y) || entityDataFrame.isInFrame(p.x, p.y) || resourceFrame.isInFrame(p.x, p.y))
-		return true;
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		if (frames[i]->isInFrame(p))
+			return true;
+	}
 	return false;
 }
 
 void GUI::triggerOnClicked(CPoint p) {
-	if (entityDataButtonFrame.isInFrame(p)) {
-		entityDataButtonFrame.onClicked(p);
-	}
-	if (entityDataFrame.isInFrame(p)) {
-		entityDataFrame.onClicked(p);
-	}
-	if (resourceFrame.isInFrame(p)) {
-		resourceFrame.onClicked(p);
-	}
-	if (minimap.isInFrame(p)) {
-		World::getInstance()->setScreenLocation(minimap.MiniMapLoc2GlobalLoc(p));
+	for (unsigned int i = 0; i < frames.size(); i++) {
+		if (frames[i]->isInFrame(p))
+			frames[i]->onClicked(p);
 	}
 }
 
-void GUI::printTest() {
-	TRACE("TEST\n");
+void GUI::loadMainMenu() {
+	freeFrames();
+	frames.push_back(new StartMenuFrame);
 }
 
 GUI GUI::instance;

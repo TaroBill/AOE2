@@ -394,5 +394,5 @@ Unit::Villager::Villager()
 }
 Unit::Villager::~Villager()
 {
-	TRACE("~Villager\n");
+	//TRACE("~Villager\n");
 }

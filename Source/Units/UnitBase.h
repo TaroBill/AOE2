@@ -104,7 +104,7 @@ namespace Unit
 		virtual ~UnitBase()
 		{
 			RemoveComponents(_components);
-			TRACE("~UnitBase\n");
+			//TRACE("~UnitBase\n");
 		}
 
 		

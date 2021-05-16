@@ -58,6 +58,8 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
+#include "GUI/Frames/EntityDataButtonFrame.h"
+#include "GUI/Frames/EntityDataFrame.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -98,6 +100,7 @@ namespace game_framework {
 
 	void CGameStateInit::OnBeginState()
 	{
+		GUI::getInstance()->loadMainMenu();
 	}
 
 	void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -106,17 +109,16 @@ namespace game_framework {
 		const char KEY_SPACE = ' ';
 		if (nChar == KEY_SPACE) {
 			//TRACE("TEST\n");
-			NetWork::getInstance()->play();
-			GotoGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
 		}
-		else if (nChar == KEY_ESC)								// Demo 關閉遊戲的方法
-			PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
 	}
 
 	void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 	{
-		NetWork::getInstance()->createServer();
-		AfxMessageBox(_T("已創建伺服器"));
+		GUI::getInstance()->triggerOnClicked(point);
+	}
+
+	void CGameStateInit::OnMouseMove(UINT nFlags, CPoint point) {
+		World::getInstance()->mouseLocation = point;
 	}
 
 	void CGameStateInit::OnShow()
@@ -126,22 +128,8 @@ namespace game_framework {
 		//
 		logo.SetTopLeft((SIZE_X - logo.Width()) / 2, SIZE_Y / 8);
 		logo.ShowBitmap();
-		//
-		// Demo螢幕字型的使用，不過開發時請盡量避免直接使用字型，改用CMovingBitmap比較好
-		//
-		CDC* pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
-		CFont f, * fp;
-		f.CreatePointFont(160, "Times New Roman");	// 產生 font f; 160表示16 point的字
-		fp = pDC->SelectObject(&f);					// 選用 font f
-		pDC->SetBkColor(RGB(0, 0, 0));
-		pDC->SetTextColor(RGB(255, 255, 0));
-		pDC->TextOut(120, 220, "Please click mouse or press SPACE to begin.");
-		pDC->TextOut(5, 395, "Press Ctrl-F to switch in between window mode and full screen mode.");
-		if (ENABLE_GAME_PAUSE)
-			pDC->TextOut(5, 425, "Press Ctrl-Q to pause the Game.");
-		pDC->TextOut(5, 455, "Press Alt-F4 or ESC to Quit.");
-		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
-		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
+
+		GUI::getInstance()->onShow();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -156,6 +144,7 @@ namespace game_framework {
 
 	void CGameStateOver::OnMove()
 	{
+		GUI::getInstance()->onMove();
 		counter--;
 		if (counter < 0)
 			GotoGameState(GAME_STATE_INIT);
@@ -185,6 +174,7 @@ namespace game_framework {
 
 	void CGameStateOver::OnShow()
 	{
+		GUI::getInstance()->onShow();
 		CDC* pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
 		CFont f, * fp;
 		f.CreatePointFont(160, "Times New Roman");	// 產生 font f; 160表示16 point的字
@@ -205,7 +195,7 @@ namespace game_framework {
 	CGameStateRun::CGameStateRun(CGame* g)
 		: CGameState(g)
 	{
-
+	
 	}
 
 	CGameStateRun::~CGameStateRun()
@@ -218,6 +208,7 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
+		GUI::getInstance()->loadInGameGUI();
 		World::getInstance()->initWorld();
 	}
 
@@ -239,8 +230,7 @@ namespace game_framework {
 		// 移動彈跳的球
 		//
 		World::getInstance()->onMove();
-		GUI::getInstance()->minimap.setCurrentLocation(World::getInstance()->getScreenX() / 50, World::getInstance()->getScreenY() / 50);
-
+		GUI::getInstance()->onMove();
 		World::getInstance()->UnitOnMove();
 		//NetWork::getInstance()->SendData();
 	}
@@ -248,7 +238,6 @@ namespace game_framework {
 	void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	{
 		World::getInstance()->LoadBitmap();
-		GUI::getInstance()->loadBitmap();
 		//
 		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -351,15 +340,15 @@ namespace game_framework {
 			World::getInstance()->LE = World::getInstance()->listAllEntityInRange(LButtonDownPoint, LButtonUpPoint);
 		}
 
-		GUI::getInstance()->entityDataButtonFrame.LoadEmpty();
+		dynamic_cast<EntityDataButtonFrame*>(GUI::getInstance()->frames.at(3))->LoadEmpty();
 		if (!World::getInstance()->LE.empty()) {
-			GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
+			dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->loadEntitysBitmap(World::getInstance()->LE);
 			if (typeid(Unit::Villager) == typeid(*World::getInstance()->LE[0]) && World::getInstance()->LE[0]->playerId == 0) {
-				GUI::getInstance()->entityDataButtonFrame.LoadVillagerButtons();
+				dynamic_cast<EntityDataButtonFrame*>(GUI::getInstance()->frames.at(3))->LoadVillagerButtons();
 			}
 		}
 		else {
-			GUI::getInstance()->entityDataFrame.clearEntitysBitmap();
+			dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->clearEntitysBitmap();
 		}
 		isLButtonDown = false;
 	}

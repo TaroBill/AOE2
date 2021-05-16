@@ -1,6 +1,6 @@
 #pragma once
 #include "Button.h"
-#include "../EntityDataButtonFrame.h"
+#include "../Frames/EntityDataButtonFrame.h"
 
 class Building_Button : public Button
 {

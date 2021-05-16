@@ -147,7 +147,7 @@ namespace Unit
 
 		virtual ~Entity()
 		{
-			TRACE("~Entity%d\n",this->ID);
+			//TRACE("~Entity%d\n",this->ID);
 		}
 
 		//copy constructor

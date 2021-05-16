@@ -2,12 +2,14 @@
 
 EntityDataFrame::EntityDataFrame() : Frame(300, SIZE_Y - 240, 240, 1380)
 {
+	loadBitmap();
 }
 
 EntityDataFrame::~EntityDataFrame()
 {
 
 }
+
 
 void EntityDataFrame::loadBitmap() {
 	texture.LoadBitmap(IDB_DATABACKGROUND);
@@ -36,6 +38,10 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 
 void EntityDataFrame::clearEntitysBitmap() {
 	entitys.clear();
+}
+
+void EntityDataFrame::onMove() {
+
 }
 
 void EntityDataFrame::OnShow() {
@@ -74,8 +80,4 @@ void EntityDataFrame::OnShow() {
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 	}
-}
-
-void EntityDataFrame::onClicked(CPoint p) {
-
 }

@@ -38,7 +38,7 @@ namespace Unit
 
 	Mine::~Mine()
 	{
-		TRACE("~Mine\n");
+		//TRACE("~Mine\n");
 	}
 
 
