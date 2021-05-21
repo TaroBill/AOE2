@@ -92,7 +92,7 @@ int Unit::Navigator::onMove(CPoint* point)
 		Normalization(*point, (pathPoints.front()), velocity);
 
 		MoveStraight(point);
-#pragma region 改變方向
+
 		if (velocity[0]<0)
 			if (velocity[1] < 0)GetParent<Entity>()->faceDirection = Unit::Entity::Direction::LeftUp;
 			else if (velocity[1] > 0)GetParent<Entity>()->faceDirection = Unit::Entity::Direction::LeftDown;
@@ -105,7 +105,7 @@ int Unit::Navigator::onMove(CPoint* point)
 			if (velocity[1] < 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Up;
 			else if (velocity[1] > 0)	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Down;
 			else	GetParent<Entity>()->faceDirection = Unit::Entity::Direction::Down;
-#
+
 		if (pathDistances.front() <= speedFixed)
 		{
 			Info.pathPoints.erase(Info.pathPoints.begin());
@@ -274,7 +274,7 @@ DWORD WINAPI AStarSync(LPVOID p)
 			{
 				((threadInfo*)p)->pathPoints.push_back(std::move(Unit::Navigator::Tile2Point(stackPath.top())));
 				stackPath.pop();
-				TRACE("%d,%d", ((threadInfo*)p)->pathPoints[i].x, ((threadInfo*)p)->pathPoints[i].y);
+				//TRACE("%d,%d", ((threadInfo*)p)->pathPoints[i].x, ((threadInfo*)p)->pathPoints[i].y);
 			}
 			for (unsigned int i = 0; i < ((threadInfo*)p)->pathPoints.size() - 1; i++)
 			{
@@ -422,24 +422,53 @@ void Unit::Navigator::AStar()
 	}
 }
 
-
-//開始尋路
-void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
+CPoint Unit::Navigator::FindNearestPoint(CPoint targetP)
 {
-	int canPass = World::getInstance()->getLocationItem(targrtP.x, targrtP.y);
-
-	if (canPass)
+	int isObstacle = World::getInstance()->getLocationItem(targetP.x, targetP.y);
+	if (isObstacle)//障礙
 	{
-		TRACE("Find Path Fail\n");
-		return;
+		//找直線
+		float v[2] = { 0,0 };
+		Normalization(targetP, startPoint, v);
+		int counter = 0;
+		float counterX = 0, counterY = 0;
+		while (World::getInstance()->getLocationItem(targetP.x, targetP.y))
+		{
+			counterX += v[0];
+			counterY += v[1];
+			targetP.x += static_cast<int>(counterX);
+			targetP.y += static_cast<int>(counterY);
+			counterX -= static_cast<int>(counterX);
+			counterY -= static_cast<int>(counterY);
+			counter++;
+			if (counter >= 5000)
+			{
+				return startPoint;
+			}
+		}
+
+		return targetP;
 	}
+	else//非障礙
+	{
+		return targetP;
+	}
+}
+//開始尋路
+void Unit::Navigator::FindPath(CPoint targetP, vector<Entity*> entityList)
+{
 
 	startPoint = this->GetParent<Entity>()->point;
 	startTile = this->GetParent<Entity>()->GetTile();
 	pathPoints.clear();
 	pathDistances.clear();
-	this->targetPoint = targrtP;
-	targetTile = Point2Tile(targrtP);
+
+	targetP = FindNearestPoint(targetP);
+
+	this->targetPoint = targetP;
+	targetTile = Point2Tile(targetP);
+
+
 
 	
 	Info = threadInfo();
@@ -455,14 +484,6 @@ void Unit::Navigator::FindPath(CPoint targrtP, vector<Entity*> entityList)
 		CloseHandle(hThead);
 	}
 	hThead = CreateThread(NULL, 0, AStarSync, &Info, 0, &dwThreadID);
-	
-
-
-	//if (GetHandleInformation(hThead, (LPDWORD)dwThreadID))
-	//{
-	//		CloseHandle(hThead);
-	//}
-
 }
 
 //開始尋路
@@ -508,8 +529,6 @@ Unit::Navigator::Navigator()
 	velocity[1] = 0;
 	counterF[0] = 0;
 	counterF[1] = 0;
-
-
 }
 Unit::Navigator::~Navigator()
 {

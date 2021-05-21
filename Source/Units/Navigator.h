@@ -84,6 +84,8 @@ namespace Unit
 		void FindPath(CPoint targrtPoint, vector<Entity*> entityList);
 		void FindPath(CPoint targrtPoint);
 
+		CPoint FindNearestPoint(CPoint target);
+
 		//利用Component找物件
 		template<typename T>
 		void FindEntityPath()
