@@ -53,7 +53,7 @@ World::~World() {
 int World::getLocationItem(int x, int y) {
 	int GX = x / 50;
 	int GY = y / 50;
-	return map[GY][GX] /*|| buildingMap[GY][GX]*/;
+	return map[GY][GX] || buildingMap[GY][GX];
 }
 
 void World::OnShow() {

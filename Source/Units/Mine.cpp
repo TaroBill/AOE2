@@ -9,6 +9,8 @@ namespace Unit
 		AddComponent(n);
 		entityType = EntityTypes::GoldMine;
 		SetBitmap();
+		World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+
 	}
 
 	Mine::Mine(int x, int y, ResourceType rt) : Entity(x, y)
@@ -17,6 +19,8 @@ namespace Unit
 		AddComponent(n);
 		entityType = EntityTypes::GoldMine;
 		SetBitmap();
+		World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+
 	}
 
 
@@ -38,6 +42,7 @@ namespace Unit
 
 	Mine::~Mine()
 	{
+		World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 0;
 		TRACE("~Mine\n");
 	}
 
