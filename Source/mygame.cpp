@@ -105,16 +105,39 @@ namespace game_framework {
 
 	void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
-		const char KEY_ESC = 27;
-		const char KEY_SPACE = ' ';
-		if (nChar == KEY_SPACE) {
-			//TRACE("TEST\n");
+		if (GUI::getInstance()->isTyping) {
+			if (nChar >= 96 && nChar <= 105) {
+				char strInt[2];
+				sprintf(strInt, "%d", nChar - 96);
+				GUI::getInstance()->ip += strInt;
+			}
+			else if (nChar >= 48 && nChar <= 57) {
+				char strInt[2];
+				sprintf(strInt, "%d", nChar - 48);
+				GUI::getInstance()->ip += strInt;
+			}
+			else if (nChar == 190 || nChar == 110) {
+				GUI::getInstance()->ip += ".";
+			}
+			else if (nChar == 8) {
+				if(!GUI::getInstance()->ip.empty())
+					GUI::getInstance()->ip.pop_back();
+			}
+		}
+		TRACE("%d\n", nChar);
+		if (nChar == 80) {
+			game_framework::CGame::Instance()->SetGameState(GAME_STATES::GAME_STATE_RUN);
 		}
 	}
 
 	void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		GUI::getInstance()->triggerOnClicked(point);
+	}
+
+	void CGameStateInit::OnRButtonDown(UINT nFlags, CPoint point)
+	{
+		GUI::getInstance()->loadMainMenu();
 	}
 
 	void CGameStateInit::OnMouseMove(UINT nFlags, CPoint point) {
@@ -130,6 +153,20 @@ namespace game_framework {
 		logo.ShowBitmap();
 
 		GUI::getInstance()->onShow();
+		if (GUI::getInstance()->isTyping) {
+			CDC* pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
+			CFont f, * fp;
+			f.CreatePointFont(160, "Times New Roman");	// 產生 font f; 160表示16 point的字
+			fp = pDC->SelectObject(&f);					// 選用 font f
+			pDC->SetBkColor(RGB(255, 255, 255));
+			pDC->SetTextColor(RGB(0, 0, 0));
+			char* output = new char[GUI::getInstance()->ip.length() + 1];
+			strcpy(output, GUI::getInstance()->ip.c_str());
+			pDC->TextOut(950, 560, output);
+			pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
+			CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
+			delete[] output;
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////

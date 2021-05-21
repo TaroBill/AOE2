@@ -29,6 +29,11 @@
     <ClCompile Include="Source\GUI\Frames\StartMenuFrame.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Frames\ServerFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -70,6 +75,11 @@
     <ClInclude Include="Source\GUI\Frames\StartMenuFrame.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
+    <ClInclude Include="Source\GUI\Frames\ServerFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\IPFrame.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -230,6 +240,8 @@
     <Image Include="RES\Button_Icon\ButtonMultiGame.bmp" />
     <Image Include="RES\Button_Icon\StartMenuButtonLong.bmp" />
     <Image Include="RES\Button_Icon\StartMenuButtonShort.bmp" />
+    <Image Include="RES\ServerFrame.bmp" />
+    <Image Include="RES\IP.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

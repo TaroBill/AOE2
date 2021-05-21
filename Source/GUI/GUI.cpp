@@ -11,7 +11,8 @@ GUI* GUI::getInstance() {
 
 
 GUI::GUI() {
-
+	isTyping = false;
+	ip = "";
 }
 
 GUI::~GUI() {
@@ -67,6 +68,10 @@ void GUI::triggerOnClicked(CPoint p) {
 		if (frames[i]->isInFrame(p))
 			frames[i]->onClicked(p);
 	}
+}
+
+void GUI::addFrame(Frame* frame) {
+	frames.push_back(frame);
 }
 
 void GUI::loadMainMenu() {

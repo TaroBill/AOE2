@@ -1,6 +1,7 @@
 #include "StartMenu_MulitGame_Button.h"
 #include "../GUI.h"
 #include "../../socket/NetWork.h"
+#include "../Frames/ServerFrame.h"
 
 
 MultiGameButton::MultiGameButton() : Button(400, 190, 240, 165, true)
@@ -17,10 +18,10 @@ void MultiGameButton::loadBitmap() {
 }
 
 void MultiGameButton::onClicked() {
-	NetWork::getInstance()->createServer();
-	//AfxMessageBox(_T("已創建伺服器"));	//這行會觸發BUG
-	NetWork::getInstance()->play();
-	game_framework::CGame::Instance()->SetGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
+	/*NetWork::getInstance()->play();
+	game_framework::CGame::Instance()->SetGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN*/
+	Frame* f = new ServerFrame();
+	GUI::getInstance()->addFrame(f);
 }
 
 void MultiGameButton::OnShow() {

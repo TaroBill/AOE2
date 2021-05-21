@@ -16,7 +16,7 @@ public:
     NetWork();
     ~NetWork();
     void createServer();
-    void ConnectToServer();
+    void ConnectToServer(string ip);
     void OnAccept();
     void OnReceive();
     void play();
@@ -29,5 +29,6 @@ private:
     static NetWork instance;
     bool isOpened;
     bool isPlaying;
+    bool isCreated;
     bool isConnectedToClient;
 };

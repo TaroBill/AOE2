@@ -21,7 +21,10 @@ public:
 	void loadInGameGUI();
 	void loadMainMenu();
 	void freeFrames();
+	void addFrame(Frame* frame);
 	vector<Frame*> frames;
+	bool isTyping;
+	string ip;
 private:
 	static GUI instance;
 
