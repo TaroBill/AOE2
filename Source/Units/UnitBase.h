@@ -60,20 +60,7 @@ namespace Unit
 			_components.push_back(n);
 			n->SetParent(this);
 		}
-		//刪除指定的同型別組件
-		//RemoveComponent<組件型別>()
-		template<typename T>
-		bool RemoveComponent()
-		{
-			for (unsigned int i = 0; i < _components.size(); i++)
-				if (dynamic_cast<T*>(_components.at(i)))
-				{
-					//做錯了，應該用erase直接刪除
-					_components.pop_back();
-					return true;
-				}
-			return false;
-		}
+
 
 		void RemoveComponents(vector<UnitBase*> components)
 		{
@@ -87,10 +74,16 @@ namespace Unit
 			}
 			components.clear();
 		}
-		void RemoveComponents()
+		template<typename T>
+		bool IsContains()
 		{
 
+			for (unsigned int i = 0; i < _components.size(); i++)
+				if (dynamic_cast<T*>(_components.at(i)))
+					return true;
+			return false;
 		}
+
 		template<typename T>
 		T* GetParent()
 		{

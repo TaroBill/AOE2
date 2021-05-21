@@ -383,7 +383,7 @@ void Unit::Navigator::AStar()
 				break;
 			}
 		}
-
+		
 
 
 		if (cp == targetTile)//¨ì¤F
@@ -467,6 +467,7 @@ void Unit::Navigator::FindPath(CPoint targetP, vector<Entity*> entityList)
 	for (size_t i = 0; i < entityList.size(); i++)
 	{
 		if (entityList.at(i)->ID != GetParent<Entity>()->ID&&
+			entityList.at(i)->IsContains<Navigator>()&&
 			entityList.at(i)->GetComponent<Navigator>()->targetPoint == targetPoint)
 		{
 			targetP.x += (entityList.at(i)->size.x + GetParent<Entity>()->size.x)/2;
