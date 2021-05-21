@@ -23,15 +23,20 @@ namespace Unit
 		{
 			entityType = EntityTypes::TownCenter;
 			SetBitmap();
+			World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+
 		}
 		TownCenter(CPoint point) :Entity(point)
 		{
 			entityType = EntityTypes::TownCenter;
 			SetBitmap();
+			World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+
 		}
 		TownCenter()
 		{
 			SetBitmap();
+			World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 0;
 		}
 	};
 }
