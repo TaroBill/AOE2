@@ -462,8 +462,19 @@ void Unit::Navigator::FindPath(CPoint targetP, vector<Entity*> entityList)
 	startTile = this->GetParent<Entity>()->GetTile();
 	pathPoints.clear();
 	pathDistances.clear();
-
 	targetP = FindNearestPoint(targetP);
+
+	for (size_t i = 0; i < entityList.size(); i++)
+	{
+		if (entityList.at(i)->ID != GetParent<Entity>()->ID&&
+			entityList.at(i)->GetComponent<Navigator>()->targetPoint == targetPoint)
+		{
+			targetP.x += (entityList.at(i)->size.x + GetParent<Entity>()->size.x)/2;
+			targetP.y += (entityList.at(i)->size.y + GetParent<Entity>()->size.y)/2;
+
+			targetP = FindNearestPoint(targetP);
+		}
+	}
 
 	this->targetPoint = targetP;
 	targetTile = Point2Tile(targetP);
