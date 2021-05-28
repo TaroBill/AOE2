@@ -26,9 +26,7 @@
     <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
     <ClCompile Include="Source\Units\Attack.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Source\Units\TownCenter.cpp" />
-=======
     <ClCompile Include="Source\GUI\Frames\StartMenuFrame.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
@@ -37,7 +35,6 @@
     <ClCompile Include="Source\GUI\Frames\ServerFrame.cpp" />
     <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
->>>>>>> origin/GUI2
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
