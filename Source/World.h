@@ -97,8 +97,16 @@ public:
 	//己方所有實體
 	vector<Unit::Entity*> unit;							
 	//系統所有資源實體
-	vector<Unit::Entity*> ResaurceUnit;					
+	vector<Unit::Entity*> ResaurceUnit;			
+	//同步敵人
 	void LoadEnemyFromStringStream(int, stringstream&);	
+	//同步自己
+	void LoadUnitFromStringStream(int, stringstream&);
+	//同步資源
+	void LoadResourceFromStringStream(int, stringstream&);
+	//包裝成stringstream送出同步
+	void packUnit(vector<Unit::Entity*>, int type);
+	//實體工廠
 	EntityFactory entityFactory;
 	//取得與實體ID相符的實體
 	Unit::Entity* getEntityByID(unsigned int ID);			

@@ -372,17 +372,101 @@ void World::spawningEntity(int bitmap) {
 void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 	int size = EnemyUnit.size() ;
 	//TRACE("Size: %d\n", amount);
-	if (amount > size) {
-		for (int i = 0; i < amount - size; i++) {
-			spawnEnemy(EntityTypes::Villager, 0, 0);
+	for (int i = 0; i < amount; i++) {
+		int ET;
+		ss >> ET;
+		switch (ET)
+		{
+		case EntityTypes::Villager:
+			dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->deSerialize(ss);
+			break;
+		case EntityTypes::TownCenter:
+			dynamic_cast<Unit::TownCenter*>(EnemyUnit.at(i))->deSerialize(ss);
+			break;
+		default:	//略過出問題的資料
+			TRACE("ERROR on update data");
+			string erase;
+			ss >> erase;
+			while (erase != "End") {
+				ss >> erase;
+			}
+			break;
 		}
 	}
-	else if (amount < size) {
-		
-	}
+}
+
+void World::LoadUnitFromStringStream(int amount, stringstream& ss) {
+	int size = unit.size();
+	//TRACE("Size: %d\n", amount);
 	for (int i = 0; i < amount; i++) {
-		dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->deSerialize(ss);
+		int ET;
+		ss >> ET;
+		switch (ET)
+		{
+		case EntityTypes::Villager:
+			dynamic_cast<Unit::Villager*>(unit.at(i))->deSerialize(ss);
+			break;
+		case EntityTypes::TownCenter:
+			dynamic_cast<Unit::TownCenter*>(unit.at(i))->deSerialize(ss);
+			break;
+		default:	//略過出問題的資料
+			TRACE("ERROR on update data");
+			string erase;
+			ss >> erase;
+			while (erase != "End") {
+				ss >> erase;
+			}
+			break;
+		}
 	}
+}
+
+void World::LoadResourceFromStringStream(int amount, stringstream& ss) {
+	int size = ResaurceUnit.size();
+	//TRACE("Size: %d\n", amount);
+	for (int i = 0; i < amount; i++) {
+		int ET;
+		ss >> ET;
+		switch (ET)
+		{
+		case EntityTypes::GoldMine:
+			dynamic_cast<Unit::Mine*>(ResaurceUnit.at(i))->deSerialize(ss);
+			break;
+		default:	//略過出問題的資料
+			TRACE("ERROR on update data");
+			string erase;
+			ss >> erase;
+			while (erase != "End") {
+				ss >> erase;
+			}
+			break;
+		}
+	}
+}
+void World::packUnit(vector<Unit::Entity*> entitys, int type) {
+	stringstream cmd2;
+	if(type == 1)
+		cmd2 << "UpdateEntity1 ";
+	else if(type == 2)
+		cmd2 << "UpdateEntity2 ";
+	else if (type ==3)
+		cmd2 << "UpdateEntity3 ";
+	cmd2 << entitys.size() << " ";
+	for (unsigned int i = 0; i < entitys.size(); i++) {
+		EntityTypes ET = entitys.at(i)->entityType;
+		switch (ET) {
+		case EntityTypes::Villager:
+			dynamic_cast<Unit::Villager*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		case EntityTypes::GoldMine:
+			dynamic_cast<Unit::Mine*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		case EntityTypes::TownCenter:
+			dynamic_cast<Unit::TownCenter*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		}
+	}
+	NetWork::getInstance()->SendData(cmd2);
 }
 
 Unit::Entity* World::getEntityByID(unsigned int ID) {

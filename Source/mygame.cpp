@@ -247,6 +247,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnBeginState()
 	{
+		sendDataCounter = 0;
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// ¼·©ñ WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// ¼·©ñ WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// ¼·©ñ MIDI*/
@@ -260,6 +261,17 @@ namespace game_framework {
 			stringstream cmd;
 			cmd << "OnMove";
 			NetWork::getInstance()->SendData(cmd);
+			sendDataCounter++;
+			if (sendDataCounter == 20) {
+				World::getInstance()->packUnit(World::getInstance()->unit, 1);
+			}
+			else if (sendDataCounter == 40) {
+				World::getInstance()->packUnit(World::getInstance()->EnemyUnit, 2);
+			}
+			if (sendDataCounter == 60) {
+				World::getInstance()->packUnit(World::getInstance()->ResaurceUnit, 3);
+				sendDataCounter = 0;
+			}
 		}
 		if (World::getInstance()->player.population == 0) {
 			GotoGameState(GAME_STATE_OVER);

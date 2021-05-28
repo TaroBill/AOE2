@@ -15,23 +15,29 @@ namespace Unit
 
 		void Serialize(stringstream &in)
 		{
+			in << "Type " << this->entityType << " ";
 			in << "HP " << this->hp << " ";
-			in << "maxHP " << this->maxHP << " ";
 			in << "PointX " << this->point.x << " ";
 			in << "PointY " << this->point.y << " ";
 			in << "ID " << this->ID << " ";
 			in << "playerID " << this->playerId << " ";
+			in << "resourceCounter " << resourceCounter << " ";
+			in << "attackCounter " << attackCounter << " ";
+			in << "End ";
+
 		}
 
 		void deSerialize(stringstream &in)
 		{
 			string erase;
 			in >> erase >> this->hp;
-			in >> erase >> this->maxHP;
 			in >> erase >> this->point.x;
 			in >> erase >> this->point.y;
 			in >> erase >> this->ID;
 			in >> erase >> this->playerId;
+			in >> erase >> this->resourceCounter;
+			in >> erase >> this->attackCounter;
+			in >> erase; //¦Y±¼End
 		}
 
 	public:

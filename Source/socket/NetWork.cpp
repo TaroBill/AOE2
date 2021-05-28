@@ -149,6 +149,21 @@ void NetWork::OnReceive() {
         else if (contain == "OnMove") {
             game_framework::CGame::Instance()->GetGameState()->NetOnMove();
         }
+        else if (contain == "UpdateEntity1") {
+            int amount;
+            ss >> amount;
+            World::getInstance()->LoadUnitFromStringStream(amount, ss);
+        }
+        else if (contain == "UpdateEntity2") {
+            int amount;
+            ss >> amount;
+            World::getInstance()->LoadEnemyFromStringStream(amount, ss);
+        }
+        else if (contain == "UpdateEntity3") {
+            int amount;
+            ss >> amount;
+            World::getInstance()->LoadResourceFromStringStream(amount, ss);
+        }
     }
     delete [] pBuf;
 
