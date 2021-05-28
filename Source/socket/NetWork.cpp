@@ -146,6 +146,9 @@ void NetWork::OnReceive() {
         else if (contain == "StartGame") {// command = StartGame
             game_framework::CGame::Instance()->SetGameState(GAME_STATE_RUN);
         }
+        else if (contain == "OnMove") {
+            game_framework::CGame::Instance()->GetGameState()->NetOnMove();
+        }
     }
     delete [] pBuf;
 

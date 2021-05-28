@@ -23,6 +23,7 @@ public:
     void pause();
     void SendData(stringstream& command);
     bool isServer();
+    bool isConnectedToClient;
     ServerSocket cserversocket;
     ClientSocket clientsocket;
 private:
@@ -30,5 +31,4 @@ private:
     bool isOpened;
     bool isPlaying;
     bool isCreated;
-    bool isConnectedToClient;
 };

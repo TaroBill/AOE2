@@ -181,6 +181,11 @@ namespace game_framework {
 
 	void CGameStateOver::OnMove()
 	{
+		if(NetWork::getInstance()->isServer()){
+			stringstream cmd;
+			cmd << "OnMove";
+			NetWork::getInstance()->SendData(cmd);
+		}
 		GUI::getInstance()->onMove();
 		counter--;
 		if (counter < 0)
@@ -251,6 +256,11 @@ namespace game_framework {
 
 	void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	{
+		if (NetWork::getInstance()->isServer()) {
+			stringstream cmd;
+			cmd << "OnMove";
+			NetWork::getInstance()->SendData(cmd);
+		}
 		if (World::getInstance()->player.population == 0) {
 			GotoGameState(GAME_STATE_OVER);
 			stringstream ss;

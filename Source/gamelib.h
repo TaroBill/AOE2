@@ -285,6 +285,7 @@ public:
 	CGameState(CGame *g);
 	void OnDraw();			// Template Method
 	void OnCycle();			// Template Method
+	void NetOnMove();			//NetWork用觸發OnMove
 	//
 	// virtual functions, 由繼承者提供implementation
 	//
@@ -336,6 +337,7 @@ public:
 	void OnSetFocus();								// 處理Focus
 	void OnSuspend();								// 處理「待命」的動作
 	void SetGameState(int);
+	CGameState* GetGameState();
 	static CGame *Instance();
 
 private:

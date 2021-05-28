@@ -124,6 +124,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
+#include "socket/NetWork.h"
 
 namespace game_framework {
 
@@ -481,8 +482,14 @@ void CGameState::OnDraw() // Template Method
 
 void CGameState::OnCycle() // Template Method
 {
-	OnMove();
+	if(!NetWork::getInstance()->isConnectedToClient || NetWork::getInstance()->isServer())
+		OnMove();
 	OnShow();
+}
+
+void CGameState::NetOnMove()
+{
+	OnMove();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -492,6 +499,11 @@ void CGameState::OnCycle() // Template Method
 /////////////////////////////////////////////////////////////////////////////
 
 CGame CGame::instance;
+
+CGameState* CGame::GetGameState()
+{
+	return gameState;
+}
 
 CGame::CGame()
 : NUM_GAME_STATES(3)
