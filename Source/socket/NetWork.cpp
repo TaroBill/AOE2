@@ -11,6 +11,7 @@ NetWork::NetWork() {
     isOpened = false;
     isPlaying = false;
     isConnectedToClient = false;
+    isCreated = false;
 }
 
 NetWork::~NetWork() {
@@ -27,6 +28,9 @@ void NetWork::pause() {
 }
 
 void NetWork::createServer() {
+    if (isCreated) 
+        return;
+    isCreated = true;
     TRACE("Creating Server\n");
     if (cserversocket.Create(1234)) {
         if (!cserversocket.Listen()) {
@@ -38,14 +42,30 @@ void NetWork::createServer() {
     else {
         AfxMessageBox(_T("創建Socket失敗"));
     }
-    TRACE("Listening for Connections!!!\n");
+    AfxMessageBox("創建伺服器成功! \n正在等待連線");
     isOpened = true;
 }
 
-void NetWork::ConnectToServer() {
-    clientsocket.Create();
-    clientsocket.Connect("127.0.0.1", 1234);
-    isConnectedToClient = true;
+void NetWork::ConnectToServer(string ip) {
+    if (!isCreated) {
+        isCreated = true;
+        clientsocket.Create();
+    }
+    char* output = new char[ip.length() + 1];
+    strcpy(output, ip.c_str());
+
+    if (clientsocket.Connect(output, 1234)) {
+        isConnectedToClient = true;
+        AfxMessageBox("連線成功");
+        game_framework::CGame::Instance()->SetGameState(GAME_STATES::GAME_STATE_RUN);
+        stringstream command;
+        command << "StartGame";
+        SendData(command);
+    }
+    else {
+        AfxMessageBox("連線失敗");
+    }
+    delete[] output;
 }
 
 void NetWork::OnAccept() {
@@ -114,7 +134,7 @@ void NetWork::OnReceive() {
 
             }
         }
-        else if (contain == "killEntity") { // command = killEntity <amount> <id id id ... id>
+        else if (contain == "killEntity") { // command = killEntity id
             UINT id;
             ss >> id;//實體ID
             World::getInstance()->killByID(id);
@@ -122,6 +142,9 @@ void NetWork::OnReceive() {
         else if (contain == "EndGame") {// command = EndGame
             //TRACE("EndGame from data\n");
             game_framework::CGame::Instance()->SetGameState(GAME_STATE_OVER);
+        }
+        else if (contain == "StartGame") {// command = StartGame
+            game_framework::CGame::Instance()->SetGameState(GAME_STATE_RUN);
         }
     }
     delete [] pBuf;

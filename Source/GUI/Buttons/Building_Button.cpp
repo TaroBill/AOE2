@@ -1,4 +1,5 @@
 #include "Building_Button.h"
+#include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"
 
 
@@ -16,6 +17,6 @@ void Building_Button::loadBitmap() {
 }
 
 void Building_Button::onClicked() {
-	GUI::getInstance()->entityDataButtonFrame.LoadBuildingButtons();
+	dynamic_cast<EntityDataButtonFrame*>(GUI::getInstance()->frames.at(3))->LoadBuildingButtons();
 }
 

@@ -61,3 +61,7 @@ bool Button::isInButton(CPoint p) {
 	}
 	return false;
 }
+
+CPoint Button::getLocation() {
+	return CPoint(LocX, LocY);
+}

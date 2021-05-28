@@ -193,6 +193,14 @@
 #define IDB_GOLDICON                    430
 #define IDB_TOWN_CENTER_ICON            431
 #define IDB_TOWNCENTER_ICON             431
+#define IDB_MAINMENU                    433
+#define IDB_MULTIPLAYERGAMEBUTTON       434
+#define IDB_STARTMENUBUTTONLONG         435
+#define IDB_BITMAP131                   436
+#define IDB_STARTMENUBUTTONSHORT        436
+#define IDB_SERVERFRAME                 437
+#define IDB_BITMAP129                   438
+#define IDB_IP                          438
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -206,7 +214,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        432
+#define _APS_NEXT_RESOURCE_VALUE        439
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           101

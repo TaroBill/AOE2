@@ -1,5 +1,7 @@
 #include "World.h"
 #include "GUI/GUI.h"
+#include "socket/NetWork.h"
+#include "GUI/Frames/EntityDataFrame.h"
 World* World::getInstance()
 {
 	return &instance;
@@ -436,7 +438,7 @@ void World::killByID(UINT ID) {
 		}
 	}
 
-	GUI::getInstance()->entityDataFrame.loadEntitysBitmap(World::getInstance()->LE);
+	dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->loadEntitysBitmap(World::getInstance()->LE);
 
 
 	for (unsigned int i = 0; i < unit.size(); i++) {
@@ -483,15 +485,18 @@ void World::killByID(UINT ID) {
 }
 
 void World::initWorld() {
-	//debug mode
-	/*spawnEnemy(EntityTypes::Villager, 3100, 2900);
-	spawnEnemy(EntityTypes::Villager, 3150, 2900);
-	spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
-	spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
-	spawn(EntityTypes::Villager, 3000, 3000);
-	spawn(EntityTypes::TownCenter, 3800, 3300);
-	return;*/
-	//end debug mode
+	for (unsigned int i = 0; i < unit.size(); i++) {
+		delete unit[i];
+	}
+	unit.clear();
+	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+		delete EnemyUnit[i];
+	}
+	EnemyUnit.clear();
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		delete ResaurceUnit[i];
+	}
+	ResaurceUnit.clear();
 	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
 		spawn(EntityTypes::Villager, 2900, 3000);
 		spawn(EntityTypes::TownCenter, 3800, 3300);

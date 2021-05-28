@@ -2,12 +2,14 @@
 
 EntityDataButtonFrame::EntityDataButtonFrame() : Frame(0, SIZE_Y - 240, 240, 300)
 {
+	loadBitmap();
 }
 
 EntityDataButtonFrame::~EntityDataButtonFrame()
 {
-	freeButtons();
+	
 }
+
 
 void EntityDataButtonFrame::loadBitmap() {
 	texture.LoadBitmap(IDB_BUTTONBACKGROUND);
@@ -20,14 +22,8 @@ void EntityDataButtonFrame::OnShow() {
 	}
 }
 
-void EntityDataButtonFrame::onClicked(CPoint p) {
-	//TRACE("%d\n", 0);
-	for (unsigned int i = 0; i < buttons.size(); i++) {
-		if (buttons[i]->isEnable() && buttons[i]->isInButton(p)) {
-			//TRACE("%d\n", 1);
-			buttons[i]->onClicked();
-		}
-	}
+void EntityDataButtonFrame::onMove() {
+
 }
 
 void EntityDataButtonFrame::LoadEmpty() {
@@ -43,11 +39,4 @@ void EntityDataButtonFrame::LoadVillagerButtons() {
 void EntityDataButtonFrame::LoadBuildingButtons() {
 	freeButtons();
 	buttons.push_back(new House_Button());
-}
-
-void EntityDataButtonFrame::freeButtons() {
-	for (unsigned int i = 0; i < buttons.size(); i++) {
-		delete buttons[i];
-	}
-	buttons.clear();
 }

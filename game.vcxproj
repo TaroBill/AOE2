@@ -276,11 +276,19 @@
     </ClCompile>
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
-    <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
-    <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
+    <ClCompile Include="Source\GUI\Frames\EntityDataButtonFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\EntityDataFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\ServerFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\StartMenuFrame.cpp" />
     <ClCompile Include="Source\GUI\GUI.cpp" />
-    <ClCompile Include="Source\GUI\miniMap.cpp" />
-    <ClCompile Include="Source\GUI\ResourceFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\Frames\ResourceFrame.cpp" />
     <ClCompile Include="Source\ID.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -327,12 +335,20 @@
     <ClInclude Include="Source\GUI\Buttons\Button.h" />
     <ClInclude Include="Source\GUI\Buttons\House_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Military_Button.h" />
-    <ClInclude Include="Source\GUI\EntityDataButtonFrame.h" />
-    <ClInclude Include="Source\GUI\EntityDataFrame.h" />
-    <ClInclude Include="Source\GUI\Frame.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
+    <ClInclude Include="Source\GUI\Frames\EntityDataButtonFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\EntityDataFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\Frame.h" />
+    <ClInclude Include="Source\GUI\Frames\IPFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\ServerFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\StartMenuFrame.h" />
     <ClInclude Include="Source\GUI\GUI.h" />
-    <ClInclude Include="Source\GUI\miniMap.h" />
-    <ClInclude Include="Source\GUI\ResourceFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\miniMap.h" />
+    <ClInclude Include="Source\GUI\Frames\ResourceFrame.h" />
     <ClInclude Include="Source\ID.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
@@ -368,6 +384,7 @@
     <Image Include="RES\Building\TownCenter.bmp" />
     <Image Include="RES\buttonBackGround.bmp" />
     <Image Include="RES\Button_Icon\Building.bmp" />
+    <Image Include="RES\Button_Icon\ButtonMultiGame.bmp" />
     <Image Include="RES\Button_Icon\Cancel.bmp" />
     <Image Include="RES\Button_Icon\Destroy.bmp" />
     <Image Include="RES\Button_Icon\Dock.bmp" />
@@ -379,6 +396,8 @@
     <Image Include="RES\Button_Icon\MiningCamp.bmp" />
     <Image Include="RES\Button_Icon\NextPage.bmp" />
     <Image Include="RES\Button_Icon\Repair.bmp" />
+    <Image Include="RES\Button_Icon\StartMenuButtonLong.bmp" />
+    <Image Include="RES\Button_Icon\StartMenuButtonShort.bmp" />
     <Image Include="RES\Button_Icon\Stop.bmp" />
     <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Entity_Icon\GoldIcon.bmp" />
@@ -386,6 +405,8 @@
     <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />
+    <Image Include="RES\IP.bmp" />
+    <Image Include="RES\mainMenu.bmp" />
     <Image Include="RES\map.bmp" />
     <Image Include="RES\MiniMap_Current_Location.bmp" />
     <Image Include="RES\MiniMap_Grass.bmp" />
@@ -393,6 +414,7 @@
     <Image Include="RES\MiniMap_Water.bmp" />
     <Image Include="RES\MminiMap_Human.bmp" />
     <Image Include="RES\resource.bmp" />
+    <Image Include="RES\ServerFrame.bmp" />
     <Image Include="RES\Stone_aoe2.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_0.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_1.bmp" />

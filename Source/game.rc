@@ -122,8 +122,6 @@ IDB_MINIMAP             BITMAP                  "..\\RES\\map.bmp"
 
 IDB_MiniMap_CL          BITMAP                  "..\\RES\\MiniMap_Current_Location.bmp"
 
-IDB_BITMAP3             BITMAP                  "..\\res\\bitmap3.bmp"
-
 IDB_VILLAGER000         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_0.bmp"
 
 IDB_VILLAGER001         BITMAP                  "..\\RES\\Villager\\VillagerIdle_0_1.bmp"
@@ -405,6 +403,18 @@ IDB_VILLAGERICON        BITMAP                  "..\\RES\\Entity_Icon\\VillagerI
 IDB_GOLDICON            BITMAP                  "..\\RES\\Entity_Icon\\GoldIcon.bmp"
 
 IDB_TOWNCENTER_ICON     BITMAP                  "..\\RES\\Entity_Icon\\TownCenterIcon.bmp"
+
+IDB_MAINMENU            BITMAP                  "D:\\school\\AOE2\\RES\\mainMenu.bmp"
+
+IDB_MULTIPLAYERGAMEBUTTON BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\ButtonMultiGame.bmp"
+
+IDB_STARTMENUBUTTONLONG BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\StartMenuButtonLong.bmp"
+
+IDB_STARTMENUBUTTONSHORT BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\StartMenuButtonShort.bmp"
+
+IDB_SERVERFRAME         BITMAP                  "D:\\school\\AOE2\\RES\\ServerFrame.bmp"
+
+IDB_IP                  BITMAP                  "D:\\school\\AOE2\\RES\\IP.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

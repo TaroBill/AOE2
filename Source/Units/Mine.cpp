@@ -42,8 +42,12 @@ namespace Unit
 
 	Mine::~Mine()
 	{
+<<<<<<< HEAD
 		World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 0;
 		TRACE("~Mine\n");
+=======
+		//TRACE("~Mine\n");
+>>>>>>> origin/GUI2
 	}
 
 

@@ -6,11 +6,11 @@
     <ClCompile Include="Source\gameDoc.cpp" />
     <ClCompile Include="Source\gameView.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
-    <ClCompile Include="Source\GUI\EntityDataButtonFrame.cpp" />
-    <ClCompile Include="Source\GUI\EntityDataFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\EntityDataButtonFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\EntityDataFrame.cpp" />
     <ClCompile Include="Source\GUI\GUI.cpp" />
-    <ClCompile Include="Source\GUI\miniMap.cpp" />
-    <ClCompile Include="Source\GUI\ResourceFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\miniMap.cpp" />
+    <ClCompile Include="Source\GUI\Frames\ResourceFrame.cpp" />
     <ClCompile Include="Source\MainFrm.cpp" />
     <ClCompile Include="Source\StdAfx.cpp" />
     <ClCompile Include="Source\gamelib.cpp" />
@@ -26,7 +26,18 @@
     <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
     <ClCompile Include="Source\Units\Attack.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Source\Units\TownCenter.cpp" />
+=======
+    <ClCompile Include="Source\GUI\Frames\StartMenuFrame.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
+    <ClCompile Include="Source\GUI\Frames\ServerFrame.cpp" />
+    <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
+>>>>>>> origin/GUI2
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -37,12 +48,11 @@
     <ClInclude Include="Source\GUI\Buttons\Button.h" />
     <ClInclude Include="Source\GUI\Buttons\House_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Military_Button.h" />
-    <ClInclude Include="Source\GUI\EntityDataButtonFrame.h" />
-    <ClInclude Include="Source\GUI\EntityDataFrame.h" />
-    <ClInclude Include="Source\GUI\Frame.h" />
+    <ClInclude Include="Source\GUI\Frames\EntityDataButtonFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\EntityDataFrame.h" />
     <ClInclude Include="Source\GUI\GUI.h" />
-    <ClInclude Include="Source\GUI\miniMap.h" />
-    <ClInclude Include="Source\GUI\ResourceFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\miniMap.h" />
+    <ClInclude Include="Source\GUI\Frames\ResourceFrame.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Player\GameResource.h" />
     <ClInclude Include="Source\Player\Player.h" />
@@ -65,6 +75,15 @@
     <ClInclude Include="Source\socket\ClientSocket.h" />
     <ClInclude Include="Source\ID.h" />
     <ClInclude Include="Source\Units\Attack.h" />
+    <ClInclude Include="Source\GUI\Frames\Frame.h" />
+    <ClInclude Include="Source\GUI\Frames\StartMenuFrame.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
+    <ClInclude Include="Source\GUI\Frames\ServerFrame.h" />
+    <ClInclude Include="Source\GUI\Frames\IPFrame.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -221,6 +240,12 @@
     <Image Include="RES\Building\TownCenter.bmp" />
     <Image Include="RES\Entity_Icon\GoldIcon.bmp" />
     <Image Include="RES\Entity_Icon\TownCenterIcon.bmp" />
+    <Image Include="RES\mainMenu.bmp" />
+    <Image Include="RES\Button_Icon\ButtonMultiGame.bmp" />
+    <Image Include="RES\Button_Icon\StartMenuButtonLong.bmp" />
+    <Image Include="RES\Button_Icon\StartMenuButtonShort.bmp" />
+    <Image Include="RES\ServerFrame.bmp" />
+    <Image Include="RES\IP.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />
