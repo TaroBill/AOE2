@@ -205,46 +205,50 @@ DWORD WINAPI AStarSync(LPVOID p)
 		}
 #pragma endregion
 		cp = open.at(minIndex);//起點變成有最小值f的點
-		//周圍八方向的點
-		for (int y = -1; y <= 1; y++)
+		//周圍八方向的點，四方向優先
+		CPoint pointCounterTable[8] = { 
+			CPoint(0, 1),
+			CPoint(0, -1),
+			CPoint(-1, 0),
+			CPoint(1, 0),
+			CPoint(-1, 1),
+			CPoint(1, 1),
+			CPoint(-1, -1),
+			CPoint(-1, 1)
+		};
+		for (unsigned short j = 0; j < 8; j++)
 		{
-			for (int x = -1; x <= 1; x++)
+			CPoint newPoint = (CPoint(cp.x + pointCounterTable[j].x, cp.y + pointCounterTable[j].y));
+			bool continueFlag = false;
+			for (unsigned i = 0; i < close.size(); i++)
 			{
-				if (!(y == 0 && x == 0))//非自己
+				if (close[i] == newPoint)
 				{
-					CPoint newPoint = (CPoint(cp.x + x, cp.y + y));
-					bool continueFlag = false;
-					for (unsigned i = 0; i < close.size(); i++)
-					{
-						if (close[i] == newPoint)
-						{
-							continueFlag = true;
-							break;
-						}
-					}
-					if (continueFlag)continue;
-
-					//目前到這裡的cost
-					int newGScore = gScore[cp] + 1;
-
-					//評估cost
-					int canPass = World::getInstance()->getLocationItem((newPoint).x * 50, (newPoint).y * 50);
-
-					//canPass = 1 - canPass;
-					//曼哈頓距離預測
-					int newHScore = 1000 * canPass + (abs(((threadInfo*)p)->targetTile.x - (newPoint).x) + abs(((threadInfo*)p)->targetTile.y - (newPoint).y));
-
-					int newFScore = newGScore + newHScore;
-
-
-					gScore.insert(pair<CPoint, int>(newPoint, newGScore));
-					hScore.insert(pair<CPoint, int>(newPoint, newHScore));
-					fScore.insert(pair<CPoint, int>(newPoint, newFScore));
-					open.push_back(newPoint);
-					come_from.insert(pair<CPoint, CPoint>(newPoint, cp));
-
+					continueFlag = true;
+					break;
 				}
 			}
+			if (continueFlag)continue;
+
+			//目前到這裡的cost
+			int newGScore = gScore[cp] + 1;
+
+			//評估cost
+			int canPass = World::getInstance()->getLocationItem((newPoint).x * 50, (newPoint).y * 50);
+
+			//canPass = 1 - canPass;
+			//曼哈頓距離預測
+			int newHScore = 1000 * canPass + (abs(((threadInfo*)p)->targetTile.x - (newPoint).x) + abs(((threadInfo*)p)->targetTile.y - (newPoint).y));
+
+			int newFScore = newGScore + newHScore;
+
+
+			gScore.insert(pair<CPoint, int>(newPoint, newGScore));
+			hScore.insert(pair<CPoint, int>(newPoint, newHScore));
+			fScore.insert(pair<CPoint, int>(newPoint, newFScore));
+			open.push_back(newPoint);
+			come_from.insert(pair<CPoint, CPoint>(newPoint, cp));
+
 		}
 		//cp加入close list
 		close.push_back(cp);
@@ -434,20 +438,23 @@ CPoint Unit::Navigator::FindNearestPoint(CPoint targetP)
 		short step = 50;
 		unsigned short counter = 0;
 		unsigned short counterMax = SHORT_MAX / step * 2;
-		CPoint pointCounterTable[4] = {
-		 CPoint(0, -1),
-		 CPoint(-1, 0),
-		 CPoint(1, 0) ,
-		 CPoint(0, 1)
+		CPoint pointCounterTable[8] = {
+			CPoint(0, 1),
+			CPoint(0, -1),
+			CPoint(-1, 0),
+			CPoint(1, 0),
+			CPoint(-1, 1),
+			CPoint(1, 1),
+			CPoint(-1, -1),
+			CPoint(-1, 1)
 		};
-	
 		//上下左右
 		while (!openPoints.empty())
 		{
 			current = openPoints.front();
 			closePoints.push_back(current);
 			openPoints.pop();
-			for (short i = 0; i < 4; i++)
+			for (short i = 0; i < 8; i++)
 			{
 
 				CPoint newCurrent = current + CPoint( pointCounterTable[i].x*step, pointCounterTable[i].y*step);
