@@ -370,22 +370,21 @@ void World::spawningEntity(int bitmap) {
 }
 
 void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
-	int size = EnemyUnit.size() ;
+	int size = EnemyUnit.size();
 	//TRACE("Size: %d\n", amount);
 	for (int i = 0; i < amount; i++) {
+		string erase;
 		int ET;
-		ss >> ET;
-		switch (ET)
-		{
-		case EntityTypes::Villager:
+		ss >> erase >> ET;
+		if (ET == static_cast<int>(EntityTypes::Villager)) {
 			dynamic_cast<Unit::Villager*>(EnemyUnit.at(i))->deSerialize(ss);
-			break;
-		case EntityTypes::TownCenter:
+		}
+		else if (ET == static_cast<int>(EntityTypes::TownCenter)) {
 			dynamic_cast<Unit::TownCenter*>(EnemyUnit.at(i))->deSerialize(ss);
-			break;
-		default:	//略過出問題的資料
-			TRACE("ERROR on update data");
-			string erase;
+		}
+		else {	//略過出問題的資料
+			TRACE("ERROR on update Enemy");
+			TRACE("ET = %d, %s\n", ET, ss.str().c_str());
 			ss >> erase;
 			while (erase != "End") {
 				ss >> erase;
@@ -397,25 +396,26 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 
 void World::LoadUnitFromStringStream(int amount, stringstream& ss) {
 	int size = unit.size();
-	//TRACE("Size: %d\n", amount);
+	TRACE("Size: %d %d\n", amount, size);
 	for (int i = 0; i < amount; i++) {
+		string erase;
 		int ET;
+		ss >> erase;
+		TRACE("erase: %s\n", erase.c_str());
 		ss >> ET;
-		switch (ET)
-		{
-		case EntityTypes::Villager:
+		TRACE("ER: %d\n", ET);
+		if (ET == static_cast<int>(EntityTypes::Villager)) {
 			dynamic_cast<Unit::Villager*>(unit.at(i))->deSerialize(ss);
-			break;
-		case EntityTypes::TownCenter:
+		}
+		else if (ET == static_cast<int>(EntityTypes::TownCenter)) {
 			dynamic_cast<Unit::TownCenter*>(unit.at(i))->deSerialize(ss);
-			break;
-		default:	//略過出問題的資料
-			TRACE("ERROR on update data");
-			string erase;
+		}
+		else {//略過出問題的資料
+			TRACE("ERROR on update Unit");
 			ss >> erase;
-			while (erase != "End") {
-				ss >> erase;
-			}
+			TRACE("ET = %d, %s\n", ET, erase.c_str());
+			ss >> erase;
+			TRACE("erase: %s\n", erase.c_str());
 			break;
 		}
 	}
@@ -425,16 +425,15 @@ void World::LoadResourceFromStringStream(int amount, stringstream& ss) {
 	int size = ResaurceUnit.size();
 	//TRACE("Size: %d\n", amount);
 	for (int i = 0; i < amount; i++) {
+		string erase;
 		int ET;
-		ss >> ET;
-		switch (ET)
-		{
-		case EntityTypes::GoldMine:
+		ss >> erase >> ET;
+		if (ET == static_cast<int>(EntityTypes::GoldMine)) {
 			dynamic_cast<Unit::Mine*>(ResaurceUnit.at(i))->deSerialize(ss);
-			break;
-		default:	//略過出問題的資料
-			TRACE("ERROR on update data");
-			string erase;
+		}
+		else {	//略過出問題的資料
+			TRACE("ERROR on update Resource");
+			TRACE("ET = %d, %s\n", ET, ss.str().c_str());
 			ss >> erase;
 			while (erase != "End") {
 				ss >> erase;
@@ -452,6 +451,7 @@ void World::packUnit(vector<Unit::Entity*> entitys, int type) {
 	else if (type ==3)
 		cmd2 << "UpdateEntity3 ";
 	cmd2 << entitys.size() << " ";
+	//TRACE("%s\n", cmd2.str().c_str());
 	for (unsigned int i = 0; i < entitys.size(); i++) {
 		EntityTypes ET = entitys.at(i)->entityType;
 		switch (ET) {

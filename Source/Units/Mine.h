@@ -7,6 +7,7 @@
 #include "../gamelib.h"
 #include "../Units/Entity.h"
 #include "./Gatherable.h"
+#include <sstream>
 namespace Unit
 {
 	class Mine :public Entity
@@ -17,7 +18,7 @@ namespace Unit
 			in << "Type " << this->entityType << " ";
 			in << "ID " << this->ID << " ";
 			in << "playerID " << this->playerId << " ";
-			in << "remainAmount" << remainAmount;
+			in << "remainAmount " << remainAmount << " ";
 			in << "End ";
 		}
 

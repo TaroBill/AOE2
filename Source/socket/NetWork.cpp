@@ -100,7 +100,7 @@ void NetWork::OnReceive() {
     {
         //pBuf[iLen] = NULL;
         strData = pBuf;
-        //TRACE("%s\n", pBuf);
+        TRACE("%s\n", pBuf);
         ss << strData;
         ss >> contain;
         if (contain == "spawn") {// command = spawn EntityTypes x y
@@ -152,12 +152,13 @@ void NetWork::OnReceive() {
         else if (contain == "UpdateEntity1") {
             int amount;
             ss >> amount;
-            World::getInstance()->LoadUnitFromStringStream(amount, ss);
+            TRACE("amount %d\n", amount);
+            World::getInstance()->LoadEnemyFromStringStream(amount, ss);
         }
         else if (contain == "UpdateEntity2") {
             int amount;
             ss >> amount;
-            World::getInstance()->LoadEnemyFromStringStream(amount, ss);
+            World::getInstance()->LoadUnitFromStringStream(amount, ss);
         }
         else if (contain == "UpdateEntity3") {
             int amount;

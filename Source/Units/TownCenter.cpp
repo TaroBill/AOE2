@@ -15,7 +15,6 @@ void Unit::TownCenter::onMove()
 }
 Unit::TownCenter::TownCenter(int pointX, int pointY) :Entity(pointX, pointY)
 {
-	entityType = EntityTypes::TownCenter;
 	SetBitmap();
 	World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
 	this->entityType = EntityTypes::TownCenter;
@@ -23,7 +22,6 @@ Unit::TownCenter::TownCenter(int pointX, int pointY) :Entity(pointX, pointY)
 }
 Unit::TownCenter::TownCenter(CPoint point) :Entity(point)
 {
-	entityType = EntityTypes::TownCenter;
 	SetBitmap();
 	World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
 	this->entityType = EntityTypes::TownCenter;

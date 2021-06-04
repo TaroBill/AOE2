@@ -20,7 +20,7 @@ namespace Unit
 			in << "PointX " << this->point.x << " ";
 			in << "PointY " << this->point.y << " ";
 			in << "ID " << this->ID << " ";
-			in << "playerID " << this->playerId << " ";
+			in << "playerID " << (1 - this->playerId) << " ";
 			in << "resourceCounter " << resourceCounter << " ";
 			in << "attackCounter " << attackCounter << " ";
 			in << "End ";

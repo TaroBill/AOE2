@@ -262,13 +262,13 @@ namespace game_framework {
 			cmd << "OnMove";
 			NetWork::getInstance()->SendData(cmd);
 			sendDataCounter++;
-			if (sendDataCounter == 20) {
+			if (sendDataCounter == 30) {
 				World::getInstance()->packUnit(World::getInstance()->unit, 1);
 			}
-			else if (sendDataCounter == 40) {
+			else if (sendDataCounter == 60) {
 				World::getInstance()->packUnit(World::getInstance()->EnemyUnit, 2);
 			}
-			if (sendDataCounter == 60) {
+			if (sendDataCounter == 90) {
 				World::getInstance()->packUnit(World::getInstance()->ResaurceUnit, 3);
 				sendDataCounter = 0;
 			}

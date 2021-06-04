@@ -388,8 +388,14 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 	entityType = EntityTypes::Villager;
 	SetBitmap();
 }
-Unit::Villager::Villager()
+Unit::Villager::Villager() :Entity(0, 0)
 {
+	AddComponent<Navigator>();
+	AddComponent<Attack>(10, 20);
+	carryLimit = 10;
+	maxHP = 100;
+	resourceCounter = 0;
+	entityType = EntityTypes::Villager;
 	SetBitmap();
 }
 Unit::Villager::~Villager()

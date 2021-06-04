@@ -12,7 +12,7 @@ namespace Unit
 			in << "Type " << this->entityType << " ";
 			in << "HP " << this->hp << " ";
 			in << "ID " << this->ID << " ";
-			in << "playerID " << this->playerId << " ";
+			in << "playerID " << (1 - this->playerId) << " ";
 			in << "End ";
 
 		}
