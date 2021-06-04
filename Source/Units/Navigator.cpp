@@ -185,6 +185,18 @@ DWORD WINAPI AStarSync(LPVOID p)
 	fScore.insert(std::pair<CPoint, int>(cp, 0));
 	hScore.insert(std::pair<CPoint, int>(cp, 0));
 	gScore.insert(std::pair<CPoint, int>(cp, 0));
+	
+	CPoint pointCounterTable[9] = {
+		CPoint(-1,-1),
+		CPoint(0,-1),
+		CPoint(1,-1),
+		CPoint(-1,0),
+		CPoint(0,0),
+		CPoint(1,0),
+		CPoint(-1,1),
+		CPoint(0,1),
+		CPoint(1,1)
+	};
 
 
 	while (open.size() > 0)
@@ -206,17 +218,8 @@ DWORD WINAPI AStarSync(LPVOID p)
 #pragma endregion
 		cp = open.at(minIndex);//起點變成有最小值f的點
 		//周圍八方向的點，四方向優先
-		CPoint pointCounterTable[8] = { 
-			CPoint(0, 1),
-			CPoint(0, -1),
-			CPoint(-1, 0),
-			CPoint(1, 0),
-			CPoint(-1, 1),
-			CPoint(1, 1),
-			CPoint(-1, -1),
-			CPoint(-1, 1)
-		};
-		for (unsigned short j = 0; j < 8; j++)
+
+		for (unsigned short j = 0; j < 9; j++)
 		{
 			CPoint newPoint = (CPoint(cp.x + pointCounterTable[j].x, cp.y + pointCounterTable[j].y));
 			bool continueFlag = false;
