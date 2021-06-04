@@ -370,7 +370,7 @@ void Unit::Villager::onMove()
 Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 {
 	AddComponent<Navigator>();
-	AddComponent<Attack>(10,20);
+	AddComponent<Attack>(10,70);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;
@@ -381,7 +381,7 @@ Unit::Villager::Villager(int pointX, int pointY) :Entity(pointX, pointY)
 Unit::Villager::Villager(CPoint point) :Entity(point)
 {
 	AddComponent<Navigator>();
-	AddComponent<Attack>(10, 20);
+	AddComponent<Attack>(10, 70);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;
@@ -391,7 +391,7 @@ Unit::Villager::Villager(CPoint point) :Entity(point)
 Unit::Villager::Villager() :Entity(0, 0)
 {
 	AddComponent<Navigator>();
-	AddComponent<Attack>(10, 20);
+	AddComponent<Attack>(10, 70);
 	carryLimit = 10;
 	maxHP = 100;
 	resourceCounter = 0;

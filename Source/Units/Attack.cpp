@@ -4,7 +4,7 @@
 #include "../World.h"
 
 Unit::Attack::Attack() {
-	Range = 20;
+	Range = 50;
 	Damage = 10;
 }
 
