@@ -280,6 +280,7 @@
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataButtonFrame.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataFrame.cpp" />
@@ -339,6 +340,7 @@
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataButtonFrame.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataFrame.h" />
