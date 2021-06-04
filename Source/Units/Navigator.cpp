@@ -7,7 +7,7 @@
 #include "Entity.h"
 #include "../World.h"
 #include <memory> 
-
+#include <queue>
 using namespace std;
 #pragma region Utility
 //point2tile
@@ -427,27 +427,81 @@ CPoint Unit::Navigator::FindNearestPoint(CPoint targetP)
 	int isObstacle = World::getInstance()->getLocationItem(targetP.x, targetP.y);
 	if (isObstacle)//障礙
 	{
-		//找直線
-		float v[2] = { 0,0 };
-		Normalization(targetP, startPoint, v);
-		int counter = 0;
-		float counterX = 0, counterY = 0;
-		while (World::getInstance()->getLocationItem(targetP.x, targetP.y))
+		queue<CPoint> openPoints;
+		vector<CPoint> closePoints;
+		openPoints.push(targetP);
+		CPoint current;
+		short step = 50;
+		unsigned short counter = 0;
+		unsigned short counterMax = SHORT_MAX / step * 2;
+		CPoint pointCounterTable[4] = {
+		 CPoint(0, -1),
+		 CPoint(-1, 0),
+		 CPoint(1, 0) ,
+		 CPoint(0, 1)
+		};
+	
+		//上下左右
+		while (!openPoints.empty())
 		{
-			counterX += v[0];
-			counterY += v[1];
-			targetP.x += static_cast<int>(counterX);
-			targetP.y += static_cast<int>(counterY);
-			counterX -= static_cast<int>(counterX);
-			counterY -= static_cast<int>(counterY);
-			counter++;
-			if (counter >= 5000)
+			current = openPoints.front();
+			closePoints.push_back(current);
+			openPoints.pop();
+			for (short i = 0; i < 4; i++)
 			{
-				return startPoint;
+
+				CPoint newCurrent = current + CPoint( pointCounterTable[i].x*step, pointCounterTable[i].y*step);
+				bool isInCloseList = false;
+				if (!World::getInstance()->getLocationItem(newCurrent.x, newCurrent.y))
+				{
+					return newCurrent;
+				}
+				for (size_t j = 0; j < closePoints.size(); j++)
+				{
+					if (closePoints.at(j) == newCurrent)
+					{
+						isInCloseList = true;
+						break;
+					}
+				}
+				if (!isInCloseList)
+				{
+					openPoints.push(newCurrent);
+				}
+
+			}
+			counter++;
+			if (counter >= counterMax)
+			{
+				TRACE("耗時過久，改使用低耗時演算法\n");
+				//找直線
+				float v[2] = { 0,0 };
+				Normalization(targetP, startPoint, v);
+				counter = 0;
+				float counterX = 0, counterY = 0;
+				while (World::getInstance()->getLocationItem(targetP.x, targetP.y))
+				{
+					counterX += v[0];
+					counterY += v[1];
+					targetP.x += static_cast<int>(counterX);
+					targetP.y += static_cast<int>(counterY);
+					counterX -= static_cast<int>(counterX);
+					counterY -= static_cast<int>(counterY);
+					counter++;
+					if (counter >= counterMax)
+					{
+						TRACE("沒找到更近的了，回傳原點\n");
+						return startPoint;
+					}
+				}
+
+				return targetP;
+
 			}
 		}
+		TRACE("沒找到更近的了，回傳原點\n");
+		return startPoint;
 
-		return targetP;
 	}
 	else//非障礙
 	{
@@ -487,22 +541,23 @@ void Unit::Navigator::FindPath(CPoint targetP, vector<Entity*> entityList)
 }
 
 //開始尋路
-void Unit::Navigator::FindPath(CPoint targrtP)
+void Unit::Navigator::FindPath(CPoint targetP)
 {
-	int canPass = World::getInstance()->getLocationItem(targrtP.x, targrtP.y);
+	int canPass = World::getInstance()->getLocationItem(targetP.x, targetP.y);
 
-	if (canPass)
-	{
-		TRACE("Find Path Fail\n");
-		return;
-	}
+
 
 	startPoint = this->GetParent<Entity>()->point;
 	startTile = this->GetParent<Entity>()->GetTile();
 	pathPoints.clear();
 	pathDistances.clear();
-	this->targetPoint = targrtP;
-	targetTile = Point2Tile(targrtP);
+	this->targetPoint = targetP;
+	targetTile = Point2Tile(targetP);
+	
+	targetP = FindNearestPoint(targetP);
+
+	this->targetPoint = targetP;
+	targetTile = Point2Tile(targetP);
 
 	Info = threadInfo();
 	Info.pathDistance.clear();
@@ -522,6 +577,9 @@ void Unit::Navigator::FindPath(CPoint targrtP)
 }
 Unit::Navigator::Navigator()
 {
+
+
+
 	speedFixed = 5;
 	targetPoint = CPoint(0, 0);
 	targetTile = CPoint(0, 0);
