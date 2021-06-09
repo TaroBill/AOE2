@@ -18,6 +18,10 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
 		entity = new Unit::TownCenter(p);
 		World::getInstance()->buildingMap[(int)(p.y / 50)][(int)(p.x / 50)] = 1;
 		break;
+    case EntityTypes::Stone:
+        entity = new Unit::Stone(p, ResourceType::Stone);
+        World::getInstance()->buildingMap[(int)(p.y / 50)][(int)(p.x / 50)] = 1;
+        break;
     default:
         break;
     }
@@ -32,13 +36,17 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, int x, int y) {
         entity = new Unit::Villager(x, y);
         break;
     case EntityTypes::GoldMine:
-        entity = new Unit::Mine(CPoint(x, y), ResourceType::Gold);
+        entity = new Unit::Mine(x, y, ResourceType::Gold);
         World::getInstance()->buildingMap[(int)(y / 50)][(int)(x / 50)] = 1;
 		break;
 	case EntityTypes::TownCenter:
 		entity = new Unit::TownCenter(x,y);
-		World::getInstance()->buildingMap[(int)(x / 50)][(int)(x / 50)] = 1;
+		World::getInstance()->buildingMap[(int)(y / 50)][(int)(x / 50)] = 1;
 		break;
+    case EntityTypes::Stone:
+        entity = new Unit::Stone(x, y, ResourceType::Stone);
+        World::getInstance()->buildingMap[(int)(y / 50)][(int)(x / 50)] = 1;
+        break;
     default:
         break;
     }

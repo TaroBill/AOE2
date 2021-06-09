@@ -404,17 +404,19 @@ IDB_GOLDICON            BITMAP                  "..\\RES\\Entity_Icon\\GoldIcon.
 
 IDB_TOWNCENTER_ICON     BITMAP                  "..\\RES\\Entity_Icon\\TownCenterIcon.bmp"
 
-IDB_MAINMENU            BITMAP                  "D:\\school\\AOE2\\RES\\mainMenu.bmp"
+IDB_MAINMENU            BITMAP                  "..\\RES\\mainMenu.bmp"
 
-IDB_MULTIPLAYERGAMEBUTTON BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\ButtonMultiGame.bmp"
+IDB_MULTIPLAYERGAMEBUTTON BITMAP                  "..\\RES\\Button_Icon\\ButtonMultiGame.bmp"
 
-IDB_STARTMENUBUTTONLONG BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\StartMenuButtonLong.bmp"
+IDB_STARTMENUBUTTONLONG BITMAP                  "..\\RES\\Button_Icon\\StartMenuButtonLong.bmp"
 
-IDB_STARTMENUBUTTONSHORT BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\StartMenuButtonShort.bmp"
+IDB_STARTMENUBUTTONSHORT BITMAP                  "..\\RES\\Button_Icon\\StartMenuButtonShort.bmp"
 
-IDB_SERVERFRAME         BITMAP                  "D:\\school\\AOE2\\RES\\ServerFrame.bmp"
+IDB_SERVERFRAME         BITMAP                  "..\\RES\\ServerFrame.bmp"
 
-IDB_IP                  BITMAP                  "D:\\school\\AOE2\\RES\\IP.bmp"
+IDB_IP                  BITMAP                  "..\\RES\\IP.bmp"
+
+IDB_STONE_ICON          BITMAP                  "..\\RES\\Entity_Icon\\StoneIcon.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

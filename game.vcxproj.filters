@@ -36,6 +36,7 @@
     <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
+    <ClCompile Include="Source\Units\Stone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="Source\GUI\Frames\IPFrame.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.h" />
+    <ClInclude Include="Source\Units\Stone.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -245,6 +247,7 @@
     <Image Include="RES\Button_Icon\StartMenuButtonShort.bmp" />
     <Image Include="RES\ServerFrame.bmp" />
     <Image Include="RES\IP.bmp" />
+    <Image Include="RES\Entity_Icon\StoneIcon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

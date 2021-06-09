@@ -6,7 +6,8 @@
 enum EntityTypes {
 	Villager = 100000,
 	GoldMine,
-	TownCenter
+	TownCenter,
+	Stone
 };
 
 namespace Unit
