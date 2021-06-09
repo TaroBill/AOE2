@@ -1,6 +1,7 @@
 #include "StartMenuFrame.h"
 #include "../Buttons/StartMenu_Leave_Button.h"
 #include "../Buttons/StartMenu_MulitGame_Button.h"
+#include "../Buttons/StartMenu_MapEditor_Button.h"
 
 StartMenuFrame::StartMenuFrame() : Frame(0, 0, 1920, 1080)
 {
@@ -32,4 +33,5 @@ void StartMenuFrame::LoadButtons() {
 	freeButtons();
 	buttons.push_back(new MultiGameButton());
 	buttons.push_back(new LeaveButton());
+	buttons.push_back(new MapEditorButton());
 }

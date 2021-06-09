@@ -30,5 +30,6 @@ namespace Unit
 		TownCenter(int pointX, int pointY);
 		TownCenter(CPoint point);
 		TownCenter();
+		~TownCenter();
 	};
 }

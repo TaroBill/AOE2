@@ -8,6 +8,7 @@
 #include <Vector>
 #include "Villager.h"
 #include "Mine.h"
+#include "Stone.h"
 
 class EntityFactory {
 public:

@@ -280,6 +280,7 @@
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataButtonFrame.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataFrame.cpp" />
@@ -322,6 +323,7 @@
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
+    <ClCompile Include="Source\Units\Stone.cpp" />
     <ClCompile Include="Source\Units\TownCenter.cpp" />
     <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\World.cpp" />
@@ -339,6 +341,7 @@
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataButtonFrame.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataFrame.h" />
@@ -367,6 +370,7 @@
     <ClInclude Include="Source\Units\Gatherable.h" />
     <ClInclude Include="Source\Units\Mine.h" />
     <ClInclude Include="Source\Units\Navigator.h" />
+    <ClInclude Include="Source\Units\Stone.h" />
     <ClInclude Include="Source\Units\TownCenter.h" />
     <ClInclude Include="Source\Units\UnitBase.h" />
     <ClInclude Include="Source\Units\Villager.h" />
@@ -401,6 +405,7 @@
     <Image Include="RES\Button_Icon\Stop.bmp" />
     <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Entity_Icon\GoldIcon.bmp" />
+    <Image Include="RES\Entity_Icon\StoneIcon.bmp" />
     <Image Include="RES\Entity_Icon\TownCenterIcon.bmp" />
     <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />

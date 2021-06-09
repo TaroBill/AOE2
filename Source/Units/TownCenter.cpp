@@ -16,19 +16,36 @@ void Unit::TownCenter::onMove()
 Unit::TownCenter::TownCenter(int pointX, int pointY) :Entity(pointX, pointY)
 {
 	SetBitmap();
-	World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX()+1] = 1;
+	World::getInstance()->buildingMap[GetTileY()+1][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY()+1][GetTileX()+1] = 1;
 	this->entityType = EntityTypes::TownCenter;
 
 }
 Unit::TownCenter::TownCenter(CPoint point) :Entity(point)
 {
 	SetBitmap();
-	World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 1;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX() + 1] = 1;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX() + 1] = 1;
 	this->entityType = EntityTypes::TownCenter;
 }
 Unit::TownCenter::TownCenter()
 {
 	SetBitmap();
-	World::getInstance()->buildingMap[GetTileX()][GetTileY()] = 0;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX() + 1] = 1;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX()] = 1;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX() + 1] = 1;
 	this->entityType = EntityTypes::TownCenter;
+}
+
+Unit::TownCenter::~TownCenter()
+{
+	World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 0;
+	World::getInstance()->buildingMap[GetTileY()][GetTileX() + 1] = 0;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX()] = 0;
+	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX() + 1] = 0;
 }

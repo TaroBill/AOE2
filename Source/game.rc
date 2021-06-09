@@ -416,6 +416,8 @@ IDB_SERVERFRAME         BITMAP                  "..\\RES\\ServerFrame.bmp"
 
 IDB_IP                  BITMAP                  "..\\RES\\IP.bmp"
 
+IDB_STONE_ICON          BITMAP                  "..\\RES\\Entity_Icon\\StoneIcon.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

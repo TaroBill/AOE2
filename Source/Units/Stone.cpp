@@ -1,49 +1,49 @@
-#include "Mine.h"
+#include "Stone.h"
 #include "../World.h"
 
 namespace Unit
 {
-	Mine::Mine(CPoint point, ResourceType rt) :Entity(point)
+	Stone::Stone(CPoint point, ResourceType rt) :Entity(point)
 	{
 		Gatherable* n = new Gatherable(rt, 35);
 		AddComponent(n);
-		entityType = EntityTypes::GoldMine;
+		entityType = EntityTypes::Stone;
 		SetBitmap();
 		World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 1;
 
 	}
 
-	Mine::Mine(int x, int y, ResourceType rt) : Entity(x, y)
+	Stone::Stone(int x, int y, ResourceType rt) : Entity(x, y)
 	{
 		Gatherable* n = new Gatherable(rt, 35);
 		AddComponent(n);
-		entityType = EntityTypes::GoldMine;
+		entityType = EntityTypes::Stone;
 		SetBitmap();
 		World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 1;
 
 	}
 
 
-	void Mine::SetBitmap()
+	void Stone::SetBitmap()
 	{
-		animations[State::Idle][Direction::Down].AddBitmap(IDB_GOLD, RGB(255, 255, 255));
+		animations[State::Idle][Direction::Down].AddBitmap(IDB_STONE, RGB(255, 255, 255));
 		size.x = animations[State::Idle][Direction::Down].Width();
 		size.y = animations[State::Idle][Direction::Down].Height();
 	}
 
-	void  Mine::SetTarget(CPoint point, vector<Entity*> group) {}
+	void  Stone::SetTarget(CPoint point, vector<Entity*> group) {}
 
-	void Mine::onMove() {
+	void Stone::onMove() {
 		HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
 		remainAmount = this->GetComponent<Gatherable>()->resource.amount;
 		if (remainAmount <= 0)
 			World::getInstance()->killByID(this->ID);
 	}
 
-	Mine::~Mine()
+	Stone::~Stone()
 	{
 		World::getInstance()->buildingMap[GetTileY()][GetTileX()] = 0;
-		//TRACE("~Mine\n");
+		//TRACE("~Stone\n");
 	}
 
 

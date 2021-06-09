@@ -458,4 +458,141 @@ namespace game_framework {
 			CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC		
 		}
 	}
+
+
+	CGameStateMapEditor::CGameStateMapEditor(CGame* g)
+		: CGameState(g)
+	{
+
+	}
+
+	CGameStateMapEditor::~CGameStateMapEditor()
+	{
+
+	}
+
+	void CGameStateMapEditor::OnBeginState()
+	{
+		GUI::getInstance()->loadInGameGUI();
+	}
+
+	void CGameStateMapEditor::OnMove()							// 移動遊戲元素
+	{
+		World::getInstance()->onMove();
+		GUI::getInstance()->onMove();
+	}
+
+	void CGameStateMapEditor::OnInit()  								// 遊戲的初值及圖形設定
+	{
+		//
+		// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
+		//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
+		//
+		ShowInitProgress(33);	// 接個前一個狀態的進度，此處進度視為33%
+		//
+		// 開始載入資料
+		//
+		//
+		// 完成部分Loading動作，提高進度
+		//
+		ShowInitProgress(50);
+		Sleep(300); // 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+		//
+		// 繼續載入其他資料
+		//
+		//
+		// 此OnInit動作會接到CGameStaterOver::OnInit()，所以進度還沒到100%
+		//
+	}
+
+	void CGameStateMapEditor::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+	{
+		const char KEY_LEFT = 0x25; // keyboard左箭頭
+		const char KEY_UP = 0x26; // keyboard上箭頭
+		const char KEY_RIGHT = 0x27; // keyboard右箭頭
+		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		if (nChar == KEY_LEFT) {
+			//eraser.SetMovingLeft(true);
+			World::getInstance()->moveScreenLeft(true);
+		}
+		if (nChar == KEY_RIGHT) {
+			//eraser.SetMovingRight(true);
+			World::getInstance()->moveScreenRight(true);
+		}
+		if (nChar == KEY_UP) {
+			//eraser.SetMovingUp(true);
+			World::getInstance()->moveScreenUp(true);
+		}
+		if (nChar == KEY_DOWN) {
+			//eraser.SetMovingDown(true);
+			World::getInstance()->moveScreenDown(true);
+		}
+	}
+
+	void CGameStateMapEditor::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+	{
+		const char KEY_LEFT = 0x25; // keyboard左箭頭
+		const char KEY_UP = 0x26; // keyboard上箭頭
+		const char KEY_RIGHT = 0x27; // keyboard右箭頭
+		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		if (nChar == KEY_LEFT) {
+			World::getInstance()->moveScreenLeft(false);
+		}
+		if (nChar == KEY_RIGHT) {
+			World::getInstance()->moveScreenRight(false);
+		}
+		if (nChar == KEY_UP) {
+			World::getInstance()->moveScreenUp(false);
+		}
+		if (nChar == KEY_DOWN) {
+			World::getInstance()->moveScreenDown(false);
+		}
+	}
+
+	void CGameStateMapEditor::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+	{
+		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
+		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
+		if (GUI::getInstance()->isInGUI(point)) {
+			GUI::getInstance()->triggerOnClicked(point);
+			return;
+		}
+	}
+
+	void CGameStateMapEditor::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+	{
+		if (GUI::getInstance()->isInGUI(point)) {
+			return;
+		}
+	}
+
+	void CGameStateMapEditor::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+	{
+	}
+
+	void CGameStateMapEditor::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+	{
+
+
+	}
+
+	void CGameStateMapEditor::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+	{
+
+	}
+
+	void CGameStateMapEditor::OnShow()
+	{
+		World::getInstance()->OnShow();
+		//
+		//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
+		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
+		//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
+		//
+
+		//
+		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
+		//
+		GUI::getInstance()->onShow();
+	}
 }
