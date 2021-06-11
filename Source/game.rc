@@ -406,7 +406,7 @@ IDB_TOWNCENTER_ICON     BITMAP                  "..\\RES\\Entity_Icon\\TownCente
 
 IDB_MAINMENU            BITMAP                  "..\\RES\\mainMenu.bmp"
 
-IDB_MULTIPLAYERGAMEBUTTON BITMAP                  "..\RES\\Button_Icon\\ButtonMultiGame.bmp"
+IDB_MULTIPLAYERGAMEBUTTON BITMAP                  "..\\RES\\Button_Icon\\ButtonMultiGame.bmp"
 
 IDB_STARTMENUBUTTONLONG BITMAP                  "..\\RES\\Button_Icon\\StartMenuButtonLong.bmp"
 
@@ -417,6 +417,12 @@ IDB_SERVERFRAME         BITMAP                  "..\\RES\\ServerFrame.bmp"
 IDB_IP                  BITMAP                  "..\\RES\\IP.bmp"
 
 IDB_STONE_ICON          BITMAP                  "..\\RES\\Entity_Icon\\StoneIcon.bmp"
+
+IDB_TREE_ICON           BITMAP                  "..\\RES\\Entity_Icon\\TreeIcon.bmp"
+
+IDB_SHEEP               BITMAP                  "..\\RES\\Sheep_aoe2.bmp"
+
+IDB_TREE                BITMAP                  "..\\RES\\Trees_aoe2.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

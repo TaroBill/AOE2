@@ -248,6 +248,8 @@
     <Image Include="RES\ServerFrame.bmp" />
     <Image Include="RES\IP.bmp" />
     <Image Include="RES\Entity_Icon\StoneIcon.bmp" />
+    <Image Include="RES\Sheep_aoe2.bmp" />
+    <Image Include="RES\Trees_aoe2.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

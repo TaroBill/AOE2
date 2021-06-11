@@ -420,7 +420,9 @@
     <Image Include="RES\MminiMap_Human.bmp" />
     <Image Include="RES\resource.bmp" />
     <Image Include="RES\ServerFrame.bmp" />
+    <Image Include="RES\Sheep_aoe2.bmp" />
     <Image Include="RES\Stone_aoe2.bmp" />
+    <Image Include="RES\Trees_aoe2.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_0.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_1.bmp" />
     <Image Include="RES\Villager\VillagerIdle_0_10.bmp" />
