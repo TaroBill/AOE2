@@ -2,9 +2,6 @@
 #include "Frame.h"
 #include <vector>
 #include<typeinfo>
-#include "../Buttons/Building_Button.h"
-#include "../Buttons/Military_Button.h"
-#include "../Buttons/House_Button.h"
 
 
 class EntityDataButtonFrame : public Frame
@@ -16,6 +13,7 @@ public:
 	void OnShow();
 	void onMove() override;
 	void LoadEmpty();
+	void LoadMapEditorButtons();
 	void LoadVillagerButtons();
 	void LoadBuildingButtons();
 };

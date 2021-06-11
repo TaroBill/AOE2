@@ -424,6 +424,12 @@ IDB_SHEEP               BITMAP                  "..\\RES\\Sheep_aoe2.bmp"
 
 IDB_TREE                BITMAP                  "..\\RES\\Trees_aoe2.bmp"
 
+IDB_GrassIcon           BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\GrassButtonIcon.bmp"
+
+IDB_WATERICON           BITMAP                  "D:\\school\\AOE2\\RES\\Button_Icon\\waterButtonIcon.bmp"
+
+IDB_SHEEPICON           BITMAP                  "D:\\school\\AOE2\\RES\\Entity_Icon\\SheepIcon.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

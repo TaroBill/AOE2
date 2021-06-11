@@ -116,6 +116,11 @@ public:
 	int buildingMap[120][120];
 	//生成世界時初始化的實體
 	void initWorld();
+	//是否正在編輯地圖 0沒有 1編輯草地 2編輯水
+	int isEditingMap = 0;
+	//設置該點的地形type = 0是草地 type = 1 是水
+	void setMap(CPoint p, int type);
+	void clearAllEntities();
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;

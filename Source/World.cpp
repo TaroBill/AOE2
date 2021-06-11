@@ -37,6 +37,11 @@ World::World() {
 }
 
 World::~World() {
+	clearAllEntities();
+	TRACE("~World()\n");
+}
+
+void World::clearAllEntities() {
 	for (unsigned int i = 0; i < unit.size(); i++) {
 		delete unit[i];
 	}
@@ -49,7 +54,6 @@ World::~World() {
 		delete ResaurceUnit[i];
 	}
 	ResaurceUnit.clear();
-	TRACE("~World()\n");
 }
 
 int World::getLocationItem(int x, int y) {
@@ -277,13 +281,21 @@ void World::spawnEnemy(EntityTypes ET, CPoint p) {
 }
 
 void World::spawnResaurce(EntityTypes ET, int x, int y) {
-	Unit::Entity* en = entityFactory.SpawnEntity(ET, x, y);
+	int tileX = x / 50;
+	int tileY = y / 50;
+	if (buildingMap[tileY][tileX] == 1)
+		return;
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, tileX * 50, tileY * 50);
 	en->playerId = -1;						//0是自己1是敵人-1是資源
 	ResaurceUnit.push_back(en);
 }
 
 void World::spawnResaurce(EntityTypes ET, CPoint p) {
-	Unit::Entity* en = entityFactory.SpawnEntity(ET, p);
+	int tileX = p.x / 50;
+	int tileY = p.y / 50;
+	if (buildingMap[tileY][tileX] == 1)
+		return;
+	Unit::Entity* en = entityFactory.SpawnEntity(ET, tileX * 50, tileY * 50);
 	en->playerId = -1;						//0是自己1是敵人-1是資源
 	ResaurceUnit.push_back(en);				//0是自己1是敵人-1是資源
 }
@@ -362,6 +374,29 @@ void World::spawningEntity(int bitmap) {
 	switch (bitmap){
 	case IDB_VILLAGER000:
 		spawningEntityType = EntityTypes::Villager;
+		World::getInstance()->isEditingMap = 0;
+		break;
+	case IDB_GOLD:
+		spawningEntityType = EntityTypes::GoldMine;
+		World::getInstance()->isEditingMap = 0;
+		break;
+	case IDB_STONE:
+		spawningEntityType = EntityTypes::Stone;
+		World::getInstance()->isEditingMap = 0;
+		break;
+	case IDB_SHEEP:
+		spawningEntityType = EntityTypes::Sheep;
+		World::getInstance()->isEditingMap = 0;
+		break;
+	case IDB_TREE:
+		spawningEntityType = EntityTypes::Tree;
+		World::getInstance()->isEditingMap = 0;
+		break;
+	case IDB_GRASS:
+		isEditingMap = 1;
+		break;
+	case IDB_WaterBig:
+		isEditingMap = 2;
 		break;
 	default:
 		break;
@@ -600,6 +635,12 @@ void World::initWorld() {
 		spawnResaurce(EntityTypes::Stone, 2800, 3000);
 	}
 	isInitingWorld = false;
+}
+
+void World::setMap(CPoint p, int type) {
+	int y = p.y / 50;
+	int x = p.x / 50;
+	map[y][x] = type;
 }
 
 World World::instance;

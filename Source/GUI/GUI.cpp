@@ -76,7 +76,14 @@ void GUI::addFrame(Frame* frame) {
 
 void GUI::loadMainMenu() {
 	freeFrames();
-	frames.push_back(new StartMenuFrame);
+	frames.push_back(new StartMenuFrame());
+}
+
+void GUI::loadMapEditorGUI() {
+	freeFrames();
+	EntityDataButtonFrame *f = new EntityDataButtonFrame();
+	f->LoadMapEditorButtons();
+	frames.push_back(f);
 }
 
 GUI GUI::instance;

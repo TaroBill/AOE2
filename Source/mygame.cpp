@@ -473,7 +473,7 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnBeginState()
 	{
-		GUI::getInstance()->loadInGameGUI();
+		GUI::getInstance()->loadMapEditorGUI();
 	}
 
 	void CGameStateMapEditor::OnMove()							// 移動遊戲元素
@@ -557,6 +557,32 @@ namespace game_framework {
 			GUI::getInstance()->triggerOnClicked(point);
 			return;
 		}
+		CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
+		if (World::getInstance()->isSpawningEntity) {
+			int isEditingMap = World::getInstance()->isEditingMap;
+			if (isEditingMap != 0) {
+				World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+			}
+			else {
+				int x = (int)LButtonDownPoint.x / 50;
+				int y = (int)LButtonDownPoint.y / 50;
+				switch (World::getInstance()->spawningEntityType) {
+				case EntityTypes::GoldMine:
+					World::getInstance()->spawnResaurce(EntityTypes::GoldMine, LButtonDownPoint);
+					break;
+				case EntityTypes::Stone:
+					World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
+					break;
+				case EntityTypes::Tree:
+
+					break;
+				case EntityTypes::Sheep:
+
+					break;
+				}
+			}
+		}
+		isLBDown = true;
 	}
 
 	void CGameStateMapEditor::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -564,16 +590,47 @@ namespace game_framework {
 		if (GUI::getInstance()->isInGUI(point)) {
 			return;
 		}
+		isLBDown = false;
 	}
 
 	void CGameStateMapEditor::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		World::getInstance()->mouseLocation = point;
+		if (isLBDown) {
+			CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
+			if (World::getInstance()->isSpawningEntity) {
+				int isEditingMap = World::getInstance()->isEditingMap;
+				if (isEditingMap != 0) {
+					World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+				}
+				else {
+					int x = (int)LButtonDownPoint.x / 50;
+					int y = (int)LButtonDownPoint.y / 50;
+					if (World::getInstance()->buildingMap[y][x] == 1)
+						return;
+					switch (World::getInstance()->spawningEntityType) {
+					case EntityTypes::GoldMine:
+						World::getInstance()->spawnResaurce(EntityTypes::GoldMine, LButtonDownPoint);
+						break;
+					case EntityTypes::Stone:
+						World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
+						break;
+					case EntityTypes::Tree:
+
+						break;
+					case EntityTypes::Sheep:
+
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	void CGameStateMapEditor::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
-
-
+		World::getInstance()->isSpawningEntity = false;
+		World::getInstance()->isEditingMap = 0;
 	}
 
 	void CGameStateMapEditor::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -584,6 +641,7 @@ namespace game_framework {
 	void CGameStateMapEditor::OnShow()
 	{
 		World::getInstance()->OnShow();
+		World::getInstance()->UnitOnShow();
 		//
 		//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
@@ -594,5 +652,6 @@ namespace game_framework {
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
 		GUI::getInstance()->onShow();
+
 	}
 }

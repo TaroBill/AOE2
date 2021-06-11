@@ -17,9 +17,9 @@ public:
 	int getY();
 	void setLocation(int, int);//按鈕最左上角位置(X, Y)
 	void setRange(int, int);//按鈕範圍大小(長, 寬)
-	virtual void loadBitmap() = 0;		// 載入圖形
+	virtual void loadBitmap() {};		// 載入圖形
 	virtual void OnShow();			// 將圖形貼到畫面
-	virtual void onClicked() = 0;
+	virtual void onClicked() {};
 	void setEnable(bool);
 	CPoint getLocation();
 	bool isEnable();

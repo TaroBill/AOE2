@@ -37,6 +37,12 @@
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
     <ClCompile Include="Source\Units\Stone.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Grass_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\water_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Gold_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Sheep_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Stone_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Tree_Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -85,6 +91,12 @@
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.h" />
     <ClInclude Include="Source\Units\Stone.h" />
+    <ClInclude Include="Source\GUI\Buttons\Grass_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\water_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Gold_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Sheep_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Stone_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Tree_Button.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -250,6 +262,10 @@
     <Image Include="RES\Entity_Icon\StoneIcon.bmp" />
     <Image Include="RES\Sheep_aoe2.bmp" />
     <Image Include="RES\Trees_aoe2.bmp" />
+    <Image Include="RES\Entity_Icon\TreeIcon.bmp" />
+    <Image Include="RES\Button_Icon\GrassButtonIcon.bmp" />
+    <Image Include="RES\Button_Icon\waterButtonIcon.bmp" />
+    <Image Include="RES\Entity_Icon\SheepIcon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />
