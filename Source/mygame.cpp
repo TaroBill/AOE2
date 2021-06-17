@@ -364,6 +364,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		isLButtonDown = true;
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
 		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
 		LButtonDownPoint = World::getInstance()->Screen2Global(point);
@@ -372,17 +373,28 @@ namespace game_framework {
 			return;
 		}
 		if (World::getInstance()->isSpawningEntity) {
+			int x = (int)LButtonDownPoint.x / 50;
+			int y = (int)LButtonDownPoint.y / 50;
+			if (World::getInstance()->buildingMap[y][x] == 1)
+				return;
 			switch (World::getInstance()->spawningEntityType) {
 			case EntityTypes::Villager:
 				World::getInstance()->spawn(EntityTypes::Villager, LButtonDownPoint);
 				break;
+			case EntityTypes::TownCenter:
+				if (World::getInstance()->buildingMap[y][x] == 1 || World::getInstance()->buildingMap[y][x+1] == 1 || World::getInstance()->buildingMap[y+1][x] == 1 || World::getInstance()->buildingMap[y+1][x+1] == 1) {
+					break;
+				}
+				//TRACE("SPAWNING TOWNCENTER\n");
+				World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
+				break;
 			}
 		}
-		isLButtonDown = true;
 	}
 
 	void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		isLButtonDown = false;
 		if (GUI::getInstance()->isInGUI(point)) {
 			return;
 		}
@@ -409,7 +421,6 @@ namespace game_framework {
 		else {
 			dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->clearEntitysBitmap();
 		}
-		isLButtonDown = false;
 	}
 
 	void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作

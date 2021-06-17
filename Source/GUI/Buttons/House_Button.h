@@ -18,6 +18,6 @@ public:
 	}
 
 	void onClicked() override {
-		World::getInstance()->spawningEntity(IDB_VILLAGER000);
+		World::getInstance()->spawningEntity(IDB_TOWNCENTER_ICON);
 	}
 };

@@ -211,6 +211,8 @@
 #define IDB_WATERICON                   445
 #define IDB_BITMAP130                   446
 #define IDB_SHEEPICON                   446
+#define IDB_BITMAP132                   447
+#define IDB_TOWNCENTERND                447
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -224,7 +226,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        447
+#define _APS_NEXT_RESOURCE_VALUE        448
 #define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           101

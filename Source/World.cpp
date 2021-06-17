@@ -376,6 +376,10 @@ void World::spawningEntity(int bitmap) {
 		spawningEntityType = EntityTypes::Villager;
 		World::getInstance()->isEditingMap = 0;
 		break;
+	case IDB_TOWNCENTER_ICON:
+		spawningEntityType = EntityTypes::TownCenter;
+		World::getInstance()->isEditingMap = 0;
+		break;
 	case IDB_GOLD:
 		spawningEntityType = EntityTypes::GoldMine;
 		World::getInstance()->isEditingMap = 0;

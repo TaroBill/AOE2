@@ -48,7 +48,9 @@ namespace Unit
 			Gathering,//採集中
 			ReturnResourceOnRoad,//採集結束後，將資源帶回的路上
 			GoAttackOnRoad,//行軍路上
-			Attacking //正在攻擊
+			Attacking, //正在攻擊
+			BuildingOnRoad, //正在建造路上
+			Building	//建造中
 		};
 		
 		VillagerState vs;
@@ -79,6 +81,8 @@ namespace Unit
 		bool Gathering();
 		//攻擊
 		void Attacking();
+
+		bool Building();
 
 		void SetTarget(CPoint point , vector<Entity*> group);
 

@@ -27,6 +27,8 @@ namespace Unit
 		}
 		void SetBitmap();
 		void onMove();
+		void doneBuilding();
+		bool isDoneBuilding;
 		TownCenter(int pointX, int pointY);
 		TownCenter(CPoint point);
 		TownCenter();

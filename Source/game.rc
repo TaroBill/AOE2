@@ -430,6 +430,8 @@ IDB_WATERICON           BITMAP                  "..\\RES\\Button_Icon\\waterButt
 
 IDB_SHEEPICON           BITMAP                  "..\\RES\\Entity_Icon\\SheepIcon.bmp"
 
+IDB_TOWNCENTERND        BITMAP                  "D:\\school\\AOE2\\RES\\Building\\TownCenterNotDone.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

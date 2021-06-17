@@ -266,6 +266,7 @@
     <Image Include="RES\Button_Icon\GrassButtonIcon.bmp" />
     <Image Include="RES\Button_Icon\waterButtonIcon.bmp" />
     <Image Include="RES\Entity_Icon\SheepIcon.bmp" />
+    <Image Include="RES\Building\TownCenterNotDone.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

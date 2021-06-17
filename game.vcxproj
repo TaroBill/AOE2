@@ -398,6 +398,7 @@
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
     <Image Include="RES\Building\TownCenter.bmp" />
+    <Image Include="RES\Building\TownCenterNotDone.bmp" />
     <Image Include="RES\buttonBackGround.bmp" />
     <Image Include="RES\Button_Icon\Building.bmp" />
     <Image Include="RES\Button_Icon\ButtonMultiGame.bmp" />

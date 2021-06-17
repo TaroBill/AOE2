@@ -87,7 +87,7 @@ namespace Unit
 		//血量
 		int hp;
 		int maxHP;
-
+		bool isBuilding = false;
 		//這個實體的entityType
 		EntityTypes entityType;
 
