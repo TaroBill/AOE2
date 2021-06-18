@@ -8,7 +8,7 @@
 #include "../World.h"
 #include <memory> 
 #include <queue>
-using namespace std;
+//using namespace std;
 #pragma region Utility
 //point2tile
 CPoint Unit::Navigator::Point2Tile(CPoint p)

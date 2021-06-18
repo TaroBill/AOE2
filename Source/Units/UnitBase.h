@@ -36,7 +36,19 @@ namespace Unit
 			return nullptr;
 			
 		}
-		
+		template<typename T>
+		bool ContainComponent()
+		{
+			for (unsigned int i = 0; i < _components.size(); i++)
+				return (dynamic_cast<T*>(_components.at(i)) != nullptr);
+			return false;
+
+		}
+		template<typename T>
+		bool IsComponent()
+		{
+			return (dynamic_cast<T*>(this) != nullptr);
+		}
 		//新增組件時，請使用new
 		//AddComponent(new 組件型別())
 		virtual void AddComponent(UnitBase* component)

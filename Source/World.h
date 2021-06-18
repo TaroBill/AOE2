@@ -16,7 +16,7 @@
 #include "Units/TownCenter.h"
 #include "Units/Tree.h"
 #include "Units/Stone.h"
-
+#include "Units/Sheep.h"
 enum mapItem { GRASS, RIVER };
 class World {
 public:

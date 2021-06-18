@@ -17,7 +17,10 @@ namespace Unit
 
 		void SetTarget(CPoint, vector<Entity*>) override;
 
+		void onShow(int screenX, int screenY) override;
+
 		void onMove()override;
+		
 
 		~Sheep();
 	};

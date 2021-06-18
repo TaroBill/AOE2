@@ -25,6 +25,8 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
 	case EntityTypes::Tree:
 		entity = new Unit::Tree(p, ResourceType::Wood);
 		break;
+	case EntityTypes::Sheep:
+		entity = new Unit::Sheep(p, ResourceType::Food);
 	default:
         break;
     }
@@ -53,6 +55,8 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, int x, int y) {
 	case EntityTypes::Tree:
 		entity = new Unit::Tree(x, y, ResourceType::Wood);
 		break;
+	case EntityTypes::Sheep:
+		entity = new Unit::Sheep(x,y, ResourceType::Food);
 	default:
 		break;
 	}

@@ -78,7 +78,7 @@ namespace Unit
 		//現在點座標
 		CPoint GetNowPoint();
 		
-
+	
 
 		//開始尋路
 		void FindPath(CPoint targrtPoint, vector<Entity*> entityList);

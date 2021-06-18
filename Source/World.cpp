@@ -593,6 +593,7 @@ void World::initWorld() {
 		spawnResaurce(EntityTypes::Tree, 2700, 3050);
 		spawnResaurce(EntityTypes::Tree, 2600, 3000);
 		spawnResaurce(EntityTypes::Tree, 2600, 3050);
+		spawnResaurce(EntityTypes::Sheep, 3200, 2900);
 
 	}
 	else {//順序要一樣確保初始ID相同
@@ -607,6 +608,7 @@ void World::initWorld() {
 		spawnResaurce(EntityTypes::Tree, 2700, 3050);
 		spawnResaurce(EntityTypes::Tree, 2600, 3000);
 		spawnResaurce(EntityTypes::Tree, 2600, 3050);
+		spawnResaurce(EntityTypes::Sheep, 3200, 2900);
 	}
 	isInitingWorld = false;
 }

@@ -8,7 +8,8 @@ enum EntityTypes {
 	GoldMine,
 	TownCenter,
 	Stone,
-	Tree
+	Tree,
+	Sheep
 };
 
 namespace Unit
@@ -28,7 +29,6 @@ namespace Unit
 		{
 			Down, LeftDown, Left, LeftUp, Up, RightUp, Right, RightDown
 		};
-	private:
 
 	public:
 		//°Ê§@ª¬ºA
@@ -113,6 +113,8 @@ namespace Unit
 		virtual void SetTarget(CPoint point) {};
 
 		virtual void SetBitmap(){};
+
+
 		void Init()
 		{
 			this->playerId = 0;

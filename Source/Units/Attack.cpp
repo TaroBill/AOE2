@@ -25,7 +25,7 @@ bool Unit::Attack::doAttack() {
 		target->hp -= Damage;
 		if (target->hp <= 0) {
 			this->GetParent<Unit::Entity>()->target.isLive = false;
-			World::getInstance()->killByID(target->ID);
+			if(!target->IsComponent<Sheep>())World::getInstance()->killByID(target->ID);
 			return false;
 		}
 		return true;

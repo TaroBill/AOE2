@@ -38,6 +38,7 @@
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
     <ClCompile Include="Source\Units\Stone.cpp" />
     <ClCompile Include="Source\Units\Tree.cpp" />
+    <ClCompile Include="Source\Units\Sheep.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />

@@ -71,9 +71,6 @@ bool Unit::Villager::FindRecyclingPlace()
 //採集
 bool Unit::Villager::Gathering()
 {
-	//應該有個counter累計值
-	//累計到應該獲得一點資源的時候才+1
-	//但先不管
 	resourceCounter++;
 	if (resourceCounter >= 15)
 	{
@@ -115,15 +112,17 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 	Entity* temp = World::getInstance()->getNearestEntity(point);
 	if (temp != NULL) {
 		TRACE("Target set to %d\n", temp->ID);
-		if (temp->GetComponent<Gatherable>() != nullptr)
+		if (temp->ContainComponent<Gatherable>())
 		{
 			TRACE("On gather road\n");
-			vs = VillagerState::GetResourceOnRoad;
 			target.ID = temp->ID;
 			target.point = temp->point;
 			target.isLive = true;
 			this->carryResource.ResetType(
 				temp->GetComponent<Gatherable>()->resource.type);
+
+			vs = VillagerState::GetResourceOnRoad;
+
 		}
 		else if (dynamic_cast<TownCenter*>(temp))
 		{
@@ -290,7 +289,7 @@ void Unit::Villager::FSM(int navigatorState)
 			SetTargetByRange(target.point, VillagerState::Gathering);
 		}
 		//若滿了
-		if (carryResource.amount>= carryLimit || target.isLive == false)
+		if (carryResource.amount >= carryLimit || target.isLive == false)
 		{
 			//就找地方放
 			if (FindRecyclingPlace())//找到
@@ -336,9 +335,8 @@ void Unit::Villager::FSM(int navigatorState)
 			vs = VillagerState::Attacking;
 		}
 		break;
-		
+
 	case VillagerState::Attacking:
-		//TRACE("Attacking\n");
 		Unit::Villager::Attacking();
 		if (World::getInstance()->getEntityByID(ID) == NULL) { //  若打死人
 			target.isLive = false;

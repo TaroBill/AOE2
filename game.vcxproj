@@ -323,6 +323,7 @@
     <ClCompile Include="Source\Units\EntityFactory.cpp" />
     <ClCompile Include="Source\Units\Mine.cpp" />
     <ClCompile Include="Source\Units\Navigator.cpp" />
+    <ClCompile Include="Source\Units\Sheep.cpp" />
     <ClCompile Include="Source\Units\Stone.cpp" />
     <ClCompile Include="Source\Units\TownCenter.cpp" />
     <ClCompile Include="Source\Units\Tree.cpp" />
