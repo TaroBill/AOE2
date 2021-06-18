@@ -331,6 +331,7 @@
     <ClCompile Include="Source\Units\Navigator.cpp" />
     <ClCompile Include="Source\Units\Stone.cpp" />
     <ClCompile Include="Source\Units\TownCenter.cpp" />
+    <ClCompile Include="Source\Units\Tree.cpp" />
     <ClCompile Include="Source\Units\Villager.cpp" />
     <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
@@ -382,8 +383,10 @@
     <ClInclude Include="Source\Units\Gatherable.h" />
     <ClInclude Include="Source\Units\Mine.h" />
     <ClInclude Include="Source\Units\Navigator.h" />
+    <ClInclude Include="Source\Units\Sheep.h" />
     <ClInclude Include="Source\Units\Stone.h" />
     <ClInclude Include="Source\Units\TownCenter.h" />
+    <ClInclude Include="Source\Units\Tree.h" />
     <ClInclude Include="Source\Units\UnitBase.h" />
     <ClInclude Include="Source\Units\Villager.h" />
     <ClInclude Include="Source\World.h" />

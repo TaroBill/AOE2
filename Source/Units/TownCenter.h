@@ -29,8 +29,8 @@ namespace Unit
 		void onMove();
 		void doneBuilding();
 		bool isDoneBuilding;
-		TownCenter(int pointX, int pointY);
-		TownCenter(CPoint point);
+		TownCenter(int pointX, int pointY, int Hp);
+		TownCenter(CPoint point, int Hp);
 		TownCenter();
 		~TownCenter();
 	};

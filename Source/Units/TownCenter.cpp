@@ -24,7 +24,7 @@ void Unit::TownCenter::onMove()
 		doneBuilding();
 	}
 }
-Unit::TownCenter::TownCenter(int pointX, int pointY) :Entity(pointX, pointY)
+Unit::TownCenter::TownCenter(int pointX, int pointY, int Hp = 1) :Entity(pointX, pointY)
 {
 	isDoneBuilding = false;
 	isBuilding = true;
@@ -34,9 +34,9 @@ Unit::TownCenter::TownCenter(int pointX, int pointY) :Entity(pointX, pointY)
 	World::getInstance()->buildingMap[GetTileY()+1][GetTileX()] = 1;
 	World::getInstance()->buildingMap[GetTileY()+1][GetTileX()+1] = 1;
 	this->entityType = EntityTypes::TownCenter;
-	this->hp = 1;
+	this->hp = Hp;
 }
-Unit::TownCenter::TownCenter(CPoint point) :Entity(point)
+Unit::TownCenter::TownCenter(CPoint point, int Hp = 1) :Entity(point)
 {
 	isDoneBuilding = false;
 	isBuilding = true;
@@ -46,7 +46,7 @@ Unit::TownCenter::TownCenter(CPoint point) :Entity(point)
 	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX()] = 1;
 	World::getInstance()->buildingMap[GetTileY() + 1][GetTileX() + 1] = 1;
 	this->entityType = EntityTypes::TownCenter;
-	this->hp = 1;
+	this->hp = Hp;
 }
 Unit::TownCenter::TownCenter()
 {

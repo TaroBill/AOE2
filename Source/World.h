@@ -14,6 +14,8 @@
 #include <typeinfo>
 #include "Units/EntityFactory.h"
 #include "Units/TownCenter.h"
+#include "Units/Tree.h"
+#include "Units/Stone.h"
 
 enum mapItem { GRASS, RIVER };
 class World {

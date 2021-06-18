@@ -375,14 +375,14 @@ namespace game_framework {
 		if (World::getInstance()->isSpawningEntity) {
 			int x = (int)LButtonDownPoint.x / 50;
 			int y = (int)LButtonDownPoint.y / 50;
-			if (World::getInstance()->buildingMap[y][x] == 1)
+			if (World::getInstance()->getLocationItem(x * 50,y * 50) == 1)
 				return;
 			switch (World::getInstance()->spawningEntityType) {
 			case EntityTypes::Villager:
 				World::getInstance()->spawn(EntityTypes::Villager, LButtonDownPoint);
 				break;
 			case EntityTypes::TownCenter:
-				if (World::getInstance()->buildingMap[y][x] == 1 || World::getInstance()->buildingMap[y][x+1] == 1 || World::getInstance()->buildingMap[y+1][x] == 1 || World::getInstance()->buildingMap[y+1][x+1] == 1) {
+				if (World::getInstance()->getLocationItem(x * 50, y * 50) == 1 || World::getInstance()->getLocationItem(x * 50, (y+1)*50) == 1 || World::getInstance()->getLocationItem((x+1)*50, y*50) == 1 || World::getInstance()->getLocationItem((x + 1) * 50, (y + 1) * 50) == 1) {
 					break;
 				}
 				//TRACE("SPAWNING TOWNCENTER\n");
@@ -585,7 +585,7 @@ namespace game_framework {
 					World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
 					break;
 				case EntityTypes::Tree:
-
+					World::getInstance()->spawnResaurce(EntityTypes::Tree, LButtonDownPoint);
 					break;
 				case EntityTypes::Sheep:
 
@@ -617,7 +617,7 @@ namespace game_framework {
 				else {
 					int x = (int)LButtonDownPoint.x / 50;
 					int y = (int)LButtonDownPoint.y / 50;
-					if (World::getInstance()->buildingMap[y][x] == 1)
+					if (World::getInstance()->getLocationItem(x*50, y*50) == 1)
 						return;
 					switch (World::getInstance()->spawningEntityType) {
 					case EntityTypes::GoldMine:
@@ -627,7 +627,7 @@ namespace game_framework {
 						World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
 						break;
 					case EntityTypes::Tree:
-
+						World::getInstance()->spawnResaurce(EntityTypes::Tree, LButtonDownPoint);
 						break;
 					case EntityTypes::Sheep:
 

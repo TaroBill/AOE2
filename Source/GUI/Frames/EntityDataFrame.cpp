@@ -32,6 +32,9 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		else if (typeid(*en[i]) == typeid(Unit::Stone)) {
 			entitys[i].LoadBitmap(IDB_STONE_ICON);
 		}
+		else if (typeid(*en[i]) == typeid(Unit::Tree)) {
+			entitys[i].LoadBitmap(IDB_TREE_ICON);
+		}
 		entitys[i].SetTopLeft(firstLocation.x + i%20 * 40, firstLocation.y + (int)(i / 20) * 40);
 	}
 	if (entitys.size() == 1) {
@@ -67,6 +70,11 @@ void EntityDataFrame::OnShow() {
 		else if (typeid(*showDataEntity) == typeid(Unit::Stone)) {
 			char str[80];								// Demo 數字對字串的轉換
 			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Stone*>(showDataEntity)->remainAmount);
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		}
+		else if (typeid(*showDataEntity) == typeid(Unit::Tree) ){
+			char str[80];								// Demo 數字對字串的轉換
+			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Tree*>(showDataEntity)->remainAmount);
 			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
 		}
 		else {
