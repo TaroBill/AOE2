@@ -251,6 +251,7 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
+		World::getInstance()->initMap();
 		GUI::getInstance()->loadInGameGUI();
 		World::getInstance()->initWorld();
 	}
@@ -484,12 +485,14 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnBeginState()
 	{
+		World::getInstance()->initMap();
 		GUI::getInstance()->loadMapEditorGUI();
 	}
 
 	void CGameStateMapEditor::OnMove()							// 移動遊戲元素
 	{
 		World::getInstance()->onMove();
+		World::getInstance()->UnitOnMove();
 		GUI::getInstance()->onMove();
 	}
 
@@ -522,6 +525,7 @@ namespace game_framework {
 		const char KEY_UP = 0x26; // keyboard上箭頭
 		const char KEY_RIGHT = 0x27; // keyboard右箭頭
 		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		const UINT KEY_S = 83;
 		if (nChar == KEY_LEFT) {
 			//eraser.SetMovingLeft(true);
 			World::getInstance()->moveScreenLeft(true);
@@ -538,6 +542,11 @@ namespace game_framework {
 			//eraser.SetMovingDown(true);
 			World::getInstance()->moveScreenDown(true);
 		}
+		else if (nChar == KEY_S) {
+			World::getInstance()->save();
+			GotoGameState(GAME_STATES::GAME_STATE_INIT);
+		}
+		//TRACE("nchar %d \n", nChar);
 	}
 
 	void CGameStateMapEditor::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -562,8 +571,9 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		isLBDown = true;
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
+		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 		if (GUI::getInstance()->isInGUI(point)) {
 			GUI::getInstance()->triggerOnClicked(point);
 			return;
@@ -571,8 +581,13 @@ namespace game_framework {
 		CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
 		if (World::getInstance()->isSpawningEntity) {
 			int isEditingMap = World::getInstance()->isEditingMap;
-			if (isEditingMap != 0) {
+			if (isEditingMap == 1 || isEditingMap == 2) {
 				World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+			}
+			else if (isEditingMap == 3) {
+				Unit::Entity* en = World::getInstance()->getNearestEntity(LButtonDownPoint);
+				if(en != NULL)
+					World::getInstance()->killByID(en->ID);
 			}
 			else {
 				int x = (int)LButtonDownPoint.x / 50;
@@ -593,15 +608,14 @@ namespace game_framework {
 				}
 			}
 		}
-		isLBDown = true;
 	}
 
 	void CGameStateMapEditor::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		isLBDown = false;
 		if (GUI::getInstance()->isInGUI(point)) {
 			return;
 		}
-		isLBDown = false;
 	}
 
 	void CGameStateMapEditor::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -611,8 +625,16 @@ namespace game_framework {
 			CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
 			if (World::getInstance()->isSpawningEntity) {
 				int isEditingMap = World::getInstance()->isEditingMap;
-				if (isEditingMap != 0) {
+				if (isEditingMap == 1 || isEditingMap == 2) {
 					World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+				}
+				else if (isEditingMap == 3) {
+					Unit::Entity* en = World::getInstance()->getNearestEntity(LButtonDownPoint);
+					if (en != NULL) {
+						TRACE("delete %d\n", en->ID);
+						World::getInstance()->killByID(en->ID);
+					}else
+						TRACE("ID not found\n");
 				}
 				else {
 					int x = (int)LButtonDownPoint.x / 50;
@@ -663,6 +685,5 @@ namespace game_framework {
 		//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 		//
 		GUI::getInstance()->onShow();
-
 	}
 }

@@ -16,6 +16,8 @@
 #include "Units/TownCenter.h"
 #include "Units/Tree.h"
 #include "Units/Stone.h"
+#include <iostream>
+#include <fstream>
 
 enum mapItem { GRASS, RIVER };
 class World {
@@ -123,10 +125,14 @@ public:
 	//設置該點的地形type = 0是草地 type = 1 是水
 	void setMap(CPoint p, int type);
 	void clearAllEntities();
+	//儲存所有地圖(將地圖編輯器內resaurce存檔)
+	void save();
+
+	void initMap();
+
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
-	void initMap();
 	void calculatePopulation();
 	int map[120][120];
 	int sx, sy; //螢幕座標

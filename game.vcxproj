@@ -276,6 +276,7 @@
     </ClCompile>
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\eraser_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Gold_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Grass_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Sheep_Button.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\GUI\Buttons\Building_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\eraser_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Gold_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Grass_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\House_Button.h" />

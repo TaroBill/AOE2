@@ -44,6 +44,7 @@
     <ClCompile Include="Source\GUI\Buttons\Stone_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Tree_Button.cpp" />
     <ClCompile Include="Source\Units\Tree.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\eraser_Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Source\GUI\Buttons\Tree_Button.h" />
     <ClInclude Include="Source\Units\Tree.h" />
     <ClInclude Include="Source\Units\Sheep.h" />
+    <ClInclude Include="Source\GUI\Buttons\eraser_Button.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />

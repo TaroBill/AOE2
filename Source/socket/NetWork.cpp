@@ -100,7 +100,7 @@ void NetWork::OnReceive() {
     {
         //pBuf[iLen] = NULL;
         strData = pBuf;
-        TRACE("%s\n", pBuf);
+        //TRACE("%s\n", pBuf);
         ss << strData;
         ss >> contain;
         if (contain == "spawn") {// command = spawn EntityTypes x y

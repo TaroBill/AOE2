@@ -8,6 +8,7 @@
 #include "../Buttons/Gold_Button.h"
 #include "../Buttons/Stone_Button.h"
 #include "../Buttons/Tree_Button.h"
+#include "../Buttons/eraser_Button.h"
 
 EntityDataButtonFrame::EntityDataButtonFrame() : Frame(0, SIZE_Y - 240, 240, 300)
 {
@@ -58,4 +59,5 @@ void EntityDataButtonFrame::LoadMapEditorButtons() {
 	buttons.push_back(new Stone_Button());
 	buttons.push_back(new Tree_Button());
 	buttons.push_back(new Gold_Button());
+	buttons.push_back(new Eraser_Button());
 }

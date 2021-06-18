@@ -10,27 +10,43 @@ World* World::getInstance()
 
 
 void World::initMap() {
-	int resource[10][10] = { {1,1,1,0,0,0,0,1,1,1},
-							 {1,1,0,0,0,0,0,0,1,1},
-							 {1,0,0,0,0,0,0,0,0,1},
-							 {0,0,0,0,0,0,0,0,0,0},
-							 {0,0,0,0,0,0,0,0,0,0},
-							 {0,0,0,0,0,1,0,0,0,0},
-							 {0,0,0,0,0,0,0,0,0,0},
-							 {1,0,0,0,0,0,0,0,0,1},
-							 {1,1,0,0,0,0,0,0,1,1},
-							 {1,1,1,0,0,0,0,1,1,1} };
+	clearAllEntities();
+	fstream file;      //宣告fstream物件
+	file.open("..//Map//Map.txt", ios::in);
+	if (!file)
+		TRACE("File can't be opened\n");
+
+	char* pBuf = new char[50000];
+	CString strData;
+	stringstream ss;
+	file.read(pBuf, 50000);
+
+	strData = pBuf;
+	ss << strData;
+
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
+			ss >> map[i][j];
 			buildingMap[i][j] = 0;
-			int a = i / 12;
-			int b = j / 12;
-			map[i][j] = resource[a][b];
+			//TRACE("%d, %d :  %d\n", j, i, map[i][j]);
 		}
 	}
+	UINT resaurceSize;
+	ss >> resaurceSize;
+	TRACE("Size: %d\n", resaurceSize);
+	for (UINT i = 0; i < resaurceSize; i++) {
+		int ET;
+		ss >> ET;//Entity type
+		int x, y;   //Entity Location
+		ss >> x >> y;
+		World::getInstance()->spawnResaurce(static_cast<EntityTypes>(ET), x, y);
+	}
+
+	delete[] pBuf;
+	file.close();
+
 }
 World::World() {
-	initMap();
 	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	sx = sy = 50 * 50; //螢幕座標
 
@@ -85,11 +101,6 @@ void World::OnShow() {
 				break;
 			}
 		}
-	}
-	if (isSpawningEntity) {
-		//TRACE("Mouse monitor Location: (%d, %d)\n", mouseLocation.x, mouseLocation.y);
-		spawningEntityBitmap.SetTopLeft(mouseLocation.x, mouseLocation.y);
-		spawningEntityBitmap.ShowBitmap();
 	}
 }
 void World::onMove() {
@@ -157,6 +168,11 @@ void World::UnitOnShow() {
 		if (isOnScreen(ResaurceUnit[i]->point.x, ResaurceUnit[i]->point.y)) {
 			ResaurceUnit[i]->onShow(GlobalX2ScreenX(ResaurceUnit[i]->point.x), GlobalY2ScreenY(ResaurceUnit[i]->point.y));
 		}
+	}
+	if (isSpawningEntity) {
+		//TRACE("Mouse monitor Location: (%d, %d)\n", mouseLocation.x, mouseLocation.y);
+		spawningEntityBitmap.SetTopLeft(mouseLocation.x, mouseLocation.y);
+		spawningEntityBitmap.ShowBitmap();
 	}
 }
 
@@ -374,33 +390,36 @@ void World::spawningEntity(int bitmap) {
 	switch (bitmap){
 	case IDB_VILLAGER000:
 		spawningEntityType = EntityTypes::Villager;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_TOWNCENTER_ICON:
 		spawningEntityType = EntityTypes::TownCenter;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_GOLD:
 		spawningEntityType = EntityTypes::GoldMine;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_STONE:
 		spawningEntityType = EntityTypes::Stone;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_SHEEP:
 		spawningEntityType = EntityTypes::Sheep;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_TREE:
 		spawningEntityType = EntityTypes::Tree;
-		World::getInstance()->isEditingMap = 0;
+		isEditingMap = 0;
 		break;
 	case IDB_GRASS:
 		isEditingMap = 1;
 		break;
 	case IDB_WaterBig:
 		isEditingMap = 2;
+		break;
+	case IDB_DESTROY_BUTTON:
+		isEditingMap = 3;
 		break;
 	default:
 		break;
@@ -555,14 +574,17 @@ vector<Unit::Entity*> World::getEntityByID(vector<UINT> id) {
 }
 
 void World::killByID(UINT ID) {
-	for (unsigned int i = 0; i < LE.size(); i++) {
-		if (LE[i]->ID == ID) {
-			LE.erase(LE.begin() + i);
+
+	if (GUI::getInstance()->frames.size() > 2) {
+
+		for (unsigned int i = 0; i < LE.size(); i++) {
+			if (LE[i]->ID == ID) {
+				LE.erase(LE.begin() + i);
+			}
 		}
+
+		dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->loadEntitysBitmap(World::getInstance()->LE);
 	}
-
-	dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->loadEntitysBitmap(World::getInstance()->LE);
-
 
 	for (unsigned int i = 0; i < unit.size(); i++) {
 		if (unit[i]->ID == ID) {
@@ -616,22 +638,12 @@ void World::initWorld() {
 		delete EnemyUnit[i];
 	}
 	EnemyUnit.clear();
-	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
-		delete ResaurceUnit[i];
-	}
-	ResaurceUnit.clear();
 	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
 		spawn(EntityTypes::Villager, 2900, 3000);
 		spawn(EntityTypes::TownCenter, 3800, 3300);
 		spawnEnemy(EntityTypes::Villager, 3100, 2900);
 		spawnEnemy(EntityTypes::Villager, 3150, 2900);
 		spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
-		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
-		spawnResaurce(EntityTypes::Stone, 2800, 3000);
-		spawnResaurce(EntityTypes::Tree, 2700, 3000);
-		spawnResaurce(EntityTypes::Tree, 2700, 3050);
-		spawnResaurce(EntityTypes::Tree, 2600, 3000);
-		spawnResaurce(EntityTypes::Tree, 2600, 3050);
 
 	}
 	else {//順序要一樣確保初始ID相同
@@ -640,12 +652,6 @@ void World::initWorld() {
 		spawn(EntityTypes::Villager, 3100, 2900);
 		spawn(EntityTypes::Villager, 3150, 2900);
 		spawn(EntityTypes::TownCenter, 3100, 2600);
-		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
-		spawnResaurce(EntityTypes::Stone, 2800, 3000);
-		spawnResaurce(EntityTypes::Tree, 2700, 3000);
-		spawnResaurce(EntityTypes::Tree, 2700, 3050);
-		spawnResaurce(EntityTypes::Tree, 2600, 3000);
-		spawnResaurce(EntityTypes::Tree, 2600, 3050);
 	}
 	isInitingWorld = false;
 }
@@ -654,6 +660,33 @@ void World::setMap(CPoint p, int type) {
 	int y = p.y / 50;
 	int x = p.x / 50;
 	map[y][x] = type;
+}
+
+void World::save() {
+	fstream file;      //宣告fstream物件
+
+	stringstream contain;
+	file.open("..//Map//Map.txt", ios::out | ios::trunc);
+	if (!file)
+		TRACE("File can't be opened\n");
+	for (int i = 0; i < 120; i++) {
+		for (int j = 0; j < 120; j++) {
+			contain << map[i][j] << " ";
+		}
+	}
+	contain << ResaurceUnit.size() << " ";
+
+	for (unsigned int i = 0; i < ResaurceUnit.size(); i++) {
+		contain << ResaurceUnit.at(i)->entityType << " " << ResaurceUnit.at(i)->point.x << " " << ResaurceUnit.at(i)->point.y << " ";
+	}
+
+	string str = contain.str();
+	char* output = new char[str.length() + 1];
+	strcpy(output, str.c_str());
+	file.write(output, str.length() + 1);
+	TRACE("Saving done\n");
+	file.close();
+	delete[] output;
 }
 
 World World::instance;

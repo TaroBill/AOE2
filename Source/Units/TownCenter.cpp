@@ -24,7 +24,7 @@ void Unit::TownCenter::onMove()
 		doneBuilding();
 	}
 }
-Unit::TownCenter::TownCenter(int pointX, int pointY, int Hp = 1) :Entity(pointX, pointY)
+Unit::TownCenter::TownCenter(int pointX, int pointY, int Hp) :Entity(pointX, pointY)
 {
 	isDoneBuilding = false;
 	isBuilding = true;
@@ -36,7 +36,7 @@ Unit::TownCenter::TownCenter(int pointX, int pointY, int Hp = 1) :Entity(pointX,
 	this->entityType = EntityTypes::TownCenter;
 	this->hp = Hp;
 }
-Unit::TownCenter::TownCenter(CPoint point, int Hp = 1) :Entity(point)
+Unit::TownCenter::TownCenter(CPoint point, int Hp) :Entity(point)
 {
 	isDoneBuilding = false;
 	isBuilding = true;
