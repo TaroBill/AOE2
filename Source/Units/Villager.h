@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "UnitBase.h"
 #include "Navigator.h"
 #include "Gatherable.h"
 #include "Attack.h"

@@ -589,6 +589,11 @@ void World::initWorld() {
 		spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
 		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
 		spawnResaurce(EntityTypes::Stone, 2800, 3000);
+		spawnResaurce(EntityTypes::Tree, 2700, 3000);
+		spawnResaurce(EntityTypes::Tree, 2700, 3050);
+		spawnResaurce(EntityTypes::Tree, 2600, 3000);
+		spawnResaurce(EntityTypes::Tree, 2600, 3050);
+
 	}
 	else {//順序要一樣確保初始ID相同
 		spawnEnemy(EntityTypes::Villager, 2900, 3000);
@@ -598,6 +603,10 @@ void World::initWorld() {
 		spawn(EntityTypes::TownCenter, 3100, 2600);
 		spawnResaurce(EntityTypes::GoldMine, 2900, 2900);
 		spawnResaurce(EntityTypes::Stone, 2800, 3000);
+		spawnResaurce(EntityTypes::Tree, 2700, 3000);
+		spawnResaurce(EntityTypes::Tree, 2700, 3050);
+		spawnResaurce(EntityTypes::Tree, 2600, 3000);
+		spawnResaurce(EntityTypes::Tree, 2600, 3050);
 	}
 	isInitingWorld = false;
 }
