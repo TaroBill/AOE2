@@ -141,6 +141,7 @@ void NetWork::OnReceive() {
         }
         else if (contain == "EndGame") {// command = EndGame
             //TRACE("EndGame from data\n");
+            World::getInstance()->isWin = true;
             game_framework::CGame::Instance()->SetGameState(GAME_STATE_OVER);
         }
         else if (contain == "StartGame") {// command = StartGame

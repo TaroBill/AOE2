@@ -1,6 +1,7 @@
 #include "EntityFactory.h"
 #include "../World.h"
 #include <exception>
+#include "../mygame.h"
 
 Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
 	register
@@ -9,6 +10,7 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
     {
     case EntityTypes::Villager:
         entity = new Unit::Villager(p);
+		CAudio::Instance()->Play(AUDIO_UNITCREATION, false);
         break;
     case EntityTypes::GoldMine:
         entity = new Unit::Mine(p, ResourceType::Gold);
@@ -36,6 +38,7 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, int x, int y) {
 	{
 	case EntityTypes::Villager:
 		entity = new Unit::Villager(x, y);
+		CAudio::Instance()->Play(AUDIO_UNITCREATION, false);
 		break;
 	case EntityTypes::GoldMine:
 		entity = new Unit::Mine(x, y, ResourceType::Gold);

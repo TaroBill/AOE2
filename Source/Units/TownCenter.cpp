@@ -23,6 +23,15 @@ void Unit::TownCenter::onMove()
 	if (this->hp == this->maxHP && !isDoneBuilding) {
 		doneBuilding();
 	}
+	if(this->isDoneBuilding)
+		spawnCount += 1;
+	if (spawnCount > 500) {
+		spawnCount = 0;
+		if (this->playerId == 0 && World::getInstance()->player.food >= 50) {
+			World::getInstance()->player.food -= 50;
+			World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
+		}
+	}
 }
 Unit::TownCenter::TownCenter(int pointX, int pointY, int Hp) :Entity(pointX, pointY)
 {

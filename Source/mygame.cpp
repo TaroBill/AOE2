@@ -96,6 +96,10 @@ namespace game_framework {
 		CAudio::Instance()->Load(AUDIO_SHEEP, "..//Sounds//SheepSound.mp3");
 		CAudio::Instance()->Load(AUDIO_TOWNCENTER, "..//Sounds//TownCenterSound.mp3");
 		CAudio::Instance()->Load(AUDIO_SOUNDTRACK, "..//Sounds//Soundtrack.mp3");
+		CAudio::Instance()->Load(AUDIO_VILLAGER, "..//Sounds//VillagerSound.mp3");
+		CAudio::Instance()->Load(AUDIO_VILLAGERDEATH, "..//Sounds//VillagerDeathSounds.mp3");
+		CAudio::Instance()->Load(AUDIO_UNITCREATION, "..//Sounds//UnitCreation.mp3");
+		CAudio::Instance()->Load(AUDIO_ERROR, "..//Sounds//Error.mp3");
 		CAudio::Instance()->Play(AUDIO_MAINTHEME, true);
 		//Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
 		//
@@ -199,8 +203,15 @@ namespace game_framework {
 
 	void CGameStateOver::OnBeginState()
 	{
-		counter = 60 * 10; // 5 seconds
+		counter = 30 * 10; // 10 seconds
 		CAudio::Instance()->Stop(AUDIO_SOUNDTRACK);
+		GUI::getInstance()->freeFrames();
+		if (NetWork::getInstance()->isConnectedToClient) {
+			NetWork::getInstance()->clientsocket.Close();
+			if (NetWork::getInstance()->isServer()) {
+				NetWork::getInstance()->cserversocket.Close();
+			}
+		}
 	}
 
 	void CGameStateOver::OnInit()
@@ -225,13 +236,16 @@ namespace game_framework {
 		GUI::getInstance()->onShow();
 		CDC* pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
 		CFont f, * fp;
-		f.CreatePointFont(160, "Times New Roman");	// 產生 font f; 160表示16 point的字
+		f.CreatePointFont(300, "Times New Roman");	// 產生 font f; 160表示16 point的字
 		fp = pDC->SelectObject(&f);					// 選用 font f
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255, 255, 0));
 		char str[80];								// Demo 數字對字串的轉換
-		sprintf(str, "Game Over ! (%d)", counter / 30);
-		pDC->TextOut(240, 210, str);
+		if(World::getInstance()->isWin)
+			sprintf(str, "You Win ! (%d)", counter / 30);
+		else
+			sprintf(str, "You Lose ! (%d)", counter / 30);
+		pDC->TextOut(SIZE_X/2, SIZE_Y / 2, str);
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 	}
@@ -283,6 +297,7 @@ namespace game_framework {
 			}
 		}
 		if (World::getInstance()->player.population == 0) {
+			World::getInstance()->isWin = false;
 			GotoGameState(GAME_STATE_OVER);
 			stringstream ss;
 			ss << "EndGame";
@@ -396,7 +411,15 @@ namespace game_framework {
 				}
 				//TRACE("SPAWNING TOWNCENTER\n");
 				CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
-				World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
+				if (World::getInstance()->player.gold > 50 && World::getInstance()->player.stone > 50 && World::getInstance()->player.wood > 50) {
+					World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
+					World::getInstance()->player.gold -= 50;
+					World::getInstance()->player.stone -= 50;
+					World::getInstance()->player.wood -= 50;
+				}
+				else {
+					CAudio::Instance()->Play(AUDIO_ERROR, false);
+				}
 				break;
 			}
 		}

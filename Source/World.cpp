@@ -604,11 +604,26 @@ void World::killByID(UINT ID) {
 		if (EnemyUnit[i]->ID == ID) {
 			delete EnemyUnit[i];
 			EnemyUnit.erase(EnemyUnit.begin() + i);
-			stringstream command;
-			command << "killEntity" << " ";
-			command << ID;
-			NetWork::getInstance()->SendData(command);
-			return;
+			if (NetWork::getInstance()->isConnectedToClient) {
+				stringstream command;
+				command << "killEntity" << " ";
+				command << ID;
+				NetWork::getInstance()->SendData(command);
+				return;
+			}
+			else {
+				int total = 0;
+				for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
+					if (typeid(*EnemyUnit[i]) == typeid(Unit::Villager)) {
+						total++;
+					}
+				}
+				if (total == 0) {
+					World::getInstance()->isWin = true;
+					game_framework::CGame::Instance()->SetGameState(GAME_STATES::GAME_STATE_OVER);
+				}
+				return;
+			}
 		}
 	}
 

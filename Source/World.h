@@ -128,9 +128,10 @@ public:
 	void clearAllEntities();
 	//儲存所有地圖(將地圖編輯器內resaurce存檔)
 	void save();
-
+	//初始化地圖(從檔案中讀取地圖)
 	void initMap();
-
+	//是否獲勝
+	bool isWin = false;
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;

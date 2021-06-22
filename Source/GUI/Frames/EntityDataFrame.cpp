@@ -23,7 +23,7 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		entitys.push_back(CMovingBitmap());
 		if (typeid(*en[i]) == typeid(Unit::Villager)) {
 			entitys[i].LoadBitmap(IDB_VILLAGERICON);
-			CAudio::Instance()->Play(AUDIO_SHEEP, false);
+			CAudio::Instance()->Play(AUDIO_VILLAGER, false);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Mine)) {
 			entitys[i].LoadBitmap(IDB_GOLDICON);
@@ -40,6 +40,7 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Sheep)) {
 			entitys[i].LoadBitmap(IDB_SHEEPICON);
+			CAudio::Instance()->Play(AUDIO_SHEEP, false);
 		}
 		entitys[i].SetTopLeft(firstLocation.x + i%20 * 40, firstLocation.y + (int)(i / 20) * 40);
 	}
