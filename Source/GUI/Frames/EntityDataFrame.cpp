@@ -1,4 +1,5 @@
 #include "EntityDataFrame.h"
+#include "../../mygame.h"
 
 EntityDataFrame::EntityDataFrame() : Frame(300, SIZE_Y - 240, 240, 1380)
 {
@@ -22,15 +23,23 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		entitys.push_back(CMovingBitmap());
 		if (typeid(*en[i]) == typeid(Unit::Villager)) {
 			entitys[i].LoadBitmap(IDB_VILLAGERICON);
+			CAudio::Instance()->Play(AUDIO_SHEEP, false);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Mine)) {
 			entitys[i].LoadBitmap(IDB_GOLDICON);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::TownCenter)) {
 			entitys[i].LoadBitmap(IDB_TOWNCENTER_ICON);
+			CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Stone)) {
 			entitys[i].LoadBitmap(IDB_STONE_ICON);
+		}
+		else if (typeid(*en[i]) == typeid(Unit::Tree)) {
+			entitys[i].LoadBitmap(IDB_TREE_ICON);
+		}
+		else if (typeid(*en[i]) == typeid(Unit::Sheep)) {
+			entitys[i].LoadBitmap(IDB_SHEEPICON);
 		}
 		entitys[i].SetTopLeft(firstLocation.x + i%20 * 40, firstLocation.y + (int)(i / 20) * 40);
 	}
@@ -67,6 +76,16 @@ void EntityDataFrame::OnShow() {
 		else if (typeid(*showDataEntity) == typeid(Unit::Stone)) {
 			char str[80];								// Demo 數字對字串的轉換
 			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Stone*>(showDataEntity)->remainAmount);
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		}
+		else if (typeid(*showDataEntity) == typeid(Unit::Tree) ){
+			char str[80];								// Demo 數字對字串的轉換
+			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Tree*>(showDataEntity)->remainAmount);
+			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
+		}
+		else if (typeid(*showDataEntity) == typeid(Unit::Sheep)) {
+			char str[80];								// Demo 數字對字串的轉換
+			sprintf(str, "剩餘資源量: %d ", dynamic_cast<Unit::Sheep*>(showDataEntity)->remainAmount);
 			pDC->TextOut(300 + 40, SIZE_Y - 240 + 80, str);
 		}
 		else {

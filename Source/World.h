@@ -17,6 +17,9 @@
 #include "Units/Tree.h"
 #include "Units/Stone.h"
 #include "Units/Sheep.h"
+#include <iostream>
+#include <fstream>
+
 enum mapItem { GRASS, RIVER };
 class World {
 public:
@@ -118,10 +121,19 @@ public:
 	int buildingMap[120][120];
 	//生成世界時初始化的實體
 	void initWorld();
+	//是否正在編輯地圖 0沒有 1編輯草地 2編輯水
+	int isEditingMap = 0;
+	//設置該點的地形type = 0是草地 type = 1 是水
+	void setMap(CPoint p, int type);
+	void clearAllEntities();
+	//儲存所有地圖(將地圖編輯器內resaurce存檔)
+	void save();
+
+	void initMap();
+
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
-	void initMap();
 	void calculatePopulation();
 	int map[120][120];
 	int sx, sy; //螢幕座標

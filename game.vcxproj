@@ -276,12 +276,19 @@
     </ClCompile>
     <ClCompile Include="Source\GUI\Buttons\Building_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\eraser_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Gold_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Grass_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Sheep_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_Leave_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.cpp" />
     <ClCompile Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Stone_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\Tree_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\water_Button.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataButtonFrame.cpp" />
     <ClCompile Include="Source\GUI\Frames\EntityDataFrame.cpp" />
     <ClCompile Include="Source\GUI\Frames\IPFrame.cpp" />
@@ -337,14 +344,21 @@
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\GUI\Buttons\Building_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\eraser_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Gold_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Grass_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\House_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\Military_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Sheep_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_CreateServer_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer2_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_JoinServer_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_Leave_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MapEditor_Button.h" />
     <ClInclude Include="Source\GUI\Buttons\StartMenu_MulitGame_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Stone_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\Tree_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\water_Button.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataButtonFrame.h" />
     <ClInclude Include="Source\GUI\Frames\EntityDataFrame.h" />
     <ClInclude Include="Source\GUI\Frames\Frame.h" />
@@ -390,6 +404,7 @@
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
     <Image Include="RES\Building\TownCenter.bmp" />
+    <Image Include="RES\Building\TownCenterNotDone.bmp" />
     <Image Include="RES\buttonBackGround.bmp" />
     <Image Include="RES\Button_Icon\Building.bmp" />
     <Image Include="RES\Button_Icon\ButtonMultiGame.bmp" />
@@ -397,6 +412,7 @@
     <Image Include="RES\Button_Icon\Destroy.bmp" />
     <Image Include="RES\Button_Icon\Dock.bmp" />
     <Image Include="RES\Button_Icon\Garrison.bmp" />
+    <Image Include="RES\Button_Icon\GrassButtonIcon.bmp" />
     <Image Include="RES\Button_Icon\House.bmp" />
     <Image Include="RES\Button_Icon\LumberCamp.bmp" />
     <Image Include="RES\Button_Icon\Military.bmp" />
@@ -407,10 +423,13 @@
     <Image Include="RES\Button_Icon\StartMenuButtonLong.bmp" />
     <Image Include="RES\Button_Icon\StartMenuButtonShort.bmp" />
     <Image Include="RES\Button_Icon\Stop.bmp" />
+    <Image Include="RES\Button_Icon\waterButtonIcon.bmp" />
     <Image Include="RES\EntityDataBackGround.bmp" />
     <Image Include="RES\Entity_Icon\GoldIcon.bmp" />
+    <Image Include="RES\Entity_Icon\SheepIcon.bmp" />
     <Image Include="RES\Entity_Icon\StoneIcon.bmp" />
     <Image Include="RES\Entity_Icon\TownCenterIcon.bmp" />
+    <Image Include="RES\Entity_Icon\TreeIcon.bmp" />
     <Image Include="RES\Entity_Icon\VillagerIcon.bmp" />
     <Image Include="RES\Gold_aoe2.bmp" />
     <Image Include="RES\Grass.bmp" />

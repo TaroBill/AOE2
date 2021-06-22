@@ -20,6 +20,7 @@ public:
 	void triggerOnClicked(CPoint);
 	void loadInGameGUI();
 	void loadMainMenu();
+	void loadMapEditorGUI();
 	void freeFrames();
 	void addFrame(Frame* frame);
 	vector<Frame*> frames;

@@ -1,4 +1,14 @@
 #include "EntityDataButtonFrame.h"
+#include "../Buttons/Building_Button.h"
+#include "../Buttons/Military_Button.h"
+#include "../Buttons/House_Button.h"
+#include "../Buttons/Grass_Button.h"
+#include "../Buttons/water_Button.h"
+#include "../Buttons/Sheep_Button.h"
+#include "../Buttons/Gold_Button.h"
+#include "../Buttons/Stone_Button.h"
+#include "../Buttons/Tree_Button.h"
+#include "../Buttons/eraser_Button.h"
 
 EntityDataButtonFrame::EntityDataButtonFrame() : Frame(0, SIZE_Y - 240, 240, 300)
 {
@@ -39,4 +49,15 @@ void EntityDataButtonFrame::LoadVillagerButtons() {
 void EntityDataButtonFrame::LoadBuildingButtons() {
 	freeButtons();
 	buttons.push_back(new House_Button());
+}
+
+void EntityDataButtonFrame::LoadMapEditorButtons() {
+	freeButtons();
+	buttons.push_back(new Grass_Button());
+	buttons.push_back(new Water_Button());
+	buttons.push_back(new Sheep_Button());
+	buttons.push_back(new Stone_Button());
+	buttons.push_back(new Tree_Button());
+	buttons.push_back(new Gold_Button());
+	buttons.push_back(new Eraser_Button());
 }

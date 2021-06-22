@@ -92,7 +92,12 @@ namespace game_framework {
 		// 開始載入資料
 		//
 		logo.LoadBitmap(IDB_BACKGROUND);
-		Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+		CAudio::Instance()->Load(AUDIO_MAINTHEME, "..//Sounds//MainTheme.mp3");
+		CAudio::Instance()->Load(AUDIO_SHEEP, "..//Sounds//SheepSound.mp3");
+		CAudio::Instance()->Load(AUDIO_TOWNCENTER, "..//Sounds//TownCenterSound.mp3");
+		CAudio::Instance()->Load(AUDIO_SOUNDTRACK, "..//Sounds//Soundtrack.mp3");
+		CAudio::Instance()->Play(AUDIO_MAINTHEME, true);
+		//Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
 		//
 		// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
 		//
@@ -194,7 +199,8 @@ namespace game_framework {
 
 	void CGameStateOver::OnBeginState()
 	{
-		counter = 30 * 5; // 5 seconds
+		counter = 60 * 10; // 5 seconds
+		CAudio::Instance()->Stop(AUDIO_SOUNDTRACK);
 	}
 
 	void CGameStateOver::OnInit()
@@ -251,6 +257,9 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
+		CAudio::Instance()->Stop(AUDIO_MAINTHEME);
+		CAudio::Instance()->Play(AUDIO_SOUNDTRACK, true);
+		World::getInstance()->initMap();
 		GUI::getInstance()->loadInGameGUI();
 		World::getInstance()->initWorld();
 	}
@@ -364,6 +373,7 @@ namespace game_framework {
 
 	void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		isLButtonDown = true;
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
 		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
 		LButtonDownPoint = World::getInstance()->Screen2Global(point);
@@ -372,17 +382,29 @@ namespace game_framework {
 			return;
 		}
 		if (World::getInstance()->isSpawningEntity) {
+			int x = (int)LButtonDownPoint.x / 50;
+			int y = (int)LButtonDownPoint.y / 50;
+			if (World::getInstance()->getLocationItem(x * 50,y * 50) == 1)
+				return;
 			switch (World::getInstance()->spawningEntityType) {
 			case EntityTypes::Villager:
 				World::getInstance()->spawn(EntityTypes::Villager, LButtonDownPoint);
 				break;
+			case EntityTypes::TownCenter:
+				if (World::getInstance()->getLocationItem(x * 50, y * 50) == 1 || World::getInstance()->getLocationItem(x * 50, (y+1)*50) == 1 || World::getInstance()->getLocationItem((x+1)*50, y*50) == 1 || World::getInstance()->getLocationItem((x + 1) * 50, (y + 1) * 50) == 1) {
+					break;
+				}
+				//TRACE("SPAWNING TOWNCENTER\n");
+				CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
+				World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
+				break;
 			}
 		}
-		isLButtonDown = true;
 	}
 
 	void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		isLButtonDown = false;
 		if (GUI::getInstance()->isInGUI(point)) {
 			return;
 		}
@@ -409,7 +431,6 @@ namespace game_framework {
 		else {
 			dynamic_cast<EntityDataFrame*>(GUI::getInstance()->frames.at(2))->clearEntitysBitmap();
 		}
-		isLButtonDown = false;
 	}
 
 	void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -473,12 +494,14 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnBeginState()
 	{
-		GUI::getInstance()->loadInGameGUI();
+		World::getInstance()->initMap();
+		GUI::getInstance()->loadMapEditorGUI();
 	}
 
 	void CGameStateMapEditor::OnMove()							// 移動遊戲元素
 	{
 		World::getInstance()->onMove();
+		World::getInstance()->UnitOnMove();
 		GUI::getInstance()->onMove();
 	}
 
@@ -511,6 +534,7 @@ namespace game_framework {
 		const char KEY_UP = 0x26; // keyboard上箭頭
 		const char KEY_RIGHT = 0x27; // keyboard右箭頭
 		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		const UINT KEY_S = 83;
 		if (nChar == KEY_LEFT) {
 			//eraser.SetMovingLeft(true);
 			World::getInstance()->moveScreenLeft(true);
@@ -527,6 +551,11 @@ namespace game_framework {
 			//eraser.SetMovingDown(true);
 			World::getInstance()->moveScreenDown(true);
 		}
+		else if (nChar == KEY_S) {
+			World::getInstance()->save();
+			GotoGameState(GAME_STATES::GAME_STATE_INIT);
+		}
+		//TRACE("nchar %d \n", nChar);
 	}
 
 	void CGameStateMapEditor::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -551,16 +580,48 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
+		isLBDown = true;
 		TRACE("Mouse monitor Location: (%d, %d)\n", point.x, point.y);
-		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->GlobalY2ScreenY(point.y));
+		TRACE("Mouse Global Location: (%d, %d)\n", World::getInstance()->ScreenX2GlobalX(point.x), World::getInstance()->ScreenY2GlobalY(point.y));
 		if (GUI::getInstance()->isInGUI(point)) {
 			GUI::getInstance()->triggerOnClicked(point);
 			return;
+		}
+		CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
+		if (World::getInstance()->isSpawningEntity) {
+			int isEditingMap = World::getInstance()->isEditingMap;
+			if (isEditingMap == 1 || isEditingMap == 2) {
+				World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+			}
+			else if (isEditingMap == 3) {
+				Unit::Entity* en = World::getInstance()->getNearestEntity(LButtonDownPoint);
+				if(en != NULL)
+					World::getInstance()->killByID(en->ID);
+			}
+			else {
+				int x = (int)LButtonDownPoint.x / 50;
+				int y = (int)LButtonDownPoint.y / 50;
+				switch (World::getInstance()->spawningEntityType) {
+				case EntityTypes::GoldMine:
+					World::getInstance()->spawnResaurce(EntityTypes::GoldMine, LButtonDownPoint);
+					break;
+				case EntityTypes::Stone:
+					World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
+					break;
+				case EntityTypes::Tree:
+					World::getInstance()->spawnResaurce(EntityTypes::Tree, LButtonDownPoint);
+					break;
+				case EntityTypes::Sheep:
+					World::getInstance()->spawnResaurce(EntityTypes::Sheep, LButtonDownPoint);
+					break;
+				}
+			}
 		}
 	}
 
 	void CGameStateMapEditor::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		isLBDown = false;
 		if (GUI::getInstance()->isInGUI(point)) {
 			return;
 		}
@@ -568,12 +629,50 @@ namespace game_framework {
 
 	void CGameStateMapEditor::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	{
+		World::getInstance()->mouseLocation = point;
+		if (isLBDown) {
+			CPoint LButtonDownPoint = World::getInstance()->Screen2Global(point);
+			if (World::getInstance()->isSpawningEntity) {
+				int isEditingMap = World::getInstance()->isEditingMap;
+				if (isEditingMap == 1 || isEditingMap == 2) {
+					World::getInstance()->setMap(LButtonDownPoint, isEditingMap - 1);
+				}
+				else if (isEditingMap == 3) {
+					Unit::Entity* en = World::getInstance()->getNearestEntity(LButtonDownPoint);
+					if (en != NULL) {
+						TRACE("delete %d\n", en->ID);
+						World::getInstance()->killByID(en->ID);
+					}else
+						TRACE("ID not found\n");
+				}
+				else {
+					int x = (int)LButtonDownPoint.x / 50;
+					int y = (int)LButtonDownPoint.y / 50;
+					if (World::getInstance()->getLocationItem(x*50, y*50) == 1)
+						return;
+					switch (World::getInstance()->spawningEntityType) {
+					case EntityTypes::GoldMine:
+						World::getInstance()->spawnResaurce(EntityTypes::GoldMine, LButtonDownPoint);
+						break;
+					case EntityTypes::Stone:
+						World::getInstance()->spawnResaurce(EntityTypes::Stone, LButtonDownPoint);
+						break;
+					case EntityTypes::Tree:
+						World::getInstance()->spawnResaurce(EntityTypes::Tree, LButtonDownPoint);
+						break;
+					case EntityTypes::Sheep:
+						World::getInstance()->spawnResaurce(EntityTypes::Sheep, LButtonDownPoint);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	void CGameStateMapEditor::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	{
-
-
+		World::getInstance()->isSpawningEntity = false;
+		World::getInstance()->isEditingMap = 0;
 	}
 
 	void CGameStateMapEditor::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -584,6 +683,7 @@ namespace game_framework {
 	void CGameStateMapEditor::OnShow()
 	{
 		World::getInstance()->OnShow();
+		World::getInstance()->UnitOnShow();
 		//
 		//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 		//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語

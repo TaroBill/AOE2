@@ -100,6 +100,23 @@ void Unit::Villager::Attacking()
 
 }
 
+bool Unit::Villager::Building() {
+	resourceCounter++;
+	if (resourceCounter >= 15)
+	{
+		//TRACE("Building towncenter\n");
+		resourceCounter = 0;
+		Entity* e = World::getInstance()->getEntityByID(target.ID);
+		if (e == NULL) {
+			TRACE("can't find Building %d\n", target.ID);
+			return false;
+		}
+		else if (e->hp == e->maxHP)
+			return false;
+		e->hp = (e->hp + 10 > e->maxHP) ? e->maxHP : (e->hp + 10);
+	}
+	return true;
+}
 
 /*
 點擊時觸發一次
@@ -124,10 +141,32 @@ void Unit::Villager::SetTarget(CPoint point, vector<Entity*> group)
 			vs = VillagerState::GetResourceOnRoad;
 
 		}
-		else if (dynamic_cast<TownCenter*>(temp))
-		{
-			//TRACE("TC\n");
-			vs = VillagerState::ReturnResourceOnRoad;
+		else if (temp->isBuilding && temp->playerId == 1 && this->playerId == 1) {
+			if (temp->hp < temp->maxHP) {
+				vs = VillagerState::BuildingOnRoad;
+				target.ID = temp->ID;
+				target.point = temp->point;
+				target.isLive = true;
+			}
+			else if (dynamic_cast<TownCenter*>(temp) && dynamic_cast<TownCenter*>(temp)->isDoneBuilding)
+			{
+				//TRACE("TC\n");
+				vs = VillagerState::ReturnResourceOnRoad;
+			}
+
+		}
+		else if (temp->isBuilding && temp->playerId == 0 && this->playerId == 0) {
+			if (temp->hp < temp->maxHP) {
+				vs = VillagerState::BuildingOnRoad;
+				target.ID = temp->ID;
+				target.point = temp->point;
+				target.isLive = true;
+			}
+			else if (dynamic_cast<TownCenter*>(temp) && dynamic_cast<TownCenter*>(temp)->isDoneBuilding)
+			{
+				//TRACE("TC\n");
+				vs = VillagerState::ReturnResourceOnRoad;
+			}
 		}
 		else if (temp->playerId == 1 && this->playerId == 0) {
 			vs = VillagerState::GoAttackOnRoad;
@@ -166,10 +205,31 @@ void Unit::Villager::SetTarget(CPoint point)
 				temp->GetComponent<Gatherable>()->resource.type);
 			
 		}
-		else if (dynamic_cast<TownCenter*>( temp ))
-		{
-			//TRACE("TC\n");
-			vs = VillagerState::ReturnResourceOnRoad;
+		else if (temp->isBuilding && temp->playerId == 1 && this->playerId == 1) {
+			if (temp->hp < temp->maxHP) {
+				vs = VillagerState::BuildingOnRoad;
+				target.ID = temp->ID;
+				target.point = temp->point;
+				target.isLive = true;
+			}
+			else if (dynamic_cast<TownCenter*>(temp) && dynamic_cast<TownCenter*>(temp)->isDoneBuilding)
+			{
+				//TRACE("TC\n");
+				vs = VillagerState::ReturnResourceOnRoad;
+			}
+		}
+		else if (temp->isBuilding && temp->playerId == 0 && this->playerId == 0) {
+			if (temp->hp < temp->maxHP) {
+				vs = VillagerState::BuildingOnRoad;
+				target.ID = temp->ID;
+				target.point = temp->point;
+				target.isLive = true;
+			}
+			else if (dynamic_cast<TownCenter*>(temp) && dynamic_cast<TownCenter*>(temp)->isDoneBuilding)
+			{
+				//TRACE("TC\n");
+				vs = VillagerState::ReturnResourceOnRoad;
+			}
 		}
 		else if (temp->playerId == 1 && this->playerId == 0) {
 			vs = VillagerState::GoAttackOnRoad;
@@ -340,6 +400,20 @@ void Unit::Villager::FSM(int navigatorState)
 		Unit::Villager::Attacking();
 		if (World::getInstance()->getEntityByID(ID) == NULL) { //  若打死人
 			target.isLive = false;
+		}
+		break;
+
+	case VillagerState::BuildingOnRoad:
+		if (navigatorState == 1)
+		{
+			vs = VillagerState::Building;
+		}
+		break;
+
+	case VillagerState::Building:
+		if (!Building()) {
+			vs = VillagerState::Base;
+			entityState = Entity::State::Idle;
 		}
 		break;
 
