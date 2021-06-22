@@ -92,7 +92,12 @@ namespace game_framework {
 		// 開始載入資料
 		//
 		logo.LoadBitmap(IDB_BACKGROUND);
-		Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+		CAudio::Instance()->Load(AUDIO_MAINTHEME, "..//Sounds//MainTheme.mp3");
+		CAudio::Instance()->Load(AUDIO_SHEEP, "..//Sounds//SheepSound.mp3");
+		CAudio::Instance()->Load(AUDIO_TOWNCENTER, "..//Sounds//TownCenterSound.mp3");
+		CAudio::Instance()->Load(AUDIO_SOUNDTRACK, "..//Sounds//Soundtrack.mp3");
+		CAudio::Instance()->Play(AUDIO_MAINTHEME, true);
+		//Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
 		//
 		// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
 		//
@@ -194,7 +199,8 @@ namespace game_framework {
 
 	void CGameStateOver::OnBeginState()
 	{
-		counter = 30 * 5; // 5 seconds
+		counter = 60 * 10; // 5 seconds
+		CAudio::Instance()->Stop(AUDIO_SOUNDTRACK);
 	}
 
 	void CGameStateOver::OnInit()
@@ -251,6 +257,8 @@ namespace game_framework {
 		/*CAudio::Instance()->Play(AUDIO_LAKE, true);			// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
+		CAudio::Instance()->Stop(AUDIO_MAINTHEME);
+		CAudio::Instance()->Play(AUDIO_SOUNDTRACK, true);
 		World::getInstance()->initMap();
 		GUI::getInstance()->loadInGameGUI();
 		World::getInstance()->initWorld();
@@ -387,6 +395,7 @@ namespace game_framework {
 					break;
 				}
 				//TRACE("SPAWNING TOWNCENTER\n");
+				CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
 				World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
 				break;
 			}

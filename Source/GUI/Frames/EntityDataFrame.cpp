@@ -1,4 +1,5 @@
 #include "EntityDataFrame.h"
+#include "../../mygame.h"
 
 EntityDataFrame::EntityDataFrame() : Frame(300, SIZE_Y - 240, 240, 1380)
 {
@@ -22,12 +23,14 @@ void EntityDataFrame::loadEntitysBitmap(vector<Unit::Entity*> en) {
 		entitys.push_back(CMovingBitmap());
 		if (typeid(*en[i]) == typeid(Unit::Villager)) {
 			entitys[i].LoadBitmap(IDB_VILLAGERICON);
+			CAudio::Instance()->Play(AUDIO_SHEEP, false);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Mine)) {
 			entitys[i].LoadBitmap(IDB_GOLDICON);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::TownCenter)) {
 			entitys[i].LoadBitmap(IDB_TOWNCENTER_ICON);
+			CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
 		}
 		else if (typeid(*en[i]) == typeid(Unit::Stone)) {
 			entitys[i].LoadBitmap(IDB_STONE_ICON);
