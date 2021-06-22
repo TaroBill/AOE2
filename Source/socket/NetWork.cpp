@@ -185,7 +185,7 @@ void NetWork::SendData(stringstream& command) {
     delete [] output;
 }
 
-bool NetWork::isServer() {
+bool &NetWork::isServer() {
     return isOpened;
 }
 

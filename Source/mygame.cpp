@@ -208,9 +208,14 @@ namespace game_framework {
 		GUI::getInstance()->freeFrames();
 		if (NetWork::getInstance()->isConnectedToClient) {
 			NetWork::getInstance()->clientsocket.Close();
-			if (NetWork::getInstance()->isServer()) {
-				NetWork::getInstance()->cserversocket.Close();
-			}
+			NetWork::getInstance()->clientsocket.ShutDown();
+			NetWork::getInstance()->isConnectedToClient = false;
+		}
+		if (NetWork::getInstance()->isServer()) {
+			NetWork::getInstance()->isCreated = false;
+			NetWork::getInstance()->cserversocket.Close();
+			NetWork::getInstance()->cserversocket.ShutDown();
+			NetWork::getInstance()->isServer() = false;
 		}
 	}
 

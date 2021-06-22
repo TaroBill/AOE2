@@ -22,13 +22,13 @@ public:
     void play();
     void pause();
     void SendData(stringstream& command);
-    bool isServer();
+    bool &isServer();
     bool isConnectedToClient;
     ServerSocket cserversocket;
     ClientSocket clientsocket;
+    bool isCreated;
 private:
     static NetWork instance;
     bool isOpened;
     bool isPlaying;
-    bool isCreated;
 };

@@ -2,6 +2,8 @@
 #include "GUI/GUI.h"
 #include "socket/NetWork.h"
 #include "GUI/Frames/EntityDataFrame.h"
+#include "mygame.h"
+#include "audio.h"
 World* World::getInstance()
 {
 	return &instance;
@@ -588,6 +590,9 @@ void World::killByID(UINT ID) {
 
 	for (unsigned int i = 0; i < unit.size(); i++) {
 		if (unit[i]->ID == ID) {
+			if (this->isOnScreen(unit[i]->point.x, unit[i]->point.y) && dynamic_cast<Unit::Villager*>(unit[i])) {
+				CAudio::Instance()->Play(AUDIO_VILLAGERDEATH, false);
+			}
 			delete unit[i];
 			unit.erase(unit.begin() + i);
 			calculatePopulation();
@@ -602,6 +607,9 @@ void World::killByID(UINT ID) {
 
 	for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
 		if (EnemyUnit[i]->ID == ID) {
+			if (this->isOnScreen(EnemyUnit[i]->point.x, EnemyUnit[i]->point.y) && dynamic_cast<Unit::Villager*>(EnemyUnit[i])) {
+				CAudio::Instance()->Play(AUDIO_VILLAGERDEATH, false);
+			}
 			delete EnemyUnit[i];
 			EnemyUnit.erase(EnemyUnit.begin() + i);
 			if (NetWork::getInstance()->isConnectedToClient) {
