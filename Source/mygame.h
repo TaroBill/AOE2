@@ -112,7 +112,7 @@ namespace game_framework {
 		CMovingBitmap	help;		// »¡©ú¹Ï
 		CPoint LButtonDownPoint;
 		CPoint mouseLocation;
-		int sendDataCounter;
+		int sendDataCounter = -100;
 		bool isLButtonDown = false;
 		
 	};

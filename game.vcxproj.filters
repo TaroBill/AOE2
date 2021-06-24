@@ -46,6 +46,7 @@
     <ClCompile Include="Source\Units\Tree.cpp" />
     <ClCompile Include="Source\Units\Sheep.cpp" />
     <ClCompile Include="Source\GUI\Buttons\eraser_Button.cpp" />
+    <ClCompile Include="Source\GUI\Frames\HelpFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Source\Units\Tree.h" />
     <ClInclude Include="Source\Units\Sheep.h" />
     <ClInclude Include="Source\GUI\Buttons\eraser_Button.h" />
+    <ClInclude Include="Source\GUI\Frames\HelpFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -273,6 +275,7 @@
     <Image Include="RES\Button_Icon\waterButtonIcon.bmp" />
     <Image Include="RES\Entity_Icon\SheepIcon.bmp" />
     <Image Include="RES\Building\TownCenterNotDone.bmp" />
+    <Image Include="RES\helpFrame.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />
@@ -301,6 +304,5 @@
     <None Include="RES\loading.bmp" />
     <None Include="RES\ntutcsie.bmp" />
     <None Include="res\ribbon1.mfcribbon-ms" />
-    <None Include="res\Toolbar.bmp" />
   </ItemGroup>
 </Project>

@@ -20,15 +20,22 @@ void Unit::TownCenter::doneBuilding()
 void Unit::TownCenter::onMove()
 {
 	HitBox = CRect(point.x, point.y, point.x + size.x, point.y + size.y);
-	if (this->hp == this->maxHP && !isDoneBuilding) {
+	if ((this->hp == this->maxHP || World::getInstance()->cheaterMode) && !isDoneBuilding) {
+		this->hp = this->maxHP;
 		doneBuilding();
 	}
-	if(this->isDoneBuilding)
+	if (this->isDoneBuilding) {
 		spawnCount += 1;
+	}
 	if (spawnCount > 500) {
 		spawnCount = 0;
-		if (this->playerId == 0 && World::getInstance()->player.food >= 50) {
-			World::getInstance()->player.food -= 50;
+		if (!World::getInstance()->cheaterMode) {
+			if (this->playerId == 0 && World::getInstance()->player.food >= 50) {
+				World::getInstance()->player.food -= 50;
+				World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
+			}
+		}
+		else {
 			World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
 		}
 	}

@@ -25,6 +25,12 @@ void World::initMap() {
 
 	strData = pBuf;
 	ss << strData;
+	/*if (NetWork::getInstance()->isServer() && NetWork::getInstance()->isConnectedToClient) {
+		stringstream command;
+		command << "initMap " << strData;
+		//TRACE("map: %s\n", command.str().c_str());
+		NetWork::getInstance()->SendData(command);
+	}*/
 
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
@@ -48,6 +54,31 @@ void World::initMap() {
 	file.close();
 
 }
+
+void World::initMapFromNet(stringstream& ss) {
+	clearAllEntities();
+
+	for (int i = 0; i < 120; i++) {
+		for (int j = 0; j < 120; j++) {
+			ss >> map[i][j];
+			buildingMap[i][j] = 0;
+			//TRACE("%d, %d :  %d\n", j, i, map[i][j]);
+		}
+	}
+	UINT resaurceSize;
+	ss >> resaurceSize;
+	TRACE("Size: %d\n", resaurceSize);
+	for (UINT i = 0; i < resaurceSize; i++) {
+		int ET;
+		ss >> ET;//Entity type
+		int x, y;   //Entity Location
+		ss >> x >> y;
+		World::getInstance()->spawnResaurce(static_cast<EntityTypes>(ET), x, y);
+	}
+
+
+}
+
 World::World() {
 	isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	sx = sy = 50 * 50; //螢幕座標
@@ -491,6 +522,15 @@ void World::LoadResourceFromStringStream(int amount, stringstream& ss) {
 		if (ET == static_cast<int>(EntityTypes::GoldMine)) {
 			dynamic_cast<Unit::Mine*>(ResaurceUnit.at(i))->deSerialize(ss);
 		}
+		else if (ET == static_cast<int>(EntityTypes::Stone)) {
+			dynamic_cast<Unit::Stone*>(ResaurceUnit.at(i))->deSerialize(ss);
+		}
+		else if (ET == static_cast<int>(EntityTypes::Sheep)) {
+			dynamic_cast<Unit::Sheep*>(ResaurceUnit.at(i))->deSerialize(ss);
+		}
+		else if (ET == static_cast<int>(EntityTypes::Tree)) {
+			dynamic_cast<Unit::Tree*>(ResaurceUnit.at(i))->deSerialize(ss);
+		}
 		else {	//略過出問題的資料
 			TRACE("ERROR on update Resource");
 			TRACE("ET = %d, %s\n", ET, ss.str().c_str());
@@ -520,6 +560,15 @@ void World::packUnit(vector<Unit::Entity*> entitys, int type) {
 			break;
 		case EntityTypes::GoldMine:
 			dynamic_cast<Unit::Mine*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		case EntityTypes::Sheep:
+			dynamic_cast<Unit::Sheep*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		case EntityTypes::Stone:
+			dynamic_cast<Unit::Stone*>(entitys.at(i))->Serialize(cmd2);
+			break;
+		case EntityTypes::Tree:
+			dynamic_cast<Unit::Tree*>(entitys.at(i))->Serialize(cmd2);
 			break;
 		case EntityTypes::TownCenter:
 			dynamic_cast<Unit::TownCenter*>(entitys.at(i))->Serialize(cmd2);

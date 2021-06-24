@@ -86,12 +86,12 @@ void NetWork::OnAccept() {
 
 void NetWork::OnReceive() {
     TRACE("OnReceive\n");
-    char* pBuf = new char[4096];
+    char* pBuf = new char[20000];
     CString strData;
     stringstream ss;
     string contain;
     int iLen;
-    iLen = clientsocket.Receive(pBuf, 4096);
+    iLen = clientsocket.Receive(pBuf, 20000);
     if (iLen == SOCKET_ERROR)
     {
         AfxMessageBox("Could not Receive");
@@ -166,6 +166,9 @@ void NetWork::OnReceive() {
             ss >> amount;
             World::getInstance()->LoadResourceFromStringStream(amount, ss);
         }
+        else if (contain == "initMap") {
+            World::getInstance()->initMapFromNet(ss);
+        }
     }
     delete [] pBuf;
 
@@ -181,7 +184,7 @@ void NetWork::SendData(stringstream& command) {
     strcpy(output, str.c_str());
     //TRACE(output);
     
-    clientsocket.Send(output, 4096);
+    clientsocket.Send(output, 20000);
     delete [] output;
 }
 

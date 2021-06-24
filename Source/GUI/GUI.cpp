@@ -4,6 +4,7 @@
 #include "Frames/EntityDataFrame.h"
 #include "Frames/EntityDataButtonFrame.h"
 #include "Frames/StartMenuFrame.h"
+#include "Frames/HelpFrame.h"
 
 GUI* GUI::getInstance() {
 	return &instance;
@@ -13,6 +14,7 @@ GUI* GUI::getInstance() {
 GUI::GUI() {
 	isTyping = false;
 	ip = "";
+	isHelpOpened = false;
 }
 
 GUI::~GUI() {
@@ -84,6 +86,23 @@ void GUI::loadMapEditorGUI() {
 	EntityDataButtonFrame *f = new EntityDataButtonFrame();
 	f->LoadMapEditorButtons();
 	frames.push_back(f);
+}
+
+void GUI::openHelp() {
+	if (!isHelpOpened) {
+		addFrame(new HelpFrame());
+		isHelpOpened = true;
+	}
+	else {
+		isHelpOpened = false;
+		for (unsigned int i = 0; i < frames.size(); i++) {
+			if (typeid(*frames.at(i)) == typeid(HelpFrame)) {
+				delete frames.at(i);
+				frames.erase(frames.begin() + i);
+				break;
+			}
+		}
+	}
 }
 
 GUI GUI::instance;

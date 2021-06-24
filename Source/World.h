@@ -130,8 +130,12 @@ public:
 	void save();
 	//初始化地圖(從檔案中讀取地圖)
 	void initMap();
+	//初始化地圖(從檔案中讀取地圖)
+	void initMapFromNet(stringstream&);
 	//是否獲勝
 	bool isWin = false;
+	//作弊模式
+	bool cheaterMode = false;
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;

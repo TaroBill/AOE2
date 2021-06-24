@@ -137,6 +137,15 @@ namespace game_framework {
 		if (nChar == 80) {
 			game_framework::CGame::Instance()->SetGameState(GAME_STATES::GAME_STATE_RUN);
 		}
+		const UINT KEY_H = 72;
+		if (nChar == KEY_H) {
+			//TRACE("開啟help\n");
+			GUI::getInstance()->openHelp();
+		}
+		const UINT KEY_ESC = 27;
+		if (nChar == KEY_ESC) {
+			PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
+		}
 	}
 
 	void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
@@ -197,8 +206,23 @@ namespace game_framework {
 		}
 		GUI::getInstance()->onMove();
 		counter--;
-		if (counter < 0)
+		if (counter < 0) {
 			GotoGameState(GAME_STATE_INIT);
+			if (NetWork::getInstance()->isConnectedToClient) {
+				NetWork::getInstance()->clientsocket.Close();
+				NetWork::getInstance()->clientsocket.ShutDown();
+				NetWork::getInstance()->isCreated = false;
+				NetWork::getInstance()->isConnectedToClient = false;
+			}
+			if (NetWork::getInstance()->isServer()) {
+				NetWork::getInstance()->isCreated = false;
+				NetWork::getInstance()->cserversocket.Close();
+				NetWork::getInstance()->cserversocket.ShutDown();
+				NetWork::getInstance()->clientsocket.Close();
+				NetWork::getInstance()->clientsocket.ShutDown();
+				NetWork::getInstance()->isServer() = false;
+			}
+		}
 	}
 
 	void CGameStateOver::OnBeginState()
@@ -206,17 +230,6 @@ namespace game_framework {
 		counter = 30 * 10; // 10 seconds
 		CAudio::Instance()->Stop(AUDIO_SOUNDTRACK);
 		GUI::getInstance()->freeFrames();
-		if (NetWork::getInstance()->isConnectedToClient) {
-			NetWork::getInstance()->clientsocket.Close();
-			NetWork::getInstance()->clientsocket.ShutDown();
-			NetWork::getInstance()->isConnectedToClient = false;
-		}
-		if (NetWork::getInstance()->isServer()) {
-			NetWork::getInstance()->isCreated = false;
-			NetWork::getInstance()->cserversocket.Close();
-			NetWork::getInstance()->cserversocket.ShutDown();
-			NetWork::getInstance()->isServer() = false;
-		}
 	}
 
 	void CGameStateOver::OnInit()
@@ -278,9 +291,12 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
 		CAudio::Instance()->Stop(AUDIO_MAINTHEME);
 		CAudio::Instance()->Play(AUDIO_SOUNDTRACK, true);
-		World::getInstance()->initMap();
+		/*if (!NetWork::getInstance()->isServer() && NetWork::getInstance()->isConnectedToClient)
+			TRACE("Loac map from server\n");
+		else*/
+			World::getInstance()->initMap();
 		GUI::getInstance()->loadInGameGUI();
-		World::getInstance()->initWorld();
+			World::getInstance()->initWorld();
 	}
 
 	void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -353,6 +369,8 @@ namespace game_framework {
 		const char KEY_UP = 0x26; // keyboard上箭頭
 		const char KEY_RIGHT = 0x27; // keyboard右箭頭
 		const char KEY_DOWN = 0x28; // keyboard下箭頭
+		const UINT KEY_K = 75;
+		const UINT KEY_H = 72;
 		if (nChar == KEY_LEFT) {
 			//eraser.SetMovingLeft(true);
 			World::getInstance()->moveScreenLeft(true);
@@ -368,6 +386,28 @@ namespace game_framework {
 		if (nChar == KEY_DOWN) {
 			//eraser.SetMovingDown(true);
 			World::getInstance()->moveScreenDown(true);
+		}
+		if (nChar == KEY_K) {
+			if (!World::getInstance()->cheaterMode) {
+				World::getInstance()->cheaterMode = !World::getInstance()->cheaterMode;
+				World::getInstance()->player.food += 10000;
+				World::getInstance()->player.wood += 10000;
+				World::getInstance()->player.gold += 10000;
+				World::getInstance()->player.stone += 10000;
+				AfxMessageBox("你已開啟作弊模式");
+			}
+			else {
+				World::getInstance()->cheaterMode = !World::getInstance()->cheaterMode;
+				AfxMessageBox("你已關閉作弊模式");
+			}
+		}
+		if (nChar == KEY_H) {
+			TRACE("開啟help\n");
+			GUI::getInstance()->openHelp();
+		}
+		const UINT KEY_ESC = 27;
+		if (nChar == KEY_ESC) {
+			PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
 		}
 	}
 
@@ -415,8 +455,9 @@ namespace game_framework {
 					break;
 				}
 				//TRACE("SPAWNING TOWNCENTER\n");
-				CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
+				
 				if (World::getInstance()->player.gold > 50 && World::getInstance()->player.stone > 50 && World::getInstance()->player.wood > 50) {
+					CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
 					World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
 					World::getInstance()->player.gold -= 50;
 					World::getInstance()->player.stone -= 50;
@@ -579,10 +620,19 @@ namespace game_framework {
 			//eraser.SetMovingDown(true);
 			World::getInstance()->moveScreenDown(true);
 		}
-		else if (nChar == KEY_S) {
+		 if (nChar == KEY_S) {
 			World::getInstance()->save();
 			GotoGameState(GAME_STATES::GAME_STATE_INIT);
 		}
+		 const UINT KEY_H = 72;
+		 if (nChar == KEY_H) {
+			 TRACE("開啟help\n");
+			 GUI::getInstance()->openHelp();
+		 }
+		 const UINT KEY_ESC = 27;
+		 if (nChar == KEY_ESC) {
+			 PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
+		 }
 		//TRACE("nchar %d \n", nChar);
 	}
 

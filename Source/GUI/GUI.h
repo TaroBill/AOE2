@@ -23,10 +23,12 @@ public:
 	void loadMapEditorGUI();
 	void freeFrames();
 	void addFrame(Frame* frame);
+	void openHelp();
 	vector<Frame*> frames;
 	bool isTyping;
 	string ip;
 private:
+	bool isHelpOpened;
 	static GUI instance;
 
 };

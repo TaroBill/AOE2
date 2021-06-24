@@ -72,7 +72,6 @@ CMainFrame::CMainFrame()
 {
 	// TODO: add member initialization code here
 	isFullScreen = OPEN_AS_FULLSCREEN;	
-	isToolBarVisible = true;
 	isStatusBarVisible = true;
 }
 
@@ -84,13 +83,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
-	if (!m_wndToolBar.Create(this) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
-	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
 
 	if (!m_wndStatusBar.Create(this) ||
 		!m_wndStatusBar.SetIndicators(indicators,
@@ -99,13 +91,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
-
-	// TODO: Remove this if you don't want tool tips or a resizeable toolbar
-	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
-		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
-
-	// TODO: Delete these three lines if you don't want the toolbar to
-	//  be dockable
 
 	//
 	// 確定ToolBar的位置為固定的，以便計算window size
@@ -122,7 +107,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 如果是Full Screen的話，隱藏ToolBar, StatusBar, Menu
 	//
 	if (isFullScreen) {
-		m_wndToolBar.ShowWindow(SW_HIDE);
 		m_wndStatusBar.ShowWindow(SW_HIDE);
 		ModifyStyle(WS_DLGFRAME, 0);
 		SetMenu(NULL);
@@ -181,12 +165,10 @@ void CMainFrame::SetFullScreen(bool isFull)
 		//
 		// Store the states of tool bar, and status bar.
 		//
-		isToolBarVisible = m_wndToolBar.IsWindowVisible();
 		isStatusBarVisible = m_wndStatusBar.IsWindowVisible();
 		//
 		// Make menu, tool bar, and status invisible.
 		//
-		m_wndToolBar.ShowWindow(SW_HIDE);
 		m_wndStatusBar.ShowWindow(SW_HIDE);
 		ModifyStyle(WS_DLGFRAME, 0);
 		SetMenu(NULL);
@@ -199,8 +181,6 @@ void CMainFrame::SetFullScreen(bool isFull)
 		// Recover menu, tool bar, and status bar
 		//
 		SetMenu(pMenu);
-		if (isToolBarVisible)
-			m_wndToolBar.ShowWindow(SW_NORMAL);
 		if (isStatusBarVisible)
 			m_wndStatusBar.ShowWindow(SW_NORMAL);
 		ModifyStyle(0, WS_DLGFRAME);
@@ -233,10 +213,6 @@ void CMainFrame::OnPaint()
 	game_framework::CDDraw::GetClientRect(ClientRect);
 	CalcWindowRect(&ClientRect, CWnd::adjustBorder);
 	CRect ControlRect;
-	if(m_wndToolBar.IsWindowVisible()) {
-		m_wndToolBar.GetWindowRect(ControlRect);
-		extra_height = ControlRect.bottom - ControlRect.top;
-	}
 	if(m_wndStatusBar.IsWindowVisible()) {
 		m_wndStatusBar.GetWindowRect(ControlRect);
 		extra_height += ControlRect.bottom - ControlRect.top;
