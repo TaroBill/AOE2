@@ -16,7 +16,10 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, CPoint p) {
         entity = new Unit::Mine(p, ResourceType::Gold);
 		break;
 	case EntityTypes::TownCenter:
-		entity = new Unit::TownCenter(p);
+		if (World::getInstance()->cheaterMode)
+			entity = new Unit::TownCenter(p, 100);
+		else
+			entity = new Unit::TownCenter(p);
 		break;
     case EntityTypes::Stone:
         entity = new Unit::Stone(p, ResourceType::Stone);
@@ -44,7 +47,10 @@ Unit::Entity* EntityFactory::SpawnEntity(int type, int x, int y) {
 		entity = new Unit::Mine(x, y, ResourceType::Gold);
 		break;
 	case EntityTypes::TownCenter:
-		entity = new Unit::TownCenter(x, y);
+		if(World::getInstance()->cheaterMode)
+			entity = new Unit::TownCenter(x, y, 100);
+		else
+			entity = new Unit::TownCenter(x, y);
 		break;
 	case EntityTypes::Stone:
 		entity = new Unit::Stone(x, y, ResourceType::Stone);

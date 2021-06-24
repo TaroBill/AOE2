@@ -47,6 +47,9 @@
     <ClCompile Include="Source\Units\Sheep.cpp" />
     <ClCompile Include="Source\GUI\Buttons\eraser_Button.cpp" />
     <ClCompile Include="Source\GUI\Frames\HelpFrame.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_About_Button.cpp" />
+    <ClCompile Include="Source\GUI\Buttons\StartMenu_Help_Button.cpp" />
+    <ClCompile Include="Source\GUI\Frames\AboutFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -105,6 +108,9 @@
     <ClInclude Include="Source\Units\Sheep.h" />
     <ClInclude Include="Source\GUI\Buttons\eraser_Button.h" />
     <ClInclude Include="Source\GUI\Frames\HelpFrame.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_About_Button.h" />
+    <ClInclude Include="Source\GUI\Buttons\StartMenu_Help_Button.h" />
+    <ClInclude Include="Source\GUI\Frames\AboutFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc" />
@@ -276,6 +282,7 @@
     <Image Include="RES\Entity_Icon\SheepIcon.bmp" />
     <Image Include="RES\Building\TownCenterNotDone.bmp" />
     <Image Include="RES\helpFrame.bmp" />
+    <Image Include="RES\AboutFrame.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\ball.bmp" />

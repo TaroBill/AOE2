@@ -2,6 +2,8 @@
 #include "../Buttons/StartMenu_Leave_Button.h"
 #include "../Buttons/StartMenu_MulitGame_Button.h"
 #include "../Buttons/StartMenu_MapEditor_Button.h"
+#include "../Buttons/StartMenu_Help_Button.h"
+#include "../Buttons/StartMenu_About_Button.h"
 
 StartMenuFrame::StartMenuFrame() : Frame(0, 0, 1920, 1080)
 {
@@ -34,4 +36,6 @@ void StartMenuFrame::LoadButtons() {
 	buttons.push_back(new MultiGameButton());
 	buttons.push_back(new LeaveButton());
 	buttons.push_back(new MapEditorButton());
+	buttons.push_back(new HelpButton());
+	buttons.push_back(new AboutButton());
 }

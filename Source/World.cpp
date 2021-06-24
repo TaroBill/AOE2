@@ -711,19 +711,30 @@ void World::initWorld() {
 	}
 	EnemyUnit.clear();
 	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
-		spawn(EntityTypes::Villager, 2900, 3000);
-		spawn(EntityTypes::TownCenter, 3800, 3300);
-		spawnEnemy(EntityTypes::Villager, 3100, 2900);
-		spawnEnemy(EntityTypes::Villager, 3150, 2900);
-		spawnEnemy(EntityTypes::TownCenter, 3100, 2600);
-
+		World::getInstance()->cheaterMode = true;
+		setScreenLocation(1000, 2500);
+		spawn(EntityTypes::Villager, 1500, 2800);
+		spawn(EntityTypes::Villager, 1600, 2900);
+		spawn(EntityTypes::Villager, 1500, 2950);
+		spawn(EntityTypes::TownCenter, 1600, 3000);
+		spawnEnemy(EntityTypes::Villager, 4000, 2800);
+		spawnEnemy(EntityTypes::Villager, 4100, 2900);
+		spawnEnemy(EntityTypes::Villager, 4000, 2950);
+		spawnEnemy(EntityTypes::TownCenter, 4100, 3000);
+		World::getInstance()->cheaterMode = false;
 	}
 	else {//順序要一樣確保初始ID相同
-		spawnEnemy(EntityTypes::Villager, 2900, 3000);
-		spawnEnemy(EntityTypes::TownCenter, 3800, 3300);
-		spawn(EntityTypes::Villager, 3100, 2900);
-		spawn(EntityTypes::Villager, 3150, 2900);
-		spawn(EntityTypes::TownCenter, 3100, 2600);
+		World::getInstance()->cheaterMode = true;
+		setScreenLocation(3500, 2500);
+		spawnEnemy(EntityTypes::Villager, 1500, 2800);
+		spawnEnemy(EntityTypes::Villager, 1600, 2900);
+		spawnEnemy(EntityTypes::Villager, 1500, 2950);
+		spawnEnemy(EntityTypes::TownCenter, 1600, 3000);
+		spawn(EntityTypes::Villager, 4000, 2800);
+		spawn(EntityTypes::Villager, 4100, 2900);
+		spawn(EntityTypes::Villager, 4000, 2950);
+		spawn(EntityTypes::TownCenter, 4100, 3000);
+		World::getInstance()->cheaterMode = false;
 	}
 	isInitingWorld = false;
 }

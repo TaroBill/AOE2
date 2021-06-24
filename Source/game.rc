@@ -434,6 +434,8 @@ IDB_TOWNCENTERND        BITMAP                  "..\\RES\\Building\\TownCenterNo
 
 IDB_HELPFRAME           BITMAP                  "D:\\school\\AOE2\\RES\\helpFrame.bmp"
 
+IDB_ABOUTFRAME          BITMAP                  "D:\\school\\AOE2\\RES\\AboutFrame.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

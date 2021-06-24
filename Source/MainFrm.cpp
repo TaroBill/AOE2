@@ -225,7 +225,7 @@ void CMainFrame::OnPaint()
 
 void CMainFrame::OnButtonFullscreen() 
 {
-	// TODO: Add your command handler code here
+	// TODO: Add your command handler code here+
 	SetFullScreen(!isFullScreen);
 }
 
