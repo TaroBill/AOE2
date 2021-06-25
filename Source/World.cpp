@@ -457,6 +457,8 @@ void World::spawningEntity(int bitmap) {
 void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 	int size = EnemyUnit.size();
 	//TRACE("Size: %d\n", amount);
+	if (size != amount)
+		return;
 	for (int i = 0; i < amount; i++) {
 		string erase;
 		int ET;
@@ -482,6 +484,8 @@ void World::LoadEnemyFromStringStream(int amount, stringstream& ss) {
 void World::LoadUnitFromStringStream(int amount, stringstream& ss) {
 	int size = unit.size();
 	TRACE("Size: %d %d\n", amount, size);
+	if (size != amount)
+		return;
 	for (int i = 0; i < amount; i++) {
 		string erase;
 		int ET;
@@ -508,6 +512,8 @@ void World::LoadUnitFromStringStream(int amount, stringstream& ss) {
 
 void World::LoadResourceFromStringStream(int amount, stringstream& ss) {
 	int size = ResaurceUnit.size();
+	if (size != amount)
+		return;
 	//TRACE("Size: %d\n", amount);
 	for (int i = 0; i < amount; i++) {
 		string erase;

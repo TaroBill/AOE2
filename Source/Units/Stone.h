@@ -7,6 +7,7 @@
 #include "../gamelib.h"
 #include "../Units/Entity.h"
 #include "./Gatherable.h"
+#include <sstream>
 namespace Unit
 {
 	class Stone :public Entity

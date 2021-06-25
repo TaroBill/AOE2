@@ -179,7 +179,7 @@ void NetWork::OnReceive() {
             }
             else {
                 command << "MapError";
-                AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
+                AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸Map.txt檔案給對方才能開始遊戲");
                 SendData(command);
                 if (NetWork::getInstance()->isConnectedToClient) {
                     NetWork::getInstance()->clientsocket.Close();
@@ -198,7 +198,7 @@ void NetWork::OnReceive() {
             }
         }
         else if (contain == "MapError") {
-            AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
+            AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸Map.txt檔案給對方才能開始遊戲");
             if (NetWork::getInstance()->isConnectedToClient) {
                 NetWork::getInstance()->clientsocket.Close();
                 NetWork::getInstance()->clientsocket.ShutDown();
