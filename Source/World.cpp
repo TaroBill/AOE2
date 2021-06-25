@@ -25,12 +25,6 @@ void World::initMap() {
 
 	strData = pBuf;
 	ss << strData;
-	/*if (NetWork::getInstance()->isServer() && NetWork::getInstance()->isConnectedToClient) {
-		stringstream command;
-		command << "initMap " << strData;
-		//TRACE("map: %s\n", command.str().c_str());
-		NetWork::getInstance()->SendData(command);
-	}*/
 
 	for (int i = 0; i < 120; i++) {
 		for (int j = 0; j < 120; j++) {
@@ -670,8 +664,8 @@ void World::killByID(UINT ID) {
 			}
 			else {
 				int total = 0;
-				for (unsigned int i = 0; i < EnemyUnit.size(); i++) {
-					if (typeid(*EnemyUnit[i]) == typeid(Unit::Villager)) {
+				for (unsigned int j = 0; j < EnemyUnit.size(); j++) {
+					if (typeid(*EnemyUnit[j]) == typeid(Unit::Villager)) {
 						total++;
 					}
 				}
@@ -770,6 +764,42 @@ void World::save() {
 	TRACE("Saving done\n");
 	file.close();
 	delete[] output;
+}
+
+UINT World::checkMap() {
+	fstream file;      //«Å§ifstreamª«¥ó
+	file.open("..//Map//Map.txt", ios::in);
+	if (!file)
+		TRACE("File can't be opened\n");
+
+	char* pBuf = new char[50000];
+	CString strData;
+	stringstream ss;
+	file.read(pBuf, 50000);
+
+	strData = pBuf;
+	stringstream test;
+	test << strData;
+	UINT total = 0;
+	for (int i = 0; i < 120; i++) {
+		for (int j = 0; j < 120; j++) {
+			int temp = 0;
+			test >> temp;
+			total += temp;
+			//TRACE("%d, %d :  %d\n", j, i, map[i][j]);
+		}
+	}
+	UINT resaurceSize;
+	test >> resaurceSize;
+	for (UINT i = 0; i < resaurceSize; i++) {
+		int ET;
+		test >> ET;//Entity type
+		int x, y;   //Entity Location
+		test >> x >> y;
+		total += ET + x + y;
+	}
+	delete [] pBuf;
+	return total;
 }
 
 World World::instance;

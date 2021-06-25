@@ -291,10 +291,7 @@ namespace game_framework {
 		CAudio::Instance()->Play(AUDIO_NTUT, true);			// 撥放 MIDI*/
 		CAudio::Instance()->Stop(AUDIO_MAINTHEME);
 		CAudio::Instance()->Play(AUDIO_SOUNDTRACK, true);
-		/*if (!NetWork::getInstance()->isServer() && NetWork::getInstance()->isConnectedToClient)
-			TRACE("Loac map from server\n");
-		else*/
-			World::getInstance()->initMap();
+		World::getInstance()->initMap();
 		GUI::getInstance()->loadInGameGUI();
 			World::getInstance()->initWorld();
 	}
@@ -390,10 +387,10 @@ namespace game_framework {
 		if (nChar == KEY_K) {
 			if (!World::getInstance()->cheaterMode) {
 				World::getInstance()->cheaterMode = !World::getInstance()->cheaterMode;
-				World::getInstance()->player.food += 10000;
-				World::getInstance()->player.wood += 10000;
-				World::getInstance()->player.gold += 10000;
-				World::getInstance()->player.stone += 10000;
+				World::getInstance()->player.food += 500;
+				World::getInstance()->player.wood += 500;
+				World::getInstance()->player.gold += 500;
+				World::getInstance()->player.stone += 500;
 				AfxMessageBox("你已開啟作弊模式");
 			}
 			else {

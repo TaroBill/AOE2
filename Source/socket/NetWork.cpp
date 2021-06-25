@@ -57,9 +57,10 @@ void NetWork::ConnectToServer(string ip) {
     if (clientsocket.Connect(output, 1234)) {
         isConnectedToClient = true;
         AfxMessageBox("連線成功");
-        game_framework::CGame::Instance()->SetGameState(GAME_STATES::GAME_STATE_RUN);
         stringstream command;
-        command << "StartGame";
+        UINT totalMap;
+        totalMap = World::getInstance()->checkMap();
+        command << "CheckMap " << totalMap;
         SendData(command);
     }
     else {
@@ -166,8 +167,24 @@ void NetWork::OnReceive() {
             ss >> amount;
             World::getInstance()->LoadResourceFromStringStream(amount, ss);
         }
-        else if (contain == "initMap") {
-            World::getInstance()->initMapFromNet(ss);
+        else if (contain == "CheckMap") {
+            UINT totals = World::getInstance()->checkMap();
+            UINT totalFrom;
+            ss >> totalFrom;
+            stringstream command;
+            if (totals == totalFrom) {
+                command << "StartGame";
+                SendData(command);
+                game_framework::CGame::Instance()->SetGameState(GAME_STATE_RUN);
+            }
+            else {
+                command << "MapError";
+                AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
+                SendData(command);
+            }
+        }
+        else if (contain == "MapError") {
+            AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
         }
     }
     delete [] pBuf;

@@ -29,14 +29,16 @@ void Unit::TownCenter::onMove()
 	}
 	if (spawnCount > 500) {
 		spawnCount = 0;
-		if (!World::getInstance()->cheaterMode) {
-			if (this->playerId == 0 && World::getInstance()->player.food >= 50) {
-				World::getInstance()->player.food -= 50;
+		if (World::getInstance()->player.population < 20 && this->playerId == 0) {
+			if (!World::getInstance()->cheaterMode) {
+				if (this->playerId == 0 && World::getInstance()->player.food >= 50) {
+					World::getInstance()->player.food -= 50;
+					World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
+				}
+			}
+			else {
 				World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
 			}
-		}
-		else {
-			World::getInstance()->spawn(EntityTypes::Villager, this->point.x - 20, this->point.y - 20);
 		}
 	}
 }

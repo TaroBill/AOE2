@@ -136,6 +136,8 @@ public:
 	bool isWin = false;
 	//§@¹ú¼Ò¦¡
 	bool cheaterMode = false;
+
+	UINT checkMap();
 private:
 	static World instance;
 	bool isMovingLeft, isMovingRight, isMovingUp, isMovingDown;
