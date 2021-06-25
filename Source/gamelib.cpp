@@ -482,8 +482,8 @@ void CGameState::OnDraw() // Template Method
 
 void CGameState::OnCycle() // Template Method
 {
-	if(!NetWork::getInstance()->isConnectedToClient || NetWork::getInstance()->isServer())
-		OnMove();
+	//if(!NetWork::getInstance()->isConnectedToClient || NetWork::getInstance()->isServer())
+	OnMove();
 	OnShow();
 }
 

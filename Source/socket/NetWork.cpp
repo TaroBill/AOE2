@@ -181,10 +181,38 @@ void NetWork::OnReceive() {
                 command << "MapError";
                 AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
                 SendData(command);
+                if (NetWork::getInstance()->isConnectedToClient) {
+                    NetWork::getInstance()->clientsocket.Close();
+                    NetWork::getInstance()->clientsocket.ShutDown();
+                    NetWork::getInstance()->isCreated = false;
+                    NetWork::getInstance()->isConnectedToClient = false;
+                }
+                if (NetWork::getInstance()->isServer()) {
+                    NetWork::getInstance()->isCreated = false;
+                    NetWork::getInstance()->cserversocket.Close();
+                    NetWork::getInstance()->cserversocket.ShutDown();
+                    NetWork::getInstance()->clientsocket.Close();
+                    NetWork::getInstance()->clientsocket.ShutDown();
+                    NetWork::getInstance()->isServer() = false;
+                }
             }
         }
         else if (contain == "MapError") {
             AfxMessageBox("你跟對方的地圖檔不同\n 請傳輸檔案給對方才能開始遊戲");
+            if (NetWork::getInstance()->isConnectedToClient) {
+                NetWork::getInstance()->clientsocket.Close();
+                NetWork::getInstance()->clientsocket.ShutDown();
+                NetWork::getInstance()->isCreated = false;
+                NetWork::getInstance()->isConnectedToClient = false;
+            }
+            if (NetWork::getInstance()->isServer()) {
+                NetWork::getInstance()->isCreated = false;
+                NetWork::getInstance()->cserversocket.Close();
+                NetWork::getInstance()->cserversocket.ShutDown();
+                NetWork::getInstance()->clientsocket.Close();
+                NetWork::getInstance()->clientsocket.ShutDown();
+                NetWork::getInstance()->isServer() = false;
+            }
         }
     }
     delete [] pBuf;
