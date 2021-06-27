@@ -754,7 +754,7 @@ void World::save() {
 	fstream file;      //«Å§ifstreamª«¥ó
 
 	stringstream contain;
-	file.open("..//Map//Map.txt", ios::out | ios::trunc);
+	file.open("Map//Map.txt", ios::out | ios::trunc);
 	if (!file)
 		TRACE("File can't be opened\n");
 	for (int i = 0; i < 120; i++) {
