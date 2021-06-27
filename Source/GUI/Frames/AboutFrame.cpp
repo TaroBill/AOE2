@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "AboutFrame.h"
 #include "../GUI.h"
 

@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "StartMenu_CreateServer_Button.h"
 #include "../GUI.h"
 #include "../../socket/NetWork.h"

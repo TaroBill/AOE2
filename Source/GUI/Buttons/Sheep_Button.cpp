@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "Sheep_Button.h"
 #include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"

@@ -1,4 +1,5 @@
 #pragma once
+#include "../StdAfx.h"
 #include "../World.h"
 
 //把資源放到主城，讓對應的玩家增加資源
@@ -313,7 +314,7 @@ void Unit::Villager::SetBitmap()
 	{
 		for (int s = 0; s < 15; s++)
 		{
-			string str = "..\\RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
+			string str = "RES\\Villager\\VillagerIdle_" + to_string(dire) + "_" + to_string(s) + ".bmp";
 			State es = State::Idle;
 			Direction d = static_cast<Direction>(dire);
 

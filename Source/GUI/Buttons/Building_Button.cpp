@@ -1,3 +1,5 @@
+#pragma once
+#include "../../StdAfx.h"
 #include "Building_Button.h"
 #include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"

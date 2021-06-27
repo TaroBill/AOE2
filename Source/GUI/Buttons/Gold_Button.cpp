@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "Gold_Button.h"
 #include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"

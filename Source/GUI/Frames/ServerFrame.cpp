@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "ServerFrame.h"
 #include "../Buttons/StartMenu_CreateServer_Button.h"
 #include "../Buttons/StartMenu_JoinServer_Button.h"

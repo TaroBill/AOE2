@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "water_Button.h"
 #include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"

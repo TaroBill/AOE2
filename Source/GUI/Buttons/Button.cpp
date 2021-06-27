@@ -1,3 +1,5 @@
+#pragma once
+#include "../../StdAfx.h"
 #include "Button.h"
 #include "../../stdafx.h"
 #include "../../Resource.h"

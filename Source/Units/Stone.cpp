@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "Stone.h"
 #include "../World.h"
 

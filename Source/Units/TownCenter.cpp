@@ -1,10 +1,11 @@
+#include "../StdAfx.h"
 #include "../World.h"
 
 void Unit::TownCenter::SetBitmap()
 {
-	string str = "..\\RES\\Building\\TownCenterNotDone.bmp";
+	string str = "RES\\Building\\TownCenterNotDone.bmp";
 	animations[State::Idle][Direction::Down].AddBitmap(const_cast<char*>(str.c_str()), RGB(255, 255, 255));
-	string str2 = "..\\RES\\Building\\TownCenter.bmp";
+	string str2 = "RES\\Building\\TownCenter.bmp";
 	animations[State::Idle][Direction::Up].AddBitmap(const_cast<char*>(str2.c_str()), RGB(0, 0, 0));
 	size.x = animations[State::Idle][Direction::Down].Width();
 	size.y = animations[State::Idle][Direction::Down].Height();

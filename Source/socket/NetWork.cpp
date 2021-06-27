@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "NetWork.h"
 #include "../World.h"
 #include "../gamelib.h"

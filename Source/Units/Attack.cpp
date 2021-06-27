@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "Attack.h"
 #include "Entity.h"
 #include "Navigator.h"

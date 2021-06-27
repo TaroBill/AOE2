@@ -1,6 +1,6 @@
 #pragma once
-#include "./StdAfx.h"
-#include "./ID.h"
+#include "StdAfx.h"
+#include "ID.h"
 
 
 ID ID::_instance;

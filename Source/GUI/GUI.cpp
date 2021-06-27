@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "GUI.h"
 #include "Frames/minimap.h"
 #include "Frames/ResourceFrame.h"

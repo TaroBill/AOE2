@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "StartMenu_MapEditor_Button.h"
 #include "../GUI.h"
 

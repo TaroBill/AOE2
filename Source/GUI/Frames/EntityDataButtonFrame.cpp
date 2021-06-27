@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "EntityDataButtonFrame.h"
 #include "../Buttons/Building_Button.h"
 #include "../Buttons/Military_Button.h"

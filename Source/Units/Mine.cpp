@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "Mine.h"
 #include "../World.h"
 

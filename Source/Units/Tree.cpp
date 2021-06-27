@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "../World.h"
 
 namespace Unit

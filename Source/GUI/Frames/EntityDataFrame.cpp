@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "EntityDataFrame.h"
 #include "../../mygame.h"
 

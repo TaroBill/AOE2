@@ -1,3 +1,4 @@
+#include "StdAfx.h"
 #include "World.h"
 #include "GUI/GUI.h"
 #include "socket/NetWork.h"
@@ -14,7 +15,7 @@ World* World::getInstance()
 void World::initMap() {
 	clearAllEntities();
 	fstream file;      //宣告fstream物件
-	file.open("..//Map//Map.txt", ios::in);
+	file.open("Map//Map.txt", ios::in);
 	if (!file)
 		TRACE("File can't be opened\n");
 
@@ -710,6 +711,10 @@ void World::initWorld() {
 		delete EnemyUnit[i];
 	}
 	EnemyUnit.clear();
+	World::getInstance()->player.food = 100;
+	World::getInstance()->player.gold = 50;
+	World::getInstance()->player.stone = 50;
+	World::getInstance()->player.wood = 50;
 	if (NetWork::getInstance()->isServer()) {//順序要一樣確保初始ID相同
 		World::getInstance()->cheaterMode = true;
 		setScreenLocation(1000, 2500);
@@ -774,7 +779,7 @@ void World::save() {
 
 UINT World::checkMap() {
 	fstream file;      //宣告fstream物件
-	file.open("..//Map//Map.txt", ios::in);
+	file.open("Map//Map.txt", ios::in);
 	if (!file)
 		TRACE("File can't be opened\n");
 

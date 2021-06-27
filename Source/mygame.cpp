@@ -92,14 +92,14 @@ namespace game_framework {
 		// 開始載入資料
 		//
 		logo.LoadBitmap(IDB_BACKGROUND);
-		CAudio::Instance()->Load(AUDIO_MAINTHEME, "..//Sounds//MainTheme.mp3");
-		CAudio::Instance()->Load(AUDIO_SHEEP, "..//Sounds//SheepSound.mp3");
-		CAudio::Instance()->Load(AUDIO_TOWNCENTER, "..//Sounds//TownCenterSound.mp3");
-		CAudio::Instance()->Load(AUDIO_SOUNDTRACK, "..//Sounds//Soundtrack.mp3");
-		CAudio::Instance()->Load(AUDIO_VILLAGER, "..//Sounds//VillagerSound.mp3");
-		CAudio::Instance()->Load(AUDIO_VILLAGERDEATH, "..//Sounds//VillagerDeathSounds.mp3");
-		CAudio::Instance()->Load(AUDIO_UNITCREATION, "..//Sounds//UnitCreation.mp3");
-		CAudio::Instance()->Load(AUDIO_ERROR, "..//Sounds//Error.mp3");
+		CAudio::Instance()->Load(AUDIO_MAINTHEME, "Sounds//MainTheme.mp3");
+		CAudio::Instance()->Load(AUDIO_SHEEP, "Sounds//SheepSound.mp3");
+		CAudio::Instance()->Load(AUDIO_TOWNCENTER, "Sounds//TownCenterSound.mp3");
+		CAudio::Instance()->Load(AUDIO_SOUNDTRACK, "Sounds//Soundtrack.mp3");
+		CAudio::Instance()->Load(AUDIO_VILLAGER, "Sounds//VillagerSound.mp3");
+		CAudio::Instance()->Load(AUDIO_VILLAGERDEATH, "Sounds//VillagerDeathSounds.mp3");
+		CAudio::Instance()->Load(AUDIO_UNITCREATION, "Sounds//UnitCreation.mp3");
+		CAudio::Instance()->Load(AUDIO_ERROR, "Sounds//Error.mp3");
 		CAudio::Instance()->Play(AUDIO_MAINTHEME, true);
 		//Sleep(300);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
 		//
@@ -450,7 +450,7 @@ namespace game_framework {
 				}
 				//TRACE("SPAWNING TOWNCENTER\n");
 				
-				if (World::getInstance()->player.gold > 50 && World::getInstance()->player.stone > 50 && World::getInstance()->player.wood > 50) {
+				if (World::getInstance()->player.gold >= 50 && World::getInstance()->player.stone >= 50 && World::getInstance()->player.wood >= 50) {
 					CAudio::Instance()->Play(AUDIO_TOWNCENTER, false);
 					World::getInstance()->spawn(EntityTypes::TownCenter, x * 50, y * 50);
 					World::getInstance()->player.gold -= 50;

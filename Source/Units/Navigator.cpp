@@ -1,4 +1,5 @@
 #pragma once
+#include "../StdAfx.h"
 #include <vector>
 #include <map>
 #include <stack>

@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "ClientSocket.h"
 #include "NetWork.h"
 

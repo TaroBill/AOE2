@@ -1,3 +1,4 @@
+#include "../StdAfx.h"
 #include "EntityFactory.h"
 #include "../World.h"
 #include <exception>

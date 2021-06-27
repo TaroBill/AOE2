@@ -5,19 +5,7 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "game.vcxproj", "{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "gameSetup.vdproj", "{984E2E2A-0DB0-4F9D-9E5C-A3C536609A39}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0FB2535-F480-4EC8-A5E3-A9349FA0A2E4}"
-	ProjectSection(SolutionItems) = preProject
-		Source\GUI\Buttons\Gold_Button.cpp = Source\GUI\Buttons\Gold_Button.cpp
-		Source\GUI\Buttons\Gold_Button.h = Source\GUI\Buttons\Gold_Button.h
-		Source\GUI\Buttons\Sheep_Button.cpp = Source\GUI\Buttons\Sheep_Button.cpp
-		Source\GUI\Buttons\Sheep_Button.h = Source\GUI\Buttons\Sheep_Button.h
-		Source\GUI\Buttons\Stone_Button.cpp = Source\GUI\Buttons\Stone_Button.cpp
-		Source\GUI\Buttons\Stone_Button.h = Source\GUI\Buttons\Stone_Button.h
-		Source\GUI\Buttons\Tree_Button.cpp = Source\GUI\Buttons\Tree_Button.cpp
-		Source\GUI\Buttons\Tree_Button.h = Source\GUI\Buttons\Tree_Button.h
-	EndProjectSection
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgeOfEmpire2", "AgeOfEmpire2\AgeOfEmpire2.vdproj", "{8ED8603E-0A2C-4CD7-9E03-4704DBF53BF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +17,8 @@ Global
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Debug|Win32.Build.0 = Debug|Win32
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Release|Win32.ActiveCfg = Release|Win32
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Release|Win32.Build.0 = Release|Win32
-		{984E2E2A-0DB0-4F9D-9E5C-A3C536609A39}.Debug|Win32.ActiveCfg = Debug
-		{984E2E2A-0DB0-4F9D-9E5C-A3C536609A39}.Release|Win32.ActiveCfg = Release
-		{984E2E2A-0DB0-4F9D-9E5C-A3C536609A39}.Release|Win32.Build.0 = Release
+		{8ED8603E-0A2C-4CD7-9E03-4704DBF53BF7}.Debug|Win32.ActiveCfg = Debug
+		{8ED8603E-0A2C-4CD7-9E03-4704DBF53BF7}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

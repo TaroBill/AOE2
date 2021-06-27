@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "StartMenu_Help_Button.h"
 #include "../GUI.h"
 

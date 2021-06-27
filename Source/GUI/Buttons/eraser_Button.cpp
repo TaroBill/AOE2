@@ -1,3 +1,4 @@
+#include "../../StdAfx.h"
 #include "eraser_Button.h"
 #include "../Frames/EntityDataButtonFrame.h"
 #include "../GUI.h"
